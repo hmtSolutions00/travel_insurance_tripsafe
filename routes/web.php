@@ -14,5 +14,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontend.pages.formpesanan');
+});
+
+Route::get('/data/penumpang', function () {
+    return view('frontend.pages.formpenumpang');
+});
+
+Route::get('/last', function () {
+    return view('frontend.pages.halamanterakhir');
+});
+
+Route::get('/contact-us', function () {
+    return view('frontend.pages.contactus');
 });
