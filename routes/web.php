@@ -18,10 +18,25 @@ use Illuminate\Support\Facades\Route;
 //     return view('admin.pages.dashboard')->name('dashboard');
 // });
 
-Route::get('/', function () {
+Route::get('/dashboard', function () {
     return view('admin.pages.dashboard');
 })->name('dashboard'); // ✅ Benar
 
+Route::get('/', function () {
+    return view('frontend.pages.formpesanan');
+});
+
+Route::get('/data/penumpang', function () {
+    return view('frontend.pages.formpenumpang');
+});
+
+Route::get('/last', function () {
+    return view('frontend.pages.halamanterakhir');
+});
+
+Route::get('/contact-us', function () {
+    return view('frontend.pages.contactus');
+});
 
 
 
