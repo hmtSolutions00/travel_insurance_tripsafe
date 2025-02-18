@@ -200,7 +200,7 @@
 
                                                 <div class="col-12 col-lg-3 mb-3" style="text-align: left">
                                                     <small class="form-check-label mb-5 fw-bold"
-                                                        for="tamggal_lahir_1">Tamggal
+                                                        for="tanggal_lahir_1">Tanggal
                                                         Lahir</small>
                                                     <input type="date" name="tanggal_lahir_1" id="tanggal_lahir_1"
                                                         class="form-control form-control-sm">
@@ -302,7 +302,7 @@
 
                                                 <div class="col-12 col-lg-3 mb-3" style="text-align: left">
                                                     <small class="form-check-label mb-5 fw-bold"
-                                                        for="tamggal_lahir_2">Tanggal
+                                                        for="tanggal_lahir_2">Tanggal
                                                         Lahir</small>
                                                     <input type="date" name="tanggal_lahir_2" id="tanggal_lahir_2"
                                                         class="form-control form-control-sm">
