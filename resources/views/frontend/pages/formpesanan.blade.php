@@ -112,13 +112,13 @@
                                                                 jumlahHariElement.style.textAlign = 'left';
                                                                 jumlahHariElement.innerHTML = `
                                                                 <i class="fa-solid fa-clock fa-sm"></i>
-                                                                <small class="form-check-label mb-1" style="font-style:italic">Total hari 0 hari</small>
+                                                                <small class="form-check-label mb-1" style="font-style:italic">Total perjalanan 0 hari</small>
                                                                 `;
 
                                                                 tanggalKeberangkatan.parentNode.appendChild(jumlahHariElement);
                                                             } else {
                                                                 document.getElementById('jumlah_hari').querySelectorAll('small')[0].innerText =
-                                                                    `Total hari ${jumlahHariValue} hari`;
+                                                                    `Total perjalanan ${jumlahHariValue} hari`;
                                                             }
                                                         }
                                                     }
@@ -255,13 +255,13 @@
                                                                 jumlahHariElement.style.textAlign = 'left';
                                                                 jumlahHariElement.innerHTML = `
                                                                 <i class="fa-solid fa-clock fa-sm"></i>
-                                                                <small class="form-check-label mb-1" style="font-style:italic">Total hari 0 hari</small>
+                                                                <small class="form-check-label mb-1" style="font-style:italic">Durasi perjalan 0 hari</small>
                                                                 `;
 
                                                                 tanggalKeberangkatan_t.parentNode.appendChild(jumlahHariElement);
                                                             } else {
                                                                 document.getElementById('jumlah_hari_t').querySelectorAll('small')[0].innerText =
-                                                                    `Total hari ${jumlahHariValue_t} hari`;
+                                                                    `Durasi perjalanan hari ${jumlahHariValue_t} hari`;
                                                             }
                                                         }
                                                     }
