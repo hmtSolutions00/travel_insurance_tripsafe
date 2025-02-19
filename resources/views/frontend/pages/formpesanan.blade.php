@@ -66,9 +66,11 @@
                                                     <select class="form-control form-control-sm" aria-label="Pilihan"
                                                         name="wilayah" id="wilayah">
                                                         <option value="0" selected disabled>Pilih Wilayah</option>
-                                                        <option value="Wilayah1">Wilayah 1</option>
-                                                        <option value="Wilayah2">Wilayah 2</option>
-                                                        <option value="Wilayah3">Wilayah 3</option>
+                                                        <option value="Wilayah1">Greater Asia</option>
+                                                        <option value="Wilayah2">Pasific Country & Schengen</option>
+                                                        <option value="Wilayah3">Umroh - Saudi Arabia Plus</option>
+                                                        <option value="Wilayah3">Worldwide exclude US & Canada</option>
+                                                        <option value="Wilayah3">Worldwide include US & Canada</option>                                                        </option>
                                                     </select>
                                                 </div>
                                                 <div class="col-12 col-lg-6 mb-3" style="text-align: left">
@@ -206,9 +208,11 @@
                                                     <select class="form-control form-control-sm" aria-label="Pilihan"
                                                         name="wilayah_t" id="wilayah_t">
                                                         <option value="0" selected disabled>Pilih Wilayah</option>
-                                                        <option value="Wilayah1">Wilayah 1</option>
-                                                        <option value="Wilayah2">Wilayah 2</option>
-                                                        <option value="Wilayah3">Wilayah 3</option>
+                                                        <option value="Wilayah1">Greater Asia</option>
+                                                        <option value="Wilayah2">Pasific Country & Schengen</option>
+                                                        <option value="Wilayah3">Umroh - Saudi Arabia Plus</option>
+                                                        <option value="Wilayah3">Worldwide exclude US & Canada</option>
+                                                        <option value="Wilayah3">Worldwide include US & Canada</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-12 col-lg-6 mb-3" style="text-align: left">
