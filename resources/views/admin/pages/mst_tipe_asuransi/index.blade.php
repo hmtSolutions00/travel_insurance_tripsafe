@@ -3,7 +3,7 @@
 @section('admin')
 <div class="content-wrapper">
     <div class="page-header">
-        <h3 class="page-title"> Data Master Wilayah/Destinasi</h3>
+        <h3 class="page-title"> Data Master Tipe Asuransi</h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 @foreach ($breadcrumb as $item)
@@ -30,8 +30,8 @@
                 <div class="card-body">
                     <div class="col-md-4 grid-margin stretch-card">
                         <div class="d-grid gap-2">
-                            <a href="{{ route('admin.master.wilayah.create') }}" class="btn btn-primary btn-lg">
-                                <i class="mdi mdi-plus"></i> Tambah Data Wilayah
+                            <a href="{{ route('admin.master.tipe_asuransi.create') }}" class="btn btn-primary btn-lg">
+                                <i class="mdi mdi-plus"></i> Tambah Data Tipe Asuransi
                             </a>
                         </div>
                     </div>
@@ -41,34 +41,31 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Wilayah</th>
-                                    <th>Termasuk</th>
-                                    <th>Tidak Termasuk</th>
-                                    <th>Status</th>
+                                    <th>Nama Tipe Asuransi</th>
+                                    <th>Tipe Perjalanan</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($wilayahs as $index => $wilayah)
+                                @forelse ($asuransis as $index => $asuransi)
                                     <tr>
                                         <td class="py-1">{{ $loop->iteration }}</td>
-                                        <td>{{ $wilayah->name }}</td>
-                                        <td>{{ $wilayah->include }}</td>
-                                        <td>{{ $wilayah->exclude }}</td>
+                                        <td>{{ $asuransi->name }}</td>
                                         <td>
-                                            <span class="badge {{ $wilayah->status === 'active' ? 'badge-success' : 'badge-danger' }}">
-                                                {{ ucfirst($wilayah->status) }}
-                                            </span>
+                                            <ul>
+                                                @foreach ($asuransi->tipe_perjalanan_id as $tipe_id)
+                                                    @if (isset($tipePerjalanans[$tipe_id]))
+                                                        <li>{{ $tipePerjalanans[$tipe_id]->name }}</li>
+                                                    @endif
+                                                @endforeach
+                                            </ul>
                                         </td>
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <a href="{{ route('admin.master.wilayah.show', $wilayah->id) }}" class="btn btn-sm btn-outline-info">
-                                                    <i class="mdi mdi-eye d-block mb-1"></i>
-                                                </a>
-                                                <a href="{{ route('admin.master.wilayah.edit', $wilayah->id) }}" class="btn btn-sm btn-outline-warning">
+                                                <a href="{{ route('admin.master.tipe_asuransi.edit', $asuransi->id) }}" class="btn btn-sm btn-outline-warning">
                                                     <i class="mdi mdi-pencil-outline d-block mb-1"></i>
                                                 </a>
-                                                <form action="{{ route('admin.master.wilayah.destroy', $wilayah->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                                <form action="{{ route('admin.master.tipe_asuransi.destroy', $asuransi->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -80,7 +77,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="text-center">Tidak ada data.</td>
+                                        <td colspan="4" class="text-center">Tidak ada data.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -88,9 +85,9 @@
                     </div>
 
                     {{-- Pagination --}}
-                    <div class="d-flex justify-content-center mt-3">
-                        {{ $wilayahs->links() }}
-                    </div>
+                    {{-- <div class="d-flex justify-content-center mt-3">
+                        {{ $asuransis->links() }}
+                    </div> --}}
 
                 </div>
             </div>

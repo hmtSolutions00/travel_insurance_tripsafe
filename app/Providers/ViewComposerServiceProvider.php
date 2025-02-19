@@ -43,8 +43,8 @@ class ViewComposerServiceProvider extends ServiceProvider
             // **2️⃣ Tentukan Sidebar yang Aktif Berdasarkan Prefix Route**
             $activeSidebar = [
                 'master_tipe_perjalanan' => Str::startsWith($currentRoute, 'admin.master.tipe_perjalanan.'),
-                // 'destinasi_tujuan' => Str::startsWith($currentRoute, 'admin.master.destinasi_tujuan.'),
-                // 'tipe_asuransi' => Str::startsWith($currentRoute, 'admin.master.tipe_asuransi.'),
+                'master_wilayah' => Str::startsWith($currentRoute, 'admin.master.wilayah.'),
+                'master_tipe_asuransi' => Str::startsWith($currentRoute, 'admin.master.tipe_asuransi.'),
                 // 'tipe_customer' => Str::startsWith($currentRoute, 'admin.master.tipe_customer.'),
                 // 'paket_asuransi' => Str::startsWith($currentRoute, 'admin.master.paket_asuransi.'),
             ];

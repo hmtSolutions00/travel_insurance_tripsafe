@@ -57,13 +57,13 @@
             </a>
         </li>
 
-          <li class="nav-item">
-            <a class="nav-link"  href="" aria-expanded="false" aria-controls="ui-basic">
-                <i class="mdi mdi-map-marker menu-icon"></i> <span class="menu-title">Destinasi Tujuan (Wilayah)</span>
+          <li class="nav-item {{ $activeSidebar['master_wilayah'] ? 'active' : '' }}">
+            <a class="nav-link"  href="{{route('admin.master.wilayah.index')}}" aria-expanded="false" aria-controls="ui-basic">
+                <i class="mdi mdi-map-marker menu-icon"></i> <span class="menu-title">Data Wilayah</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link"  href=" " aria-expanded="false" aria-controls="ui-basic">
+          <li class="nav-item {{ $activeSidebar['master_tipe_asuransi'] ? 'active' : '' }}">
+            <a class="nav-link"  href=" {{route('admin.master.tipe_asuransi.index')}}" aria-expanded="false" aria-controls="ui-basic">
                 <i class="mdi mdi-shield-outline menu-icon"></i> <span class="menu-title">Tipe Asuransi</span>
             </a>
           </li>
