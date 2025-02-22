@@ -2,7 +2,11 @@
 
 use App\Http\Controllers\DetailCustomerController;
 use App\Http\Controllers\HargaPaketController;
+use App\Http\Controllers\KelolaBenefitController;
+use App\Http\Controllers\MstBenefitController;
+use App\Http\Controllers\MstPaketAsuransiController;
 use App\Http\Controllers\MstTipeAsuransiController;
+use App\Http\Controllers\MstTipePelangganController;
 use App\Http\Controllers\MstTipePerjalananController;
 use App\Http\Controllers\MstWilayahController;
 use App\Http\Controllers\PesananController;
@@ -90,4 +94,45 @@ Route::get('/contact-us', function () {
         // Route::get('/{id}/detail', [MstTipeAsuransiController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
         // Route::delete('/{id}', [MstTipeAsuransiController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
     });
+
+    Route::prefix('master/tipe/pelanggan')->name('admin.master.tipe_pelanggan.')->group(function () {
+        Route::get('/', [MstTipePelangganController::class, 'index'])->name('index');
+        Route::get('/create', [MstTipePelangganController::class, 'create'])->name('create');
+        Route::post('/store', [MstTipePelangganController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [MstTipePelangganController::class, 'edit'])->name('edit');  // ✅ Tambahkan {id}
+        Route::put('/{id}/update', [MstTipePelangganController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
+        Route::get('/{id}/detail', [MstTipePelangganController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
+        Route::delete('/{id}', [MstTipePelangganController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
+    });
+    Route::prefix('master/paket')->name('admin.paket_asuransi.')->group(function () {
+        Route::get('/', [MstPaketAsuransiController::class, 'index'])->name('index');
+        Route::get('/create', [MstPaketAsuransiController::class, 'create'])->name('create');
+        Route::post('/store', [MstPaketAsuransiController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [MstPaketAsuransiController::class, 'edit'])->name('edit');  // ✅ Tambahkan {id}
+        Route::put('/{id}/update', [MstPaketAsuransiController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
+        Route::get('/{id}/detail', [MstPaketAsuransiController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
+        Route::delete('/{id}', [MstPaketAsuransiController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
+    });
+    Route::prefix('master/benefit')->name('admin.benefit_asuransi.')->group(function () {
+        Route::get('/', [MstBenefitController::class, 'index'])->name('index');
+        Route::get('/create', [MstBenefitController::class, 'create'])->name('create');
+        Route::post('/store', [MstBenefitController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [MstBenefitController::class, 'edit'])->name('edit');  // ✅ Tambahkan {id}
+        Route::put('/{id}/update', [MstBenefitController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
+        Route::get('/{id}/detail', [MstBenefitController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
+        Route::delete('/{id}', [MstBenefitController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
+    });
+
+    Route::prefix('kelola/data_benefit')->name('kelola.data_benefit.')->group(function () {
+        Route::get('/', [KelolaBenefitController::class, 'index'])->name('index');
+        Route::get('/create', [KelolaBenefitController::class, 'create'])->name('create');
+        Route::post('/store', [KelolaBenefitController::class, 'store'])->name('store');
+
+        // ✅ Gunakan kombinasi insurance_type_id dan destionation_id
+        Route::get('/{insurance_type_id}/{destionation_id}/edit', [KelolaBenefitController::class, 'edit'])->name('edit');
+        Route::put('/{insurance_type_id}/{destionation_id}/update', [KelolaBenefitController::class, 'update'])->name('update');
+        Route::get('/{insurance_type_id}/{destionation_id}/detail', [KelolaBenefitController::class, 'show'])->name('show');
+        Route::delete('/{insurance_type_id}/{destionation_id}', [KelolaBenefitController::class, 'destroy'])->name('destroy');
+    });
+
 

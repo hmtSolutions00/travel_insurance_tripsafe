@@ -7,10 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class PaketAsuransi extends Model
 {
-    protected $table = 'paket_asuransis';
+    use HasFactory;
+    protected $table = 'paket_asuransis'; // Nama tabel di database
 
-
-    protected $fillable = [
-        'nama_paket',
-    ];
+    protected $fillable = ['nama_paket'];
 }

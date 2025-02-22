@@ -44,6 +44,7 @@
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="{{url('/admin/assets/vendors/js/vendor.bundle.base.js')}}"></script>
+    @yield('jseextend')
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <script src="{{url('/admin/assets/vendors/jquery-bar-rating/jquery.barrating.min.js')}}"></script>

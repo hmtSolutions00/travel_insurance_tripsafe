@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class ManfaatPaket extends Model
 {
-    protected $table = 'manfaat_pakets';
+    use HasFactory;
+    protected $table = 'manfaat_pakets'; // Nama tabel
+    protected $fillable = ['name']; // Kolom yang dapat diisi
 
-
-    protected $fillable = [
-        'name'
-    ];
+    /**
+     * Relasi ke opsi_manfaats (One-to-Many).
+     */
+    public function opsiManfaats()
+    {
+        return $this->hasMany(OpsiManfaat::class, 'benefits_id');
+    }
 }
