@@ -28,6 +28,12 @@
                             {{ session('success') }}
                         </div>
                     @endif
+                    @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
 
                     {{-- Menampilkan Error Validasi --}}
                     @if ($errors->any())
@@ -56,7 +62,7 @@
                                         {{ $wilayah->name }}<i class="input-helper"></i>
                                         <input type="checkbox" class="form-check-input" name="destionation_id[]" 
                                             value="{{ $wilayah->id }}" id="wilayah_{{ $wilayah->id }}"
-                                            {{ in_array($wilayah->id, $detailManfaat->destionation_id) ? 'checked' : '' }}>
+                                            {{ in_array($wilayah->id,$detailManfaat->destionation_id)  ? 'checked' : '' }}>
                                     </label>
                                 </div>
                             @endforeach
@@ -77,25 +83,28 @@
                     <div class="form-group">
                         <label><strong>Harga Benefit</strong></label>
                         @foreach ($manfaatPakets as $manfaat)
-                            <div class="mb-3 border rounded p-3">
-                                <h6>{{ $manfaat->name }}</h6>
-                                <div class="row">
-                                    @foreach ($manfaat->opsiManfaats as $opsi)
-                                        @php
-                                            $existingPrice = $detailManfaat->where('benefitOption', $opsi->id)->first();
-                                            $priceValue = $existingPrice ? $existingPrice->price : '';
-                                        @endphp
-                                        <div class="col-md-6 mb-2">
-                                            <label>{{ $opsi->name }}</label>
-                                            <input type="text" name="prices[{{ $opsi->id }}]" 
-                                                value="{{ old("prices.$opsi->id", $priceValue) }}"
-                                                class="form-control"
-                                                placeholder="Masukkan harga atau detail dari benefit">
-                                        </div>
-                                    @endforeach
-                                </div>
+                        <div class="mb-3 border rounded p-3">
+                            <h6>{{ $manfaat->name }}</h6>
+                            <div class="row">
+                                @foreach ($manfaat->opsiManfaats as $opsi)
+                                    @php
+                                        $existingPrice = $detailManfaat->where('benefitOption', $opsi->id)->first();
+                                    @endphp
+                                    <div class="col-md-6 mb-2">
+                                        <label>{{ $opsi->name }}</label>
+                                        
+                                        <input type="hidden" name="prices[{{ $opsi->id }}][id]" 
+                                            value="{{ $existingPrice ? $existingPrice->id : '' }}"> <!-- ID DetailManfaat -->
+                                        
+                                        <input type="text" name="prices[{{ $opsi->id }}][price]" 
+                                            value="{{ old("prices.$opsi->id.price", $existingPrice ? $existingPrice->price : '') }}"
+                                            class="form-control"
+                                            placeholder="Masukkan harga atau detail dari benefit">
+                                    </div>
+                                @endforeach
                             </div>
-                        @endforeach
+                        </div>
+                    @endforeach
                     </div>
                 
                     <button type="submit" class="btn btn-primary me-2">Perbarui</button>

@@ -89,6 +89,9 @@
                 <span class="menu-title">Benefit Asuransi</span>
             </a>
         </li>
+        <li class="pt-2 pb-1">
+          <span class="nav-item-head">Pengaturan Website</span>
+        </li>
         
           {{-- End Menu Master --}}
         </ul>

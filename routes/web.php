@@ -7,6 +7,15 @@ use App\Http\Controllers\MstTipeAsuransiController;
 use App\Http\Controllers\MstTipePelangganController;
 use App\Http\Controllers\MstTipePerjalananController;
 use App\Http\Controllers\MstWilayahController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\WebsiteSettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,13 +29,36 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('admin.pages.dashboard')->name('dashboard');
-// });
+Route::middleware('guest')->group(function () {
+    Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+    Route::post('register', [RegisteredUserController::class, 'store']);
 
-Route::get('/dashboard', function () {
-    return view('admin.pages.dashboard');
-})->name('dashboard'); // ✅ Benar
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
+    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+
+    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+    Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.update');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
+    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
+    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
+
+    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
+    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+});
+
+//Halaman Yang dapat Diakses tanpa login
 
 Route::get('/', function () {
     return view('frontend.pages.formpesanan');
@@ -46,8 +78,11 @@ Route::get('/contact-us', function () {
 
 
 
-    // Route::get('/master/tipe/perjalanan/',[MstTipePerjalananController::class,'index'])->name('mstTipePerjalananIndex');
-    // Route::get('/master/tipe/perjalanan/create/',[MstTipePerjalananController::class,'create'])->name('mstTipePerjalananCreate');
+//halaman yang dapat diakses dengan login sebagai admin/superadmin rolesnya
+Route::get('/dashboard', function () {
+    return view('admin.pages.dashboard');
+})->name('dashboard'); // ✅ Benar
+
 
     Route::prefix('master/tipe/perjalanan')->name('admin.master.tipe_perjalanan.')->group(function () {
         Route::get('/', [MstTipePerjalananController::class, 'index'])->name('index');
@@ -119,4 +154,14 @@ Route::get('/contact-us', function () {
         Route::delete('/{insurance_type_id}/{destionation_id}', [KelolaBenefitController::class, 'destroy'])->name('destroy');
     });
     
-    
+    //halaman yang hanya dapat diakses apabila role nya adalah superaddmin
+
+      Route::prefix('settings/website')->name('seetings.webiste.')->group(function () {
+        Route::get('/', [WebsiteSettingController::class, 'index'])->name('index');
+        Route::get('/create', [WebsiteSettingController::class, 'create'])->name('create');
+        Route::post('/store', [WebsiteSettingController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [WebsiteSettingController::class, 'edit'])->name('edit');  // ✅ Tambahkan {id}
+        Route::put('/{id}/update', [WebsiteSettingController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
+        Route::get('/{id}/detail', [WebsiteSettingController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
+        Route::delete('/{id}', [WebsiteSettingController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
+    });

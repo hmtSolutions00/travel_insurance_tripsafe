@@ -38,34 +38,37 @@
                                     <th>No</th>
                                     <th>Nama Paket</th>
                                     <th>Wilayah</th>
-                                    <th>Benefit</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($groupedManfaats as $index => $detail)
+                                @foreach ($groupedData as $index => $group)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $detail->paketAsuransi->nama_paket }}</td>
-                                        <td>{{ $detail->wilayahs->pluck('name')->implode(', ') }}</td>
+                                        <td>{{ $group->first()->paketAsuransi->nama_paket }}</td>
                                         <td>
-                                            <ul class="list-unstyled mb-0">
-                                                @foreach ($detail->benefits as $benefit)
-                                                    <li>- {{ $benefit }}</li>
-                                                @endforeach
-                                            </ul>
+                                            @foreach ($group->first()->wilayahs as $wilayah)
+                                                {{ $wilayah->name }}{{ !$loop->last ? ', ' : '' }}
+                                            @endforeach
                                         </td>
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <a href="{{ route('kelola.data_benefit.show', ['insurance_type_id' => $detail->insurance_type_id, 'destionation_id' => base64_encode($detail->destionation_id)]) }}" class="btn btn-sm btn-outline-info" title="Detail">
+                                                {{-- Tombol Detail --}}
+                                                <a href="{{ route('kelola.data_benefit.show', ['insurance_type_id' => $group->first()->insurance_type_id, 'destionation_id' => base64_encode(json_encode($group->first()->destionation_id))]) }}" 
+                                                   class="btn btn-sm btn-outline-info" title="Detail">
                                                     <i class="mdi mdi-eye-outline d-block"></i>
                                                 </a>
-                                                
-                                                <a href="{{ route('kelola.data_benefit.edit', ['insurance_type_id' => $detail->insurance_type_id, 'destionation_id' => $detail->destionation_id]) }}" class="btn btn-sm btn-outline-warning" title="Edit">
+                                        
+                                                {{-- Tombol Edit (Gunakan base64_encode agar seragam) --}}
+                                                <a href="{{ route('kelola.data_benefit.edit', ['insurance_type_id' => $group->first()->insurance_type_id, 'destionation_id' => base64_encode(json_encode($group->first()->destionation_id))]) }}" 
+                                                   class="btn btn-sm btn-outline-warning" title="Edit">
                                                     <i class="mdi mdi-pencil-outline d-block"></i>
                                                 </a>
-                                                
-                                                <form action="{{ route('kelola.data_benefit.destroy', ['insurance_type_id' => $detail->insurance_type_id, 'destionation_id' => base64_encode($detail->destionation_id)]) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                        
+                                                {{-- Tombol Hapus --}}
+                                                <form action="{{ route('kelola.data_benefit.destroy', ['insurance_type_id' => $group->first()->insurance_type_id, 'destionation_id' => base64_encode(json_encode($group->first()->destionation_id))]) }}" 
+                                                      method="POST" 
+                                                      onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus">
@@ -75,11 +78,8 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center">Tidak ada data yang tersedia.</td>
-                                    </tr>
-                                @endforelse
+                                @endforeach
+                               
                             </tbody>
                         </table>
                     </div>
