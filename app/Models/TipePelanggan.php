@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class TipePelanggan extends Model
 {
     use HasFactory;
+    protected $table = 'tipe_pelanggans';
+    protected $fillable = [ 'name','age','description'];
+    // Cast tipe_perjalanan_id ke array
+    protected $casts = [
+        'age' => 'array',
+    ];
 }

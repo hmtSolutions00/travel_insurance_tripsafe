@@ -26,16 +26,22 @@
           <li class="pt-2 pb-1">
             <span class="nav-item-head">Halaman Utama</span>
           </li>
-          <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-            <a class="nav-link" href="{{url('/')}}">
-              <i class="mdi mdi-compass-outline menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
-            </a>
+          <li class="nav-item">
+            <a class="nav-link" href="">
+                <i class="mdi mdi-account-search menu-icon"></i>
+                <span class="menu-title">Kelola Data Customer</span>
+              </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="">
-                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-                <span class="menu-title">Kelola Data Customer</span>
+                <i class="mdi mdi-certificate menu-icon"></i>
+                <span class="menu-title">Kelola Prooduk Asuransi</span>
+              </a>
+          </li>
+          <li class="nav-item {{ $activeSidebar['kelola_benefit'] ? 'active' : '' }}">
+            <a class="nav-link" href="{{route('kelola.data_benefit.index')}}">
+                <i class="mdi mdi-heart-pulse menu-icon"></i>
+                <span class="menu-title">Kelola Benefit Asuransi</span>
               </a>
           </li>
             {{-- End Menu Utama --}}
@@ -67,16 +73,22 @@
                 <i class="mdi mdi-shield-outline menu-icon"></i> <span class="menu-title">Tipe Asuransi</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link"  href=" " aria-expanded="false" aria-controls="ui-basic">
-                <i class="mdi mdi-account-multiple menu-icon"></i> <span class="menu-title">Tipe Customer</span>
+          <li class="nav-item {{ $activeSidebar['master_tipe_pelanggan'] ? 'active' : '' }}">
+            <a class="nav-link"  href="{{route('admin.master.tipe_pelanggan.index')}}" aria-expanded="false" aria-controls="ui-basic">
+                <i class="mdi mdi-account-multiple menu-icon"></i> <span class="menu-title">Tipe Pelanggan</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link"  href=" " aria-expanded="false" aria-controls="ui-basic">
+          <li class="nav-item {{ $activeSidebar['paket_asuransi'] ? 'active' : '' }}">
+            <a class="nav-link"  href="{{route('admin.paket_asuransi.index')}}" aria-expanded="false" aria-controls="ui-basic">
                 <i class="mdi mdi-file-document-outline menu-icon"></i> <span class="menu-title">Paket Asuransi</span>
             </a>
           </li>
+          <li class="nav-item {{ $activeSidebar['benefit_asuransi'] ? 'active' : '' }}">
+            <a class="nav-link" href="{{route('admin.benefit_asuransi.index')}}" aria-expanded="false" aria-controls="ui-basic">
+                <i class="mdi mdi-shield-check menu-icon"></i>
+                <span class="menu-title">Benefit Asuransi</span>
+            </a>
+        </li>
         
           {{-- End Menu Master --}}
         </ul>
