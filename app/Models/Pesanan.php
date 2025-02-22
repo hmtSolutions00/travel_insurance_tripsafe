@@ -7,5 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pesanan extends Model
 {
-    use HasFactory;
+    protected $table = 'pesanans';
+
+
+    protected $fillable = [
+        'pricePac_id',
+        'total_price',
+        'durasi_perjalan',
+        'jumlah_customer',
+        'status',
+    ];
 }

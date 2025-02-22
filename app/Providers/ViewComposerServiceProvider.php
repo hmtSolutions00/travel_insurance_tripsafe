@@ -47,6 +47,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                 'master_tipe_asuransi' => Str::startsWith($currentRoute, 'admin.master.tipe_asuransi.'),
                 // 'tipe_customer' => Str::startsWith($currentRoute, 'admin.master.tipe_customer.'),
                 // 'paket_asuransi' => Str::startsWith($currentRoute, 'admin.master.paket_asuransi.'),
+                'master_pesanan_asuransi' => Str::startsWith($currentRoute, 'admin.data.pesanan_asuransi.'),
             ];
 
             // Kirim data ke semua tampilan

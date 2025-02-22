@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Wilayah extends Model
 {
-    use HasFactory;
-    // protected $table = 'wilayah'; // Jika ingin menggunakan nama tabel 'wilayah' (bukan 'wilayahs')
+    protected $table = 'wilayahs';
 
     protected $fillable = [
         'name',

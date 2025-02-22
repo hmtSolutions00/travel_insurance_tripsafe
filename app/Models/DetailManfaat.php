@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetailManfaat extends Model
 {
-    use HasFactory;
+    protected $table = 'detail_manfaats';
+
+
+    protected $fillable = [
+        'benefitOption',
+        'insurance_type_id',
+        'destionation_id',
+        'price'
+    ];
 }

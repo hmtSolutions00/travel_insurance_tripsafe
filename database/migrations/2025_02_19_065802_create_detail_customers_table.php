@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('pesanan_id'); //ref pesanan
             $table->string('fullname');
             $table->enum('gender', ['Laki-laki', 'Perempuan']);
-            $table->date('date_od_birth');
+            $table->date('date_of_birth');
             $table->string('place_of_birth');
             $table->string('no_passport');
             $table->string('pekerjaan')->nullable();

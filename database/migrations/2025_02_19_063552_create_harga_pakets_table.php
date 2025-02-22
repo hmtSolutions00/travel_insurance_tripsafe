@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('harga_pakets', function (Blueprint $table) {
             $table->id();
-            $table->string("destionation_id"); //ref wilayah
+            $table->string("destination_id"); //ref wilayah
             $table->string("package_id");//ref paket asuransi
+            $table->string("tipePerjalanan_id");//ref tipe Perjalanan
             $table->json("duration");
             $table->string("price");
             $table->string("insuranceType_id");// ref tipe asuransi
             $table->json("custAge_id");
             $table->string("extra_price");
             $table->string("product_name");
+            $table->string("cetak_polis");
             $table->timestamps();
         });
     }

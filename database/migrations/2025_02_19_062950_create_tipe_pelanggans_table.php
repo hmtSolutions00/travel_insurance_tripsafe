@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->json("age");
             $table->text("description");
-            $table->string("tipe_perjalan_id"); //ref tipe_perjalanan
             $table->timestamps();
         });
     }

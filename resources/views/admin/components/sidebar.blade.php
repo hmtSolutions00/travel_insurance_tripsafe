@@ -32,10 +32,10 @@
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">
+          <li class="nav-item {{ $activeSidebar['master_pesanan_asuransi'] ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.data.pesanan_asuransi.index') }}">
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-                <span class="menu-title">Kelola Data Customer</span>
+                <span class="menu-title">Kelola Data Pesanan</span>
               </a>
           </li>
             {{-- End Menu Utama --}}

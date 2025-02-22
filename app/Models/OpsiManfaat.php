@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class OpsiManfaat extends Model
 {
-    use HasFactory;
+    protected $table = 'opsi_manfaats';
+
+
+    protected $fillable = [
+        'benefits_id',
+        'name'
+    ];
 }

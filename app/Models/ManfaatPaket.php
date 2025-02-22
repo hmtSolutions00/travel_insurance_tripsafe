@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ManfaatPaket extends Model
 {
-    use HasFactory;
+    protected $table = 'manfaat_pakets';
+
+
+    protected $fillable = [
+        'name'
+    ];
 }
