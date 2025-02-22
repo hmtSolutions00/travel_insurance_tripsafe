@@ -18,7 +18,7 @@ class ViewComposerServiceProvider extends ServiceProvider
             $breadcrumb = [];
             if ($currentRoute) {
                 $routeParts = explode('.', $currentRoute);
-                
+
                 if ($routeParts[0] === 'admin') {
                     array_shift($routeParts);
                 }
@@ -31,10 +31,10 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                     $breadcrumb[] = [
                         'name' => Str::title(str_replace('_', ' ', $part)),
-                        'route' => Route::has($routeName) 
-                            ? (Str::contains($routeName, ['edit', 'update', 'show', 'destroy']) 
+                        'route' => Route::has($routeName)
+                            ? (Str::contains($routeName, ['edit', 'update', 'show', 'destroy'])
                                 ? null  // Jangan buat route jika butuh ID tapi tidak ada ID
-                                : route($routeName)) 
+                                : route($routeName))
                             : null
                     ];
                 }
@@ -45,10 +45,14 @@ class ViewComposerServiceProvider extends ServiceProvider
                 'master_tipe_perjalanan' => Str::startsWith($currentRoute, 'admin.master.tipe_perjalanan.'),
                 'master_wilayah' => Str::startsWith($currentRoute, 'admin.master.wilayah.'),
                 'master_tipe_asuransi' => Str::startsWith($currentRoute, 'admin.master.tipe_asuransi.'),
+                // 'tipe_customer' => Str::startsWith($currentRoute, 'admin.master.tipe_customer.'),
+                // 'paket_asuransi' => Str::startsWith($currentRoute, 'admin.master.paket_asuransi.'),
+                'master_pesanan_asuransi' => Str::startsWith($currentRoute, 'admin.data.pesanan_asuransi.'),
                 'master_tipe_pelanggan' => Str::startsWith($currentRoute, 'admin.master.tipe_pelanggan.'),
                 'paket_asuransi' => Str::startsWith($currentRoute, 'admin.paket_asuransi.'),
                 'benefit_asuransi' => Str::startsWith($currentRoute, 'admin.benefit_asuransi.'),
-                'kelola_benefit' => Str::startsWith($currentRoute, 'kelola.data_benefit.')
+                'kelola_benefit' => Str::startsWith($currentRoute, 'kelola.data_benefit.'),
+                'kelola_produk' => Str::startsWith($currentRoute, 'kelola.data_produk.')
             ];
 
             // Kirim data ke semua tampilan

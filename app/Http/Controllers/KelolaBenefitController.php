@@ -39,10 +39,10 @@ class KelolaBenefitController extends Controller
     public function create()
     {
         $wilayahs = Wilayah::all(); // Semua data wilayah
-    $paketAsuransis = PaketAsuransi::all(); // Semua paket asuransi
-    $manfaatPakets = ManfaatPaket::with('opsiManfaats')->get(); // Manfaat Utama dan Sub Manfaat
+        $paketAsuransis = PaketAsuransi::all(); // Semua paket asuransi
+        $manfaatPakets = ManfaatPaket::with('opsiManfaats')->get(); // Manfaat Utama dan Sub Manfaat
 
-    return view('admin.pages.data_benefit.create', compact('wilayahs', 'paketAsuransis', 'manfaatPakets'));
+        return view('admin.pages.data_benefit.create', compact('wilayahs', 'paketAsuransis', 'manfaatPakets'));
     }
 
     /**
@@ -58,7 +58,6 @@ class KelolaBenefitController extends Controller
             'prices' => 'required|array',
             'prices.*' => 'nullable|string|max:255', // Price sebagai varchar
         ]);
-    
         // Simpan harga untuk setiap Sub Manfaat (Opsi Manfaat)
         foreach ($request->prices as $opsi_id => $price) {
             if ($price !== null) {
@@ -70,7 +69,7 @@ class KelolaBenefitController extends Controller
                 ]);
             }
         }
-    
+
         return redirect()->route('kelola.data_benefit.index')->with('success', 'Data berhasil ditambahkan.');
     }
 

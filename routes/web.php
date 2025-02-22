@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DetailCustomerController;
+use App\Http\Controllers\HargaPaketController;
 use App\Http\Controllers\KelolaBenefitController;
 use App\Http\Controllers\MstBenefitController;
 use App\Http\Controllers\MstPaketAsuransiController;
@@ -16,6 +18,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\WebsiteSettingController;
+use App\Http\Controllers\PesananController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,17 +63,19 @@ Route::middleware('auth')->group(function () {
 
 //Halaman Yang dapat Diakses tanpa login
 
-Route::get('/', function () {
-    return view('frontend.pages.formpesanan');
-});
+Route::get('/', [HargaPaketController::class, 'index'])->name('frontend.pages.formpesanan');
 
-Route::get('/data/penumpang', function () {
-    return view('frontend.pages.formpenumpang');
-});
+Route::get('get-asuransi', [HargaPaketController::class, 'get_paket_asuransi'])->name('getAsuransi');
 
-Route::get('/last', function () {
-    return view('frontend.pages.halamanterakhir');
-});
+Route::get('/data/penumpang/', [DetailCustomerController::class, 'index'])->name('frontend.pages.formpenumpang');
+
+Route::post('/tambah/pesanan/asuransi', [DetailCustomerController::class, 'kirim_pesanan_asuransi'])->name('kirim-pesanan-asuransi');
+
+Route::get('/response', [DetailCustomerController::class, 'response_pesanan'])->name('frontend.pages.halamanterakhir');
+Route::get('/brosur/file', [DetailCustomerController::class, 'halaman_file'])->name('frontend.pages.halamanfile');
+Route::get('/download/single', [DetailCustomerController::class, 'download_single'])->name('download_single');
+Route::get('/download/annual', [DetailCustomerController::class, 'download_annual'])->name('download_annual');
+Route::get('/download/religi', [DetailCustomerController::class, 'download_religi'])->name('download_religi');
 
 Route::get('/contact-us', function () {
     return view('frontend.pages.contactus');
@@ -103,7 +108,7 @@ Route::get('/dashboard', function () {
         Route::get('/{id}/detail', [MstWilayahController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
         Route::delete('/{id}', [MstWilayahController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
     });
-    
+
     Route::prefix('master/tipe/asuransi')->name('admin.master.tipe_asuransi.')->group(function () {
         Route::get('/', [MstTipeAsuransiController::class, 'index'])->name('index');
         Route::get('/create', [MstTipeAsuransiController::class, 'create'])->name('create');
@@ -112,6 +117,21 @@ Route::get('/dashboard', function () {
         Route::put('/{id}/update', [MstTipeAsuransiController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
         Route::get('/{id}/detail', [MstTipeAsuransiController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
         Route::delete('/{id}', [MstTipeAsuransiController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
+    });
+
+    Route::prefix('data/pesanan/')->name('admin.data.pesanan_asuransi.')->group(function () {
+        Route::get('/', [PesananController::class, 'index'])->name('index');
+        Route::get('/{id}/detail', [PesananController::class, 'show'])->name('show');
+        Route::get('/{id}/belum-diproses', [PesananController::class, 'u_belum_diproses'])->name('belum.diproses');
+        Route::get('/{id}/sudah-diproses', [PesananController::class, 'u_sudah_diproses'])->name('sudah.diproses');
+        Route::get('/{id}/tidak-valid', [PesananController::class, 'u_tidak_valid'])->name('tidak.valid');
+        Route::get('/{id}/butuh-konfirmasi', [PesananController::class, 'u_butuh_konfirmasi'])->name('butuh.konfirmasi');
+        // Route::get('/create', [MstTipeAsuransiController::class, 'create'])->name('create');
+        // Route::post('/store', [MstTipeAsuransiController::class, 'store'])->name('store');
+        // Route::get('/{id}/edit', [MstTipeAsuransiController::class, 'edit'])->name('edit');  // ✅ Tambahkan {id}
+        // Route::put('/{id}/update', [MstTipeAsuransiController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
+        // Route::get('/{id}/detail', [MstTipeAsuransiController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
+        // Route::delete('/{id}', [MstTipeAsuransiController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
     });
 
     Route::prefix('master/tipe/pelanggan')->name('admin.master.tipe_pelanggan.')->group(function () {
@@ -146,7 +166,7 @@ Route::get('/dashboard', function () {
         Route::get('/', [KelolaBenefitController::class, 'index'])->name('index');
         Route::get('/create', [KelolaBenefitController::class, 'create'])->name('create');
         Route::post('/store', [KelolaBenefitController::class, 'store'])->name('store');
-    
+
         // ✅ Gunakan kombinasi insurance_type_id dan destionation_id
         Route::get('/{insurance_type_id}/{destionation_id}/edit', [KelolaBenefitController::class, 'edit'])->name('edit');
         Route::put('/{insurance_type_id}/{destionation_id}/update', [KelolaBenefitController::class, 'update'])->name('update');
@@ -165,3 +185,15 @@ Route::get('/dashboard', function () {
         Route::get('/{id}/detail', [WebsiteSettingController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
         Route::delete('/{id}', [WebsiteSettingController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
     });
+
+    Route::prefix('master/kelola/produk')->name('kelola.data_produk.')->group(function () {
+        Route::get('/', [HargaPaketController::class, 'index_admin'])->name('index');
+        Route::get('/create', [HargaPaketController::class, 'create'])->name('create');
+        Route::post('/store', [HargaPaketController::class, 'store'])->name('store');
+        Route::get('{id}/show', [HargaPaketController::class, 'show'])->name('show');
+        Route::get('{id}/edit', [HargaPaketController::class, 'edit'])->name('edit');
+        Route::post('{id}/update', [HargaPaketController::class, 'update'])->name('update');
+        Route::get('{id}/delete', [HargaPaketController::class, 'destroy'])->name('destroy');
+    });
+
+
