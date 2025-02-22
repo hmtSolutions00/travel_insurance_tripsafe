@@ -101,9 +101,9 @@
                     </div>
 
                     {{-- Pagination --}}
-                    <div class="d-flex justify-content-center mt-3">
+                    {{-- <div class="d-flex justify-content-center mt-3">
                         {{ $pelanggans->links() }}
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>

@@ -238,7 +238,6 @@
                             const tabelAsuransi = document.getElementById('table-asuransi');
                             const totalHari = Math.round((tglKeberangkatan - tglKeberangkatan) / (1000 * 3600 *
                                 24)) + 1;
-                            console.log(tabelAsuransi);
 
                             if (wilayah == 0) {
                                 massJlhPelangganDiv.innerHTML = `
@@ -283,6 +282,7 @@
                                     var table = $('#table-asuransi');
                                     var tbody = table.find('tbody');
                                     tbody.empty();
+                                    console.log(res);
                                     $.each(res, function(key, value) {
                                         var row = $('<tr>');
                                         row.append($('<td>').text(value.product_name));

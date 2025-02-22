@@ -41,12 +41,12 @@
                     @endif
 
                     {{-- Form Edit Data --}}
-                    <form class="forms-sample" 
-                    action="{{ route('kelola.data_benefit.update', ['insurance_type_id' => $detailManfaat->insurance_type_id, 'destionation_id' => json_encode($detailManfaat->destionation_id)]) }}" 
+                    <form class="forms-sample"
+                    action="{{ route('kelola.data_benefit.update', ['insurance_type_id' => $detailManfaat->insurance_type_id, 'destionation_id' => json_encode($detailManfaat->destionation_id)]) }}"
                     method="POST">
                     @csrf
                     @method('PUT')
-                
+
                     <div class="form-group">
                         <label><strong>Pilih Wilayah</strong></label>
                         <div class="form-check-label d-flex flex-wrap">
@@ -54,15 +54,15 @@
                                 <div class="form-check me-2">
                                     <label class="form-check-label" for="wilayah_{{ $wilayah->id }}">
                                         {{ $wilayah->name }}<i class="input-helper"></i>
-                                        <input type="checkbox" class="form-check-input" name="destionation_id[]" 
+                                        <input type="checkbox" class="form-check-input" name="destionation_id[]"
                                             value="{{ $wilayah->id }}" id="wilayah_{{ $wilayah->id }}"
-                                            {{ in_array($wilayah->id, $detailManfaat->destionation_id) ? 'checked' : '' }}>
+                                            {{ in_array($wilayah->id,$detailManfaat->destionation_id ) ? 'checked' : '' }}>
                                     </label>
                                 </div>
                             @endforeach
                         </div>
                     </div>
-                
+
                     <div class="form-group">
                         <label for="insurance_type_id"><strong>Pilih Paket Asuransi</strong></label>
                         <select class="form-select" id="insurance_type_id" name="insurance_type_id" required>
@@ -73,31 +73,34 @@
                             @endforeach
                         </select>
                     </div>
-                
+
                     <div class="form-group">
                         <label><strong>Harga Benefit</strong></label>
                         @foreach ($manfaatPakets as $manfaat)
-                            <div class="mb-3 border rounded p-3">
-                                <h6>{{ $manfaat->name }}</h6>
-                                <div class="row">
-                                    @foreach ($manfaat->opsiManfaats as $opsi)
-                                        @php
-                                            $existingPrice = $detailManfaat->where('benefitOption', $opsi->id)->first();
-                                            $priceValue = $existingPrice ? $existingPrice->price : '';
-                                        @endphp
-                                        <div class="col-md-6 mb-2">
-                                            <label>{{ $opsi->name }}</label>
-                                            <input type="text" name="prices[{{ $opsi->id }}]" 
-                                                value="{{ old("prices.$opsi->id", $priceValue) }}"
-                                                class="form-control"
-                                                placeholder="Masukkan harga atau detail dari benefit">
-                                        </div>
-                                    @endforeach
-                                </div>
+                        <div class="mb-3 border rounded p-3">
+                            <h6>{{ $manfaat->name }}</h6>
+                            <div class="row">
+                                @foreach ($manfaat->opsiManfaats as $opsi)
+                                    @php
+                                        $existingPrice = $detailManfaat->where('benefitOption', $opsi->id)->first();
+                                    @endphp
+                                    <div class="col-md-6 mb-2">
+                                        <label>{{ $opsi->name }}</label>
+
+                                        <input type="hidden" name="prices[{{ $opsi->id }}][id]"
+                                            value="{{ $existingPrice ? $existingPrice->id : '' }}"> <!-- ID DetailManfaat -->
+
+                                        <input type="text" name="prices[{{ $opsi->id }}][price]"
+                                            value="{{ old("prices.$opsi->id.price", $existingPrice ? $existingPrice->price : '') }}"
+                                            class="form-control"
+                                            placeholder="Masukkan harga atau detail dari benefit">
+                                    </div>
+                                @endforeach
                             </div>
-                        @endforeach
+                        </div>
+                    @endforeach
                     </div>
-                
+
                     <button type="submit" class="btn btn-primary me-2">Perbarui</button>
                     <a href="{{ route('kelola.data_benefit.index') }}" class="btn btn-light">Batalkan</a>
                 </form>

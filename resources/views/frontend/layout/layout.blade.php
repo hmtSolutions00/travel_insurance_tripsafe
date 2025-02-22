@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="ThemesLay">
-    <title>RoundTours - Tours and Travel Landing Page</title>
+    <title>SafeTrip - Insurance Travel</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="80x80" href="{{ asset('/frontend/assets/images/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="80x80" href="{{ asset('/frontend/assets/images/logo4.jpg') }}">
     <!-- Main CSS -->
     <link href="{{ asset('/frontend/assets/css/main.css') }}" rel="stylesheet">
 

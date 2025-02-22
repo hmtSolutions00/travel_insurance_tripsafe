@@ -40,6 +40,10 @@ Route::get('/data/penumpang/', [DetailCustomerController::class, 'index'])->name
 Route::post('/tambah/pesanan/asuransi', [DetailCustomerController::class, 'kirim_pesanan_asuransi'])->name('kirim-pesanan-asuransi');
 
 Route::get('/response', [DetailCustomerController::class, 'response_pesanan'])->name('frontend.pages.halamanterakhir');
+Route::get('/brosur/file', [DetailCustomerController::class, 'halaman_file'])->name('frontend.pages.halamanfile');
+Route::get('/download/single', [DetailCustomerController::class, 'download_single'])->name('download_single');
+Route::get('/download/annual', [DetailCustomerController::class, 'download_annual'])->name('download_annual');
+Route::get('/download/religi', [DetailCustomerController::class, 'download_religi'])->name('download_religi');
 
 Route::get('/contact-us', function () {
     return view('frontend.pages.contactus');
@@ -133,6 +137,16 @@ Route::get('/contact-us', function () {
         Route::put('/{insurance_type_id}/{destionation_id}/update', [KelolaBenefitController::class, 'update'])->name('update');
         Route::get('/{insurance_type_id}/{destionation_id}/detail', [KelolaBenefitController::class, 'show'])->name('show');
         Route::delete('/{insurance_type_id}/{destionation_id}', [KelolaBenefitController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('master/kelola/produk')->name('kelola.data_produk.')->group(function () {
+        Route::get('/', [HargaPaketController::class, 'index_admin'])->name('index');
+        Route::get('/create', [HargaPaketController::class, 'create'])->name('create');
+        Route::post('/store', [HargaPaketController::class, 'store'])->name('store');
+        Route::get('{id}/show', [HargaPaketController::class, 'show'])->name('show');
+        Route::get('{id}/edit', [HargaPaketController::class, 'edit'])->name('edit');
+        Route::post('{id}/update', [HargaPaketController::class, 'update'])->name('update');
+        Route::get('{id}/delete', [HargaPaketController::class, 'destroy'])->name('destroy');
     });
 
 

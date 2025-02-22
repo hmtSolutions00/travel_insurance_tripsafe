@@ -35,11 +35,11 @@
                 <!--start main -->
                          @yield('admin')
                 <!-- end main-panel ends -->
-                @include('admin.components.footer') 
-      </div> 
+                @include('admin.components.footer')
       </div>
-    
-     
+      </div>
+
+
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->

@@ -144,4 +144,29 @@ class DetailCustomerController extends Controller
     {
         return view('frontend.pages.halamanterakhir');
     }
+
+    public function halaman_file(){
+        return view('frontend.pages.halamandownload');
+    }
+
+    public function download_single(){
+        $filePath = public_path('file-download/Brosur_TravelPro_Single_Trip.pdf');
+        $fileName = 'Brosur_TravelPro _Single_Trip.pdf';
+
+        return response()->download($filePath, $fileName);
+    }
+
+    public function download_annual(){
+        $filePath = public_path('file-download/Brosur_TravelPro_Annual_Trip.pdf');
+        $fileName = 'Brosur_TravelPro _Annual_Trip.pdf';
+
+        return response()->download($filePath, $fileName);
+    }
+
+    public function download_religi(){
+        $filePath = public_path('file-download/Brosur_TravelPro_Religi.pdf');
+        $fileName = 'Brosur_TravelPro _Religi.pdf';
+
+        return response()->download($filePath, $fileName);
+    }
 }

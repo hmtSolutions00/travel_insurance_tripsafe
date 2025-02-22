@@ -14,8 +14,7 @@ class MstTipePelangganController extends Controller
     public function index()
     {
     // Ambil semua data tipe pelanggan dengan pagination
-    $pelanggans = TipePelanggan::paginate(10);
-
+    $pelanggans = TipePelanggan::all();
     // Proses data sebelum dikirim ke view
     $pelanggans->transform(function ($pelanggan) {
         $pelanggan->age = json_decode($pelanggan->age, true) ?? ['Tidak ada', 'Tidak ada'];
@@ -94,18 +93,18 @@ class MstTipePelangganController extends Controller
             'max_age' => 'required|integer|gte:min_age',
             'description' => 'nullable|string',
         ]);
-    
+
         $pelanggan = TipePelanggan::findOrFail($id);
-        
+
         // Simpan data dengan format JSON untuk age
         $pelanggan->update([
             'name' => $request->name,
             'age' => json_encode([$request->min_age, $request->max_age]),
             'description' => $request->description,
         ]);
-    
+
         return redirect()->route('admin.master.tipe_pelanggan.index')->with('success', 'Data berhasil diperbarui.');
-    
+
     }
 
     /**

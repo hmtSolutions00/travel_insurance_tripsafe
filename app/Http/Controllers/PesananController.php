@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class PesananController extends Controller
 {
     public function index(){
-        $pesanan = Pesanan::sortByRaw('');
+        $pesanan = Pesanan::all();
         return view('admin.pages.data_pesanan.index',[
             'pesanan' => $pesanan
         ]);

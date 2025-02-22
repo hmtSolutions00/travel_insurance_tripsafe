@@ -32,8 +32,8 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered">
-                            <thead class="table-dark">
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Paket</th>
@@ -57,15 +57,15 @@
                                         </td>
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <a href="{{ route('kelola.data_benefit.show', ['insurance_type_id' => $detail->insurance_type_id, 'destionation_id' => base64_encode($detail->destionation_id)]) }}" class="btn btn-sm btn-outline-info" title="Detail">
+                                                <a href="{{ route('kelola.data_benefit.show', ['insurance_type_id' => $detail->insurance_type_id, 'destionation_id' => base64_encode(json_encode($detail->destionation_id))]) }}" class="btn btn-sm btn-outline-info" title="Detail">
                                                     <i class="mdi mdi-eye-outline d-block"></i>
                                                 </a>
-                                                
-                                                <a href="{{ route('kelola.data_benefit.edit', ['insurance_type_id' => $detail->insurance_type_id, 'destionation_id' => $detail->destionation_id]) }}" class="btn btn-sm btn-outline-warning" title="Edit">
+
+                                                <a href="{{ route('kelola.data_benefit.edit', ['insurance_type_id' => $detail->insurance_type_id, 'destionation_id' => base64_encode(json_encode($detail->destionation_id))]) }}" class="btn btn-sm btn-outline-warning" title="Edit">
                                                     <i class="mdi mdi-pencil-outline d-block"></i>
                                                 </a>
-                                                
-                                                <form action="{{ route('kelola.data_benefit.destroy', ['insurance_type_id' => $detail->insurance_type_id, 'destionation_id' => base64_encode($detail->destionation_id)]) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+
+                                                <form action="{{ route('kelola.data_benefit.destroy', ['insurance_type_id' => $detail->insurance_type_id, 'destionation_id' => base64_encode(json_encode($detail->destionation_id))]) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus">

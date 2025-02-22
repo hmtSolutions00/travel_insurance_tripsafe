@@ -36,10 +36,10 @@
                 <span class="menu-title">Kelola Data Pesanan</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="">
+        <li class="nav-item {{ $activeSidebar['kelola_produk'] ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('kelola.data_produk.index') }}">
                 <i class="mdi mdi-certificate menu-icon"></i>
-                <span class="menu-title">Kelola Prooduk Asuransi</span>
+                <span class="menu-title">Kelola Produk Asuransi</span>
             </a>
         </li>
         <li class="nav-item {{ $activeSidebar['kelola_benefit'] ? 'active' : '' }}">
