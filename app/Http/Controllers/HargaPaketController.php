@@ -243,6 +243,11 @@ class HargaPaketController extends Controller
 
     public function store(Request $request)
     {
+        if($request->tipe_perjalanan == 2){
+            $request['durasi_min'] = 1;
+            $request['durasi_maks'] = 367;
+            $request['extra_price'] = 0;
+        }
         $request->validate([
             'product_name' => 'required',
             'package_id' => 'required',
@@ -360,6 +365,11 @@ class HargaPaketController extends Controller
 
     public function update(Request $request, $id)
     {
+        if($request->tipe_perjalanan == 2){
+            $request['durasi_min'] = 1;
+            $request['durasi_maks'] = 367;
+            $request['extra_price'] = 0;
+        }
         $request->validate([
             'product_name' => 'required',
             'tipePelanggan_id' => 'required',

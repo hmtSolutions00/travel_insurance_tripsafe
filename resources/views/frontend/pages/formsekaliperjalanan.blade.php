@@ -283,9 +283,15 @@
                                     var tbody = table.find('tbody');
                                     var modal = $('#benefit-modal');
 
-                                    tbody.empty();
+                                    tbody.html('');
+                                    const trBenefit = document.getElementById('tr-benefit');
+                                    if (trBenefit) {
+                                        trBenefit.remove();
+                                    }else{
+                                        console.log("tidak ada");
+                                    }
+
                                     $.each(res['paket_asuransi'], function(key, value) {
-                                        console.log(value.paket_asuransi_id);
                                         var row = $('<tr>');
                                         row.append($('<td>').text(value.product_name));
                                         row.append($('<td>').text(value.nama_paket));
@@ -293,7 +299,8 @@
                                         row.append($('<td>').text(formatRupiah(value.cetak_polis)));
                                         row.append(`
                                         <td style="place-content: center; color: #0393D2;"><button class="btn"
-                                                    data-bs-toggle="modal" data-bs-target="#modal-detail-asuransi-`+ key +`"
+                                                    data-bs-toggle="modal" data-bs-target="#modal-detail-asuransi-` +
+                                            key + `"
                                                     style="background: transparent; border-color: transparent;">
                                                     <i class="fa-solid fa-circle-info fa-md text-secondary fs-5"></i>
                                                 </button></td>
@@ -331,7 +338,8 @@
                                         )
                                         tbody.append(row);
                                         modal.append(`
-                                                <div class="modal fade modal-xl" id="modal-detail-asuransi-`+ key +`" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade modal-xl" id="modal-detail-asuransi-` + key +
+                                            `" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content p-3">
                                                             <div class="modal-header">
@@ -340,7 +348,7 @@
                                                             </div>
                                                             <div class="modal-body" style="text-align: left">
                                                                 <small>Berikut adalah detail benefit dari paket asuransi :</small>
-                                                                <table class="table table-bordered m-1" id="table-benefit-`+ key +`">
+                                                                <table class="table table-bordered m-1" id="table-benefit-` + key + `">
                                                                     <tbody>
                                                                     </tbody>
                                                                 </table>
@@ -356,20 +364,18 @@
                                         tbody2.empty();
                                         $.each(res['manfaat'], function(key2, value2) {
                                             tbody2.append(`
-                                            <tr><td colspan="2" class="fw-bold"><small>`+ value2.name +`</small></td></tr>
+                                            <tr><td colspan="2" class="fw-bold"><small>` + value2.name + `</small></td></tr>
                                             `);
                                             $.each(res['detail_manfaat'], function(key3,
                                                 value3) {
                                                 if (value3.insurance_type_id ==
                                                     value.paket_asuransi_id &&
                                                     value2.id == value3.benefits_id
-                                                    ) {
-                                                    console.log(value3
-                                                        .price);
-                                                        tbody2.append(`
+                                                ) {
+                                                    tbody2.append(`
                                                             <tr>
-                                                                <td><small>`+ value3.opsi_manfaat+`</small></td>
-                                                                <td class="text-center"><small>`+ value3.price +`</small></td>
+                                                                <td><small>` + value3.opsi_manfaat + `</small></td>
+                                                                <td class="text-center"><small>` + value3.price + `</small></td>
                                                             </tr>
                                                         `);
                                                 }

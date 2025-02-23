@@ -47,11 +47,34 @@
                 tanggalKeberangkatan_t.addEventListener('change', hitungJumlahHari_t);
 
                 function hitungJumlahHari_t() {
-                        var tanggalKeberangkatanValue = new Date(tanggalKeberangkatan_t.value);
-                        var tanggalKepulanganValue = new Date(tanggalKeberangkatanValue);
-                        tanggalKepulanganValue.setFullYear(tanggalKepulanganValue.getFullYear() + 1);
+                    var tanggalKeberangkatanValue = new Date(tanggalKeberangkatan_t.value);
+                    var tanggalKepulanganValue = new Date(tanggalKeberangkatanValue);
+                    tanggalKepulanganValue.setFullYear(tanggalKepulanganValue.getFullYear() + 1);
 
-                        tanggalKepulangan_t.value = tanggalKepulanganValue.toISOString().split('T')[0];
+
+                    tanggalKepulangan_t.value = tanggalKepulanganValue.toISOString().split('T')[0];
+
+                    if (tanggalKeberangkatanValue && tanggalKepulangan_t.value) {
+                        var jumlahHariValue = Math.round((new Date(tanggalKepulangan_t.value) - tanggalKeberangkatanValue) / (1000 * 3600 *
+                            24)) + 1;
+                            console.log(jumlahHariValue);
+
+                        if (!document.getElementById('jumlah_hari')) {
+                            var jumlahHariElement = document.createElement('div');
+                            jumlahHariElement.id = 'jumlah_hari';
+                            jumlahHariElement.className = 'col-12 col-lg-12 mb-3 mt-1';
+                            jumlahHariElement.style.textAlign = 'left';
+                            jumlahHariElement.innerHTML = `
+                                                                <i class="fa-solid fa-clock fa-sm"></i>
+                                                                <small class="form-check-label mb-1" style="font-style:italic">Total perjalanan 0 hari</small>
+                                                                `;
+
+                            tanggalKeberangkatan_t.parentNode.appendChild(jumlahHariElement);
+                        } else {
+                            document.getElementById('jumlah_hari').querySelectorAll('small')[0].innerText =
+                                `Total perjalanan ${jumlahHariValue} hari`;
+                        }
+                    }
                 }
             </script>
 
@@ -307,9 +330,9 @@
                                                     }).then((result) => {
                                                         if (result.isConfirmed) {
                                                             window.location.href = "/data/penumpang/` +
-                                            `?berangkat=` + tglKeberangkatan + `&pulang=` +
-                                            tglKepulangan + `&anak=` + anak + `&dewasa=` +
-                                            dewasa + `&lansia=` + lansia + `&paket=` +
+                                            `?berangkat=` + tglKeberangkatan_t + `&pulang=` +
+                                            tglKepulangan_t + `&anak=` + anak_t + `&dewasa=` +
+                                            dewasa_t + `&lansia=` + lansia_t + `&paket=` +
                                             encodeURIComponent(JSON.stringify(value)) + `";
                                                         }
                                                     });
@@ -327,7 +350,8 @@
                                                             </div>
                                                             <div class="modal-body" style="text-align: left">
                                                                 <small>Berikut adalah detail benefit dari paket asuransi :</small>
-                                                                <table class="table table-bordered m-1" id="table-benefit-` + key + `">
+                                                                <table class="table table-bordered m-1" id="table-benefit-` +
+                                            key + `">
                                                                     <tbody>
                                                                     </tbody>
                                                                 </table>

@@ -25,7 +25,7 @@
         </div>
         <!-- search engine tabs -->
         <div class="row  mt-0">
-            <div class="col-12 col-lg-4 mb-5 text-center position-relative">
+            <div class="col-12 col-lg-5 mb-5 text-center position-relative">
                 <div class="row">
                     <div class="col-12 col-lg-12 text-center bg-white position-relative" style="border-radius: 12px">
                         <div class="m-4">
@@ -56,7 +56,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-lg-8 mb-5 text-center position-relative">
+            <div class="col-12 col-lg-7 mb-5 text-center position-relative">
                 <div class="col-12 col-lg-12 text-center bg-white position-relative h-100 d-flex"
                     style="border-radius: 12px;">
                     <div class="col-12 col-lg-12 p-4">
@@ -74,9 +74,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php
-                                        $no = 1;
-                                    @endphp
+                                    <tr>
+                                        <td class="text-white" colspan="6"
+                                            style="font-weight: bold;background-color: #025f88;font-size: small">
+                                            Detail Wilayah
+                                        </td>
+                                    </tr>
+                                    @foreach ($wilayahs as $wilayah)
+                                        <tr id="tr-benefit" style="text-align: left">
+                                            <td class="text-white" rowspan="2" colspan="2"
+                                                style="align-content: center; background-color: #025f88;font-size:x-small">
+                                                {{ $wilayah->name }}</td>
+                                            <td class="" style="background-color: #0393D2;font-size: x-small">Termasuk
+                                            </td>
+                                            <td class="text-sm" colspan="3"
+                                                style="background-color: #71d3fd;font-size: x-small">{{ $wilayah->include }}
+                                            </td>
+                                        </tr>
+                                            <tr style="text-align: left">
+                                                <td class="" style="background-color: #71d3fd;font-size: x-small">Tidak
+                                                    Termasuk</td>
+                                                <td class="text-sm" colspan="3"
+                                                    style="background-color: #0393D2;font-size: x-small">{{$wilayah->exclude}}</td>
+                                            </tr>
+                                    @endforeach
+
                                 </tbody>
                             </table>
                         </div>
@@ -133,5 +155,3 @@
         });
     </script>
 @endsection
-
-
