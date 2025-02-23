@@ -30,7 +30,7 @@
               <div class="col-lg-4 mx-auto">
                 <div class="auth-form-light text-left p-5">
                   <div class="brand-logo">
-                    <img src="{{ url('/frontend/assets/images/logo.png') }}">
+                    <img src="{{ asset($websiteConfig->logo) }}">
                   </div>
                   <h4>Hello! Trip SaFe Admin</h4>
                   <h6 class="fw-light">Login Untuk Melanjutkan</h6>
@@ -55,10 +55,6 @@
                     </div>
       
                     <!-- Remember Me -->
-                    <div class="form-check">
-                      <input type="checkbox" name="remember" class="form-check-input" id="remember_me">
-                      <label class="form-check-label" for="remember_me">Ingat Saya</label>
-                    </div>
       
                     <!-- Submit Button -->
                     <div class="mt-3 d-grid gap-2">

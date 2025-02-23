@@ -15,15 +15,15 @@
                             <div class="m-4">
                                 <div class="row">
                                     <h5 class="mb-3">Berikut adalah beberapa brosur terkait paket asuransi kami! </h5>
+                                    @forelse ($brochures as $index => $brosur)
                                     <div class="col-12 col-lg-12 mb-2">
-                                        <a href="/download/annual"><i class="fa-solid fa-file-pdf text-danger"></i><span> Brosur Travel Pro - Annual Trip.pdf</span></a>
+                                        <a href="{{ asset( $brosur->url_file) }}"><i class="fa-solid fa-file-pdf text-danger"></i><span> {{ $brosur->name }}</span></a>
                                     </div>
+                                    @empty
                                     <div class="col-12 col-lg-12 mb-2">
-                                        <a href="/download/religi"><i class="fa-solid fa-file-pdf text-danger"></i><span> Brosur Travel Pro - Religi.pdf</span></a>
+                                        <span> Belum ada data brosur disini </span>
                                     </div>
-                                    <div class="col-12 col-lg-12 mb-2">
-                                        <a href="/download/single"><i class="fa-solid fa-file-pdf text-danger"></i><span> Brosur Travel Pro - Single Trip.pdf</span></a>
-                                    </div>
+                                @endforelse
                                 </div>
 
                             </div>

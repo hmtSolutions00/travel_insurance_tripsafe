@@ -52,7 +52,11 @@ class ViewComposerServiceProvider extends ServiceProvider
                 'paket_asuransi' => Str::startsWith($currentRoute, 'admin.paket_asuransi.'),
                 'benefit_asuransi' => Str::startsWith($currentRoute, 'admin.benefit_asuransi.'),
                 'kelola_benefit' => Str::startsWith($currentRoute, 'kelola.data_benefit.'),
-                'kelola_produk' => Str::startsWith($currentRoute, 'kelola.data_produk.')
+                'kelola_produk' => Str::startsWith($currentRoute, 'kelola.data_produk.'),
+                'social_media' => Str::startsWith($currentRoute, 'social.media.'),
+                'webiste_configuration' => Str::startsWith($currentRoute, 'website.configuration.'),
+                'daftar_brosur' => Str::startsWith($currentRoute, 'daftar.brosur.')
+                
             ];
 
             // Kirim data ke semua tampilan

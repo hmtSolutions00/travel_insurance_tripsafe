@@ -1,8 +1,8 @@
 <header class="header" style="background-color: white;">
     <div class="container">
         <nav class="navbar navbar-expand-lg py-3 py-lg-0 px-0">
-            <a class="navbar-brand" href="/"><img src="{{ asset('/frontend/assets/images/logo4.jpg') }}" alt="Brand Logo" title="Brand Logo" class="img-fluid" style="height: 50px"></a>
-            <a class="navbar-brand" href="/"><span class="fw-bold fs-1" style="color:#0033c4; font-family: 'Aptos Narrow', sans-serif;">TRIP</span><span class="fw-bold fs-1" style="color:#0393D2; font-family: 'Aptos Narrow', sans-serif;">SAFE</span></a>
+            <a class="navbar-brand" href="/"><img src="{{ asset($websiteConfig->logo) }}" alt="Brand Logo" title="Brand Logo" class="img-fluid" style="height: 50px"></a>
+            <a class="navbar-brand" href="/"><span class="fw-bold fs-1" style="color:#0033c4; font-family: 'Aptos Narrow', sans-serif;"></a>
             <button class="navbar-toggler px-1 btn rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

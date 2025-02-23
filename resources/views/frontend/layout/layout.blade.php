@@ -4,11 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="ThemesLay">
-    <title>SafeTrip - Insurance Travel</title>
+    <meta name="description" content="{{ $websiteConfig->about_us }}">
+    <meta name="keywords" content="{{ $websiteConfig->keywords }}">
+    <title>{{ $websiteConfig->title }}</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="80x80" href="{{ asset('/frontend/assets/images/logo4.jpg') }}">
+    <link rel="icon" type="image/png" sizes="80x80" href="{{ asset($websiteConfig->logo) }}">
     <!-- Main CSS -->
     <link href="{{ asset('/frontend/assets/css/main.css') }}" rel="stylesheet">
 
@@ -23,8 +23,8 @@
 
         {{-- header --}}
         @include('frontend.component.header')
-
-        <div class="search-engine">
+        
+        <div class="search-engine" style="background: url('{{$websiteConfig->url_photo_background}}');">
             @yield('content')
         </div>
 

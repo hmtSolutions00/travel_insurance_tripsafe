@@ -17,6 +17,8 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\BrosurController;
+use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\WebsiteSettingController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\SocialMediaController;
@@ -45,7 +47,7 @@ Route::get('/data/penumpang/', [DetailCustomerController::class, 'index'])->name
 Route::post('/tambah/pesanan/asuransi', [DetailCustomerController::class, 'kirim_pesanan_asuransi'])->name('kirim-pesanan-asuransi');
 
 Route::get('/response', [DetailCustomerController::class, 'response_pesanan'])->name('frontend.pages.halamanterakhir');
-Route::get('/brosur/file', [DetailCustomerController::class, 'halaman_file'])->name('frontend.pages.halamanfile');
+Route::get('/brosur/file', [FrontEndController::class, 'data_brosur'])->name('frontend.pages.halamanfile');
 Route::get('/download/single', [DetailCustomerController::class, 'download_single'])->name('download_single');
 Route::get('/download/annual', [DetailCustomerController::class, 'download_annual'])->name('download_annual');
 Route::get('/download/religi', [DetailCustomerController::class, 'download_religi'])->name('download_religi');
@@ -54,17 +56,17 @@ Route::get('/contact-us', function () {
     return view('frontend.pages.contactus');
 });
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    // Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+    // Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+    // Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
+    // Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
 
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
-    Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.update');
+    // Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+    // Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.update');
 
     
 });
@@ -87,9 +89,9 @@ Route::middleware('auth')->group(function () {
 
 //halaman yang dapat diakses dengan login sebagai admin/superadmin rolesnya
 Route::middleware(['auth', 'role:admin,user'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.pages.dashboard');
-    })->name('dashboard'); // ✅ Benar
+    // Route::get('/dashboard', function () {
+    //     return view('admin.pages.dashboard');
+    // })->name('dashboard'); // ✅ Benar
     Route::prefix('master/tipe/perjalanan')->name('admin.master.tipe_perjalanan.')->group(function () {
         Route::get('/', [MstTipePerjalananController::class, 'index'])->name('index');
         Route::get('/create', [MstTipePerjalananController::class, 'create'])->name('create');
@@ -99,7 +101,6 @@ Route::middleware(['auth', 'role:admin,user'])->group(function () {
         Route::get('/{id}', [MstTipePerjalananController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
         Route::delete('/{id}', [MstTipePerjalananController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
     });
-
     Route::prefix('master/wilayah')->name('admin.master.wilayah.')->group(function () {
         Route::get('/', [MstWilayahController::class, 'index'])->name('index');
         Route::get('/create', [MstWilayahController::class, 'create'])->name('create');
@@ -207,6 +208,27 @@ Route::middleware(['auth', 'role:admin,user'])->group(function () {
         Route::get('/{id}/detail', [SocialMediaController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
         Route::delete('/{id}', [SocialMediaController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
     });
+    Route::prefix('website/configuration')->name('website.configuration.')->group(function () {
+        Route::get('/', [WebsiteSettingController::class, 'index'])->name('index');
+        Route::get('/create', [WebsiteSettingController::class, 'create'])->name('create');
+        Route::post('/store', [WebsiteSettingController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [WebsiteSettingController::class, 'edit'])->name('edit');  // ✅ Tambahkan {id}
+        Route::put('/{id}/update', [WebsiteSettingController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
+        Route::get('/{id}/detail', [WebsiteSettingController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
+        Route::delete('/{id}', [WebsiteSettingController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
+    });
+    Route::prefix('daftar/brosur')->name('daftar.brosur.')->group(function () {
+        Route::get('/', [BrosurController::class, 'index'])->name('index');
+        Route::get('/create', [BrosurController::class, 'create'])->name('create');
+        Route::post('/store', [BrosurController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [BrosurController::class, 'edit'])->name('edit');  // ✅ Tambahkan {id}
+        Route::put('/{id}/update', [BrosurController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
+        Route::get('/{id}/detail', [BrosurController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
+        Route::delete('/{id}', [BrosurController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
+    });
+
+
+
     });
     
 
