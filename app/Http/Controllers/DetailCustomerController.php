@@ -145,9 +145,7 @@ class DetailCustomerController extends Controller
         return view('frontend.pages.halamanterakhir');
     }
 
-    public function halaman_file(){
-        return view('frontend.pages.halamandownload');
-    }
+    
 
     public function download_single(){
         $filePath = public_path('file-download/Brosur_TravelPro_Single_Trip.pdf');

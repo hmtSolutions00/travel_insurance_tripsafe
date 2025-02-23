@@ -101,7 +101,24 @@
         <li class="pt-2 pb-1">
           <span class="nav-item-head">Pengaturan Website</span>
         </li>
-        
+        <li class="nav-item {{ $activeSidebar['social_media'] ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('social.media.index') }}">
+                <i class="mdi mdi-share-variant menu-icon"></i>
+                <span class="menu-title">Social Media</span>
+            </a>
+        </li>
+        <li class="nav-item {{ $activeSidebar['webiste_configuration'] ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('website.configuration.index') }}">
+                <i class="mdi mdi-cog-outline menu-icon"></i>
+                <span class="menu-title">Website Settings</span>
+            </a>
+        </li>
+        <li class="nav-item {{ $activeSidebar['daftar_brosur'] ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('daftar.brosur.index') }}">
+                <i class="mdi mdi-book-open-variant menu-icon"></i>
+                <span class="menu-title">Brosur</span>
+            </a>
+        </li>
           {{-- End Menu Master --}}
         </ul>
       </nav>

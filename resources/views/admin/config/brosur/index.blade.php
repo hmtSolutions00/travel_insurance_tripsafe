@@ -3,7 +3,7 @@
 @section('admin')
 <div class="content-wrapper">
     <div class="page-header">
-        <h3 class="page-title"> Pengaturan Website Link Social Media</h3>
+        <h3 class="page-title"> Kelola Brosur </h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 @foreach ($breadcrumb as $item)
@@ -17,7 +17,6 @@
         </nav>
     </div>
 
-    {{-- Flash Message --}}
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -30,8 +29,8 @@
                 <div class="card-body">
                     <div class="col-md-4 grid-margin stretch-card">
                         <div class="d-grid gap-2">
-                            <a href="{{ route('social.media.create') }}" class="btn btn-primary btn-lg">
-                                <i class="mdi mdi-plus"></i> Tambah Social Media
+                            <a href="{{ route('daftar.brosur.create') }}" class="btn btn-primary btn-lg">
+                                <i class="mdi mdi-plus"></i> Tambah Brosur
                             </a>
                         </div>
                     </div>
@@ -41,37 +40,25 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Social Media</th>
-                                    <th>Link</th>
-                                    <th>Icon Social Media</th>
-                                    <th>Status</th>
+                                    <th>Nama Brosur</th>
+                                    <th>File Brosur</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($socialMedias as $index => $socialMedia)
+                                @forelse ($brochures as $index => $brosur)
                                     <tr>
                                         <td class="py-1">{{ $loop->iteration }}</td>
-                                        <td>{{ $socialMedia->name }}</td>
-                                        <td><a href="{{ $socialMedia->link }}" target="_blank">{{ $socialMedia->link }}</a></td>
+                                        <td>{{ $brosur->name }}</td>
                                         <td>
-                                            @if($socialMedia->icon)
-                                                <img src="{{ asset('/admin/social_media_icons/' . $socialMedia->icon) }}" alt="Icon" width="50">
-                                            @else
-                                                <span class="text-muted">Tidak ada icon</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <span class="badge {{ $socialMedia->status === 'active' ? 'badge-success' : 'badge-danger' }}">
-                                                {{ ucfirst($socialMedia->status) }}
-                                            </span>
+                                            <a href="{{ asset( $brosur->url_file) }}" target="_blank">Lihat Brosur</a>
                                         </td>
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <a href="{{ route('social.media.edit', $socialMedia->id) }}" class="btn btn-sm btn-outline-warning">
+                                                <a href="{{ route('daftar.brosur.edit', $brosur->id) }}" class="btn btn-sm btn-outline-warning">
                                                     <i class="mdi mdi-pencil-outline d-block mb-1"></i>
                                                 </a>
-                                                <form action="{{ route('social.media.destroy', $socialMedia->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                                <form action="{{ route('daftar.brosur.destroy', $brosur->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus brosur ini?');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -83,17 +70,16 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="text-center">Tidak ada data social media.</td>
+                                        <td colspan="4" class="text-center">Tidak ada data brosur.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
 
-                    {{-- Pagination --}}
-                    <div class="d-flex justify-content-center mt-3">
-                        {{ $socialMedias->links() }}
-                    </div>
+                    {{-- <div class="d-flex justify-content-center mt-3">
+                        {{ $brosurs->links() }}
+                    </div> --}}
 
                 </div>
             </div>

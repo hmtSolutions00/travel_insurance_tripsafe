@@ -21,7 +21,7 @@ class SocialMediaController extends Controller
      */
     public function create()
     {
-        return view('admin.social_media.create');
+        return view('admin.config.social_media.create');
     }
 
     /**
@@ -29,26 +29,38 @@ class SocialMediaController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->link);
         $request->validate([
             'name'  => 'required|string|max:255',
-            'link'  => 'required|url',
+            'link_sosmed'  => 'required',
             'icon'  => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:active,inactive',
         ]);
 
-        $iconPath = null;
-        if ($request->hasFile('icon')) {
-            $iconPath = $request->file('icon')->store('social_media_icons', 'public');
-        }
+      
+            $arrName = [];
+            $tambahsocialmedia = new SocialMedia();
+            $tambahsocialmedia->name = $request->name;
+            $tambahsocialmedia->link=$request->link_sosmed; 
+            $tambahsocialmedia->icon=$request->icon;
+            $tambahsocialmedia->status=$request->status;
 
-        SocialMedia::create([
-            'name'   => $request->name,
-            'link'   => $request->link,
-            'icon'   => $iconPath,
-            'status' => $request->status,
-        ]);
+            if ($request->file('icon')) {
+                if ($request->hasfile('icon')) {
+                    $filename = round(microtime(true) * 1000) . '-' . str_replace(' ', '-', $request->file('icon')->getClientOriginalName());
+                    $request->file('icon')->move(public_path('admin/social_media_icons'), $filename);
+                    $tambahsocialmedia->icon = $filename;
+                }
+                                }
+                    if (!$tambahsocialmedia->save()) {
+                                if (count($arrName) > 1) {
+                                    foreach ($arrName as $path) {
+                                        unlink(public_path() . $path);
+                                    }
+                        }
+                    }
 
-        return redirect()->route('social-media.index')->with('success', 'Social Media berhasil ditambahkan!');
+        return redirect()->route('social.media.index')->with('success', 'Social Media berhasil ditambahkan!');
     }
 
     /**
@@ -66,7 +78,7 @@ class SocialMediaController extends Controller
     public function edit($id)
     {
         $socialMedia = SocialMedia::findOrFail($id);
-        return view('admin.social_media.edit', compact('socialMedia'));
+        return view('admin.config.social_media.edit', compact('socialMedia'));
     }
 
     /**
@@ -78,24 +90,26 @@ class SocialMediaController extends Controller
 
         $request->validate([
             'name'  => 'required|string|max:255',
-            'link'  => 'required|url',
+            'link'  => 'required',
             'icon'  => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:active,inactive',
         ]);
 
-        $iconPath = $socialMedia->icon;
-        if ($request->hasFile('icon')) {
-            $iconPath = $request->file('icon')->store('social_media_icons', 'public');
-        }
+        if ($request->file('icon')) {
+            if ($request->hasfile('icon')) {
+                $filename = round(microtime(true) * 1000) . '-' . str_replace(' ', '-', $request->file('icon')->getClientOriginalName());
+                $request->file('icon')->move(public_path('admin/social_media_icons'), $filename);
+                $socialMedia->update(['icon' => $filename]);
+            }
+                            }
 
         $socialMedia->update([
             'name'   => $request->name,
             'link'   => $request->link,
-            'icon'   => $iconPath,
             'status' => $request->status,
         ]);
 
-        return redirect()->route('social-media.index')->with('success', 'Social Media berhasil diperbarui!');
+        return redirect()->route('social.media.index')->with('success', 'Social Media berhasil diperbarui!');
     }
 
     /**
@@ -104,11 +118,21 @@ class SocialMediaController extends Controller
     public function destroy($id)
     {
         $socialMedia = SocialMedia::findOrFail($id);
-        if ($socialMedia->icon) {
-            \Storage::delete('public/' , $socialMedia->icon);
-        }
-        $socialMedia->delete();
 
-        return redirect()->route('social-media.index')->with('success', 'Social Media berhasil dihapus!');
+    // Hapus file icon jika ada
+    if ($socialMedia->icon) {
+        $filePath = public_path('admin/social_media_icons/' . $socialMedia->icon);
+
+        // Cek apakah file benar-benar ada sebelum menghapusnya
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
     }
+
+    // Hapus data dari database
+    $socialMedia->delete();
+
+    return redirect()->route('social.media.index')->with('success', 'Social Media berhasil dihapus!');
+        
+}
 }
