@@ -281,9 +281,11 @@
                                 success: function(res) {
                                     var table = $('#table-asuransi');
                                     var tbody = table.find('tbody');
+                                    var modal = $('#benefit-modal');
+
                                     tbody.empty();
-                                    console.log(res);
-                                    $.each(res, function(key, value) {
+                                    $.each(res['paket_asuransi'], function(key, value) {
+                                        console.log(value.paket_asuransi_id);
                                         var row = $('<tr>');
                                         row.append($('<td>').text(value.product_name));
                                         row.append($('<td>').text(value.nama_paket));
@@ -291,14 +293,15 @@
                                         row.append($('<td>').text(formatRupiah(value.cetak_polis)));
                                         row.append(`
                                         <td style="place-content: center; color: #0393D2;"><button class="btn"
-                                                    data-bs-toggle="modal" data-bs-target="#modal-detail-asuransi"
+                                                    data-bs-toggle="modal" data-bs-target="#modal-detail-asuransi-`+ key +`"
                                                     style="background: transparent; border-color: transparent;">
                                                     <i class="fa-solid fa-circle-info fa-md text-secondary fs-5"></i>
                                                 </button></td>
                                         `);
                                         row.append(
                                             `<td>
-                                                <button class="btn text-white fw-bold" onclick="ContinueConfirmation`+ value.id+`(this)"
+                                                <button class="btn text-white fw-bold" onclick="ContinueConfirmation` +
+                                            value.id + `(this)"
                                                     style="background-color:#0393D2">
                                                 <small>Pilih</small></button>
                                                 </td> `
@@ -306,7 +309,7 @@
                                         row.append(
                                             `
                                             <script>
-                                                function ContinueConfirmation`+ value.id+`(button) {
+                                                function ContinueConfirmation` + value.id + `(button) {
                                                     // var kode = $(button).closest(.action).find(#id_car).val();
                                                     Swal.fire({
                                                         title: "Konfirmasi",
@@ -318,15 +321,60 @@
                                                     }).then((result) => {
                                                         if (result.isConfirmed) {
                                                             window.location.href = "/data/penumpang/` +
-                                                    `?berangkat=` + tglKeberangkatan + `&pulang=` +
-                                                    tglKepulangan + `&anak=` + anak + `&dewasa=` +
-                                                    dewasa + `&lansia=` + lansia + `&paket=` +
-                                                    encodeURIComponent(JSON.stringify(value)) + `";
+                                            `?berangkat=` + tglKeberangkatan + `&pulang=` +
+                                            tglKepulangan + `&anak=` + anak + `&dewasa=` +
+                                            dewasa + `&lansia=` + lansia + `&paket=` +
+                                            encodeURIComponent(JSON.stringify(value)) + `";
                                                         }
                                                     });
                                                 }`
                                         )
                                         tbody.append(row);
+                                        modal.append(`
+                                                <div class="modal fade modal-xl" id="modal-detail-asuransi-`+ key +`" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content p-3">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Detail Asuransi</h1>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body" style="text-align: left">
+                                                                <small>Berikut adalah detail benefit dari paket asuransi :</small>
+                                                                <table class="table table-bordered m-1" id="table-benefit-`+ key +`">
+                                                                    <tbody>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        `);
+
+                                        var table2 = $('#table-benefit-' + key);
+                                        var tbody2 = table2.find('tbody');
+
+                                        tbody2.empty();
+                                        $.each(res['manfaat'], function(key2, value2) {
+                                            tbody2.append(`
+                                            <tr><td colspan="2" class="fw-bold"><small>`+ value2.name +`</small></td></tr>
+                                            `);
+                                            $.each(res['detail_manfaat'], function(key3,
+                                                value3) {
+                                                if (value3.insurance_type_id ==
+                                                    value.paket_asuransi_id &&
+                                                    value2.id == value3.benefits_id
+                                                    ) {
+                                                    console.log(value3
+                                                        .price);
+                                                        tbody2.append(`
+                                                            <tr>
+                                                                <td><small>`+ value3.opsi_manfaat+`</small></td>
+                                                                <td class="text-center"><small>`+ value3.price +`</small></td>
+                                                            </tr>
+                                                        `);
+                                                }
+                                            });
+                                        });
                                     });
                                 }
                             });

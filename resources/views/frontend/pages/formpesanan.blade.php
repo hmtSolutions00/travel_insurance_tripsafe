@@ -7,7 +7,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css"
         href="{{ asset('https://cdn.datatables.net/v/bs4/dt-1.10.18/r-2.2.2/sc-2.0.0/datatables.min.css') }}" />
-        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/r-2.2.2/sc-2.0.0/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/r-2.2.2/sc-2.0.0/datatables.min.js">
+    </script>
 
 
     <div class="container">
@@ -16,7 +17,8 @@
                 <h1 class="fw-bold theme-text-shadow" style="color: white; font-family: 'Aptos Narrow', sans-serif;">
                     Hai <i>Tripper</i>, Mau terbang ke mana?
                 </h1>
-                <h3 class="fw-bold mb-4 theme-text-shadow" style="color: white;font-style:italic; font-family: 'Aptos Narrow', sans-serif;">
+                <h3 class="fw-bold mb-4 theme-text-shadow"
+                    style="color: white;font-style:italic; font-family: 'Aptos Narrow', sans-serif;">
                     "Life is short, the world is too wide."
                 </h3>
             </div>
@@ -69,7 +71,6 @@
                                         <th scope="col">EPolis & Materai</th>
                                         <th scope="col">Detail</th>
                                         <th scope="col"></th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,152 +78,9 @@
                                         $no = 1;
                                     @endphp
                                 </tbody>
-
                             </table>
                         </div>
-                        <div class="modal fade modal-xl" id="modal-detail-asuransi" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content p-3">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Detail Asuransi</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body" style="text-align: left">
-                                        <small>Berikut adalah detail benefit dari paket asuransi :</small>
-                                        <table class="table table-bordered m-1">
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="2" class="fw-bold"><small>A. Perlindungan Bagasi
-                                                            dan Barang pribadi</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Kerugian Barang Bagasi Pribadi</small></td>
-                                                    <td class="text-center"><small>Rp. 21.000.000,-</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Penundaan Bagasi</small></td>
-                                                    <td class="text-center"><small>Rp 500.000,- / 4 jam, Maks Rp
-                                                            3.500.000,-</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Kehilangan Dokumen dan Uang Pribadi</small></td>
-                                                    <td class="text-center"><small>Rp 14.000.000,-</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Penyalahgunaan Kartu Kredit</small></td>
-                                                    <td class="text-center"><small>Rp 15.000.000,-</small></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td colspan="2" class="fw-bold"><small>B. Pembatalan dan
-                                                            Perubahan Perjalanan</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Pembatalan dan Perubahan Perjalanan – Termasuk
-                                                            Pandemic</small></td>
-                                                    <td class="text-center"><small>Rp 45.000.000,-</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Penundaan Perjalanan (Delay)</small></td>
-                                                    <td class="text-center"><small>Rp 500.000,-/ 4 Jam, Maksimal Rp
-                                                            3.500.000,-</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Kepulangan Lebih Awal karena Kedukaan</small></td>
-                                                    <td class="text-center"><small>Rp 35.000.000,-</small></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td colspan="2" class="fw-bold"><small>C.Layanan
-                                                            Darurat</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Evaluasi dan Repatriasi Medis Darurat</small></td>
-                                                    <td class="text-center"><small>Biaya Aktual</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Orang yang Mendampingi</small></td>
-                                                    <td class="text-center"><small>Rp 30.000.000,-</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Perlindungan Anak</small></td>
-                                                    <td class="text-center"><small>Rp 25.000.000,-</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Biaya Pemakaian Telepon Darurat</small></td>
-                                                    <td class="text-center"><small>Rp 2.000.000,-</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Pemulangan Jenazah atau Biaya Pemakaman di Luar
-                                                            Negeri</small></td>
-                                                    <td class="text-center"><small>Biaya Aktual</small></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td colspan="2" class="fw-bold"><small>D.Pelayanan Medis di
-                                                            Luar Negeri</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Biaya Medis di Luar Negeri (Sampai dengan umur 69
-                                                            tahun)</small></td>
-                                                    <td class="text-center"><small>Rp 2.800.000.000,-</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Biaya Medis di Luar Negeri (Di Atas Umur 70
-                                                            tahun)</small></td>
-                                                    <td class="text-center"><small>Rp 1.400.000.000,-</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Biaya Pengobatan Lanjutan di Indonesia</small></td>
-                                                    <td class="text-center"><small>Rp 21.000.000,-</small></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td colspan="2" class="fw-bold"><small>E. Kecelakaan
-                                                            Diri</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Kematian Akibat Kecelakaan (Umur 14 hari – 17
-                                                            Tahun)</small></td>
-                                                    <td class="text-center"><small>Rp 350.000.000,-</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Kecelakaan Cacat Tetap (Umur 14 hari – 17 Tahun)</small>
-                                                    </td>
-                                                    <td class="text-center"><small>Rp 1.050.000.000,-</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Kematian Akibat Kecelakaan dan Cacat Tetap (Umur 18 – 69
-                                                            Tahun)</small></td>
-                                                    <td class="text-center"><small>Rp 1.050.000.000,-Rp
-                                                            21.000.000,-</small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Kematian Akibat Kecelakaan dan Cacat Tetap (14 Hari
-                                                            sampai 17 Tahun)</small></td>
-                                                    <td class="text-center"><small>Rp. 350.000.000,-</small></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td colspan="2" class="fw-bold"><small>F.Tanggung Jawab Pribadi
-                                                        </small></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><small>Tanggung Jawab Pribadi </small></td>
-                                                    <td class="text-center"><small>Rp 2.800.000.000,-</small></td>
-                                                </tr>
-                                            </tbody>
-
-                                        </table>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Tutup</button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div id="benefit-modal">
                         </div>
                     </div>
                 </div>
@@ -255,7 +113,7 @@
                 "lengthMenu": "Menampilkan _MENU_ Data per halaman",
                 "zeroRecords": "Maaf, tidak dapat menemukan apapun",
                 "info": "Menampilkan halaman _PAGE_ dari _PAGES_ halaman",
-                "infoEmpty": "Tidak ada data yang dapat ditampilkan",
+                "infoEmpty": "",
                 "infoFiltered": "(dari _MAX_ total data)",
                 "search": "Cari :",
                 "paginate": {
@@ -275,3 +133,5 @@
         });
     </script>
 @endsection
+
+

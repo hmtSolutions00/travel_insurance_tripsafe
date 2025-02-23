@@ -56,7 +56,7 @@
         });
 
         function formatRupiah(angka) {
-            return 'IDR ' + angka.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+            return 'IDR ' + angka.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
         }
     </script>
 </body>

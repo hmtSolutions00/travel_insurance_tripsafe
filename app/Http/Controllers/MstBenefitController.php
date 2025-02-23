@@ -16,6 +16,8 @@ class MstBenefitController extends Controller
         //Ambil semua manfaat beserta sub manfaatnya
         $manfaatPakets = ManfaatPaket::with('opsiManfaats')->get();
 
+        // dd($manfaatPakets);
+
         return view ('admin.pages.mst_benefit_asuransi.index', compact('manfaatPakets'));
     }
 
@@ -36,13 +38,13 @@ class MstBenefitController extends Controller
             'name' => 'required|string|max:255',
             'sub_manfaat.*' => 'required|string|max:255'
         ]);
-    
+
         $manfaat = ManfaatPaket::create(['name' => $request->name]);
-    
+
         foreach ($request->sub_manfaat as $sub) {
             $manfaat->opsiManfaats()->create(['name' => $sub]);
         }
-    
+
         return redirect()->route('admin.benefit_asuransi.index')->with('success', 'Data berhasil ditambahkan');
     }
 
@@ -75,15 +77,15 @@ class MstBenefitController extends Controller
             'name' => 'required|string|max:255', // Manfaat utama
             'sub_manfaat.*' => 'nullable|string|max:255', // Sub-manfaat (bisa kosong atau dihapus)
         ]);
-    
+
         // Update Manfaat Utama
         $manfaatPaket = ManfaatPaket::findOrFail($id);
         $manfaatPaket->update(['name' => $request->name]);
-    
+
         // **Proses Sub-Manfaat**
         $existingIds = $manfaatPaket->opsiManfaats()->pluck('id')->toArray();  // ID sub-manfaat yang sudah ada
         $submittedIds = $request->input('sub_manfaat_id', []);                 // ID sub-manfaat dari form
-    
+
         // 1. Update atau Tambah Sub-Manfaat
         if ($request->has('sub_manfaat')) {
             foreach ($request->sub_manfaat as $index => $subManfaat) {
@@ -97,16 +99,16 @@ class MstBenefitController extends Controller
                 }
             }
         }
-    
+
         // 2. Hapus Sub-Manfaat yang Dihapus dari Form
         $toDelete = array_diff($existingIds, $submittedIds);
         OpsiManfaat::whereIn('id', $toDelete)->delete();
-    
+
         // Redirect dengan Pesan Sukses
         return redirect()->route('admin.benefit_asuransi.index')->with('success', 'Data berhasil diperbarui!');
     }
 
-   
+
     /**
      * Remove the specified resource from storage.
      */

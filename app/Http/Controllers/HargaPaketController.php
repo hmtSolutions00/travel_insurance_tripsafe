@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailManfaat;
 use App\Models\HargaPaket;
+use App\Models\ManfaatPaket;
 use App\Models\PaketAsuransi;
 use App\Models\TipeAsuransi;
 use App\Models\TipePelanggan;
@@ -175,10 +177,25 @@ class HargaPaketController extends Controller
                 }
             }
         }
-        return response()->json($paket_asuransi);
+
+        $manfaat = ManfaatPaket::all();
+        $detail_manfaat = DetailManfaat::rightJoin('opsi_manfaats', 'opsi_manfaats.id', '=', 'detail_manfaats.benefitOption')
+            ->whereJsonContains('detail_manfaats.destionation_id', ["$wilayah"])
+            ->select(
+                'detail_manfaats.*',
+                'opsi_manfaats.name as opsi_manfaat',
+                'opsi_manfaats.benefits_id'
+            )->get();
+
+        return response()->json([
+            'paket_asuransi' => $paket_asuransi,
+            'manfaat' => $manfaat,
+            'detail_manfaat' => $detail_manfaat,
+        ]);
     }
 
     //admin
+
 
     public function index_admin()
     {
@@ -388,7 +405,8 @@ class HargaPaketController extends Controller
         return redirect()->route('kelola.data_produk.index')->with('success', 'Data berhasil diubah');
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $asuransi = HargaPaket::findOrFail($id);
         $asuransi->delete();
 
