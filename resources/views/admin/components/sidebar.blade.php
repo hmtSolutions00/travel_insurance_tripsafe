@@ -4,7 +4,7 @@
         <li class="nav-item nav-profile border-bottom">
             <a href="#" class="nav-link flex-column">
                 <div class="nav-profile-image">
-                    <img src="{{ url('/admin/assets/images/faces/face1.jpg') }}" alt="profile">
+                    <img src="{{ asset($websiteConfig->logo) }}" alt="profile">
                     <!--change to offline or busy as needed-->
                 </div>
                 <div class="nav-profile-text d-flex ms-0 mb-3 flex-column">
@@ -23,12 +23,6 @@
         {{-- Menu Utama --}}
         <li class="pt-2 pb-1">
             <span class="nav-item-head">Halaman Utama</span>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="">
-                <i class="mdi mdi-account-search menu-icon"></i>
-                <span class="menu-title">Kelola Data Customer</span>
-            </a>
         </li>
         <li class="nav-item {{ $activeSidebar['master_pesanan_asuransi'] ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('admin.data.pesanan_asuransi.index') }}">
@@ -54,12 +48,6 @@
             <span class="nav-item-head">Data Master</span>
 
         </li>
-        {{-- Menu Master --}}
-        {{-- <li class="nav-item {{ request()->routeIs('mstTipePerjalananIndex', 'mstTipePerjalananCreate') ? 'active' : '' }}">
-            <a class="nav-link"  href="{{route('mstTipePerjalananIndex')}}" aria-expanded="false" aria-controls="ui-basic">
-                <i class="mdi mdi-airplane menu-icon"></i> <span class="menu-title">Tipe Perjalanan</span>
-            </a>
-          </li> --}}
         <li class="nav-item {{ $activeSidebar['master_tipe_perjalanan'] ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('admin.master.tipe_perjalanan.index') }}">
                 <i class="mdi mdi-airplane menu-icon"></i>
