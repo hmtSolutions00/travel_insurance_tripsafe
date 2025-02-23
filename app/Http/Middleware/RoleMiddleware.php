@@ -24,7 +24,7 @@ class RoleMiddleware
 
         // Jika sudah login tapi tidak memiliki role yang sesuai
         if (Auth::user()->role !== $role) {
-            abort(403, 'Unauthorized action.');
+            return Redirect::to('/')->with('error', 'Anda harus login untuk mengakses halaman ini.');
         }
 
         return $next($request);

@@ -35,15 +35,21 @@
                 </div>
             </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                    <div class="preview-icon bg-info">
-                        <i class="mdi mdi-logout"></i> </div>
-                </div>
-                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="preview-subject fw-normal mb-0">Keluar</h6>
-                </div>
-            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+          </form>
+          
+          <a class="dropdown-item preview-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+              <div class="preview-thumbnail">
+                  <div class="preview-icon bg-info">
+                      <i class="mdi mdi-logout"></i>
+                  </div>
+              </div>
+              <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                  <h6 class="preview-subject fw-normal mb-0">Keluar</h6>
+              </div>
+          </a>
+          
             <div class="dropdown-divider"></div>
         </div>
         </li>

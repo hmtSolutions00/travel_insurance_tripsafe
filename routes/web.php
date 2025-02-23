@@ -19,6 +19,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\WebsiteSettingController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\SocialMediaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,34 +33,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
-    Route::post('register', [RegisteredUserController::class, 'store']);
-
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
-
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
-
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
-    Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.update');
-});
-
-Route::middleware('auth')->group(function () {
-    Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-        ->middleware(['signed', 'throttle:6,1'])
-        ->name('verification.verify');
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-        ->middleware('throttle:6,1')
-        ->name('verification.send');
-
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
-
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-});
 
 //Halaman Yang dapat Diakses tanpa login
 
@@ -80,15 +53,43 @@ Route::get('/download/religi', [DetailCustomerController::class, 'download_relig
 Route::get('/contact-us', function () {
     return view('frontend.pages.contactus');
 });
+Route::middleware('guest')->group(function () {
+    Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+    Route::post('register', [RegisteredUserController::class, 'store']);
 
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
+    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+
+    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+    Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.update');
+
+    
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
+    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
+    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
+
+    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
+    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+});
 
 
 //halaman yang dapat diakses dengan login sebagai admin/superadmin rolesnya
-Route::get('/dashboard', function () {
-    return view('admin.pages.dashboard');
-})->name('dashboard'); // ✅ Benar
-
-
+Route::middleware(['auth', 'role:admin,user'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin.pages.dashboard');
+    })->name('dashboard'); // ✅ Benar
     Route::prefix('master/tipe/perjalanan')->name('admin.master.tipe_perjalanan.')->group(function () {
         Route::get('/', [MstTipePerjalananController::class, 'index'])->name('index');
         Route::get('/create', [MstTipePerjalananController::class, 'create'])->name('create');
@@ -173,18 +174,6 @@ Route::get('/dashboard', function () {
         Route::get('/{insurance_type_id}/{destionation_id}/detail', [KelolaBenefitController::class, 'show'])->name('show');
         Route::delete('/{insurance_type_id}/{destionation_id}', [KelolaBenefitController::class, 'destroy'])->name('destroy');
     });
-    
-    //halaman yang hanya dapat diakses apabila role nya adalah superaddmin
-
-      Route::prefix('settings/website')->name('seetings.webiste.')->group(function () {
-        Route::get('/', [WebsiteSettingController::class, 'index'])->name('index');
-        Route::get('/create', [WebsiteSettingController::class, 'create'])->name('create');
-        Route::post('/store', [WebsiteSettingController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [WebsiteSettingController::class, 'edit'])->name('edit');  // ✅ Tambahkan {id}
-        Route::put('/{id}/update', [WebsiteSettingController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
-        Route::get('/{id}/detail', [WebsiteSettingController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
-        Route::delete('/{id}', [WebsiteSettingController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
-    });
 
     Route::prefix('master/kelola/produk')->name('kelola.data_produk.')->group(function () {
         Route::get('/', [HargaPaketController::class, 'index_admin'])->name('index');
@@ -195,5 +184,30 @@ Route::get('/dashboard', function () {
         Route::post('{id}/update', [HargaPaketController::class, 'update'])->name('update');
         Route::get('{id}/delete', [HargaPaketController::class, 'destroy'])->name('destroy');
     });
+
+ }); 
+    //halaman yang hanya dapat diakses apabila role nya adalah superaddmin
+    Route::middleware(['auth', 'role:admin'])->group(function () {
+      Route::prefix('settings/website')->name('seetings.webiste.')->group(function () {
+        Route::get('/', [WebsiteSettingController::class, 'index'])->name('index');
+        Route::get('/create', [WebsiteSettingController::class, 'create'])->name('create');
+        Route::post('/store', [WebsiteSettingController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [WebsiteSettingController::class, 'edit'])->name('edit');  // ✅ Tambahkan {id}
+        Route::put('/{id}/update', [WebsiteSettingController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
+        Route::get('/{id}/detail', [WebsiteSettingController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
+        Route::delete('/{id}', [WebsiteSettingController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
+    });
+
+    Route::prefix('settings/social_media')->name('social.media.')->group(function () {
+        Route::get('/', [SocialMediaController::class, 'index'])->name('index');
+        Route::get('/create', [SocialMediaController::class, 'create'])->name('create');
+        Route::post('/store', [SocialMediaController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [SocialMediaController::class, 'edit'])->name('edit');  // ✅ Tambahkan {id}
+        Route::put('/{id}/update', [SocialMediaController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
+        Route::get('/{id}/detail', [SocialMediaController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
+        Route::delete('/{id}', [SocialMediaController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
+    });
+    });
+    
 
 
