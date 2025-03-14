@@ -10,22 +10,40 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/r-2.2.2/sc-2.0.0/datatables.min.js">
     </script>
 
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Tidak Berhasil',
+                text: '{{ session('error') }}',
+            });
+        </script>
+    @endif
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
+
 
     <div class="container">
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-12 col-lg-12 mb-3 text-center position-relative">
-                <h1 class="fw-bold theme-text-shadow" style="color: white; font-family: 'Aptos Narrow', sans-serif;">
-                    Hai <i>Tripper</i>, Mau terbang ke mana?
-                </h1>
-                <h3 class="fw-bold mb-4 theme-text-shadow"
-                    style="color: white;font-style:italic; font-family: 'Aptos Narrow', sans-serif;">
-                    "Life is short, the world is too wide."
+                <h3 class="theme-text-shadow" style="color: white; font-family: 'Aptos Narrow';">
+                    Hai <b style="font-style: italic">TRIPPER</b>, Mau terbang ke mana?
                 </h3>
+                <h4 class=" mb-4 theme-text-shadow" style="color: white;font-style:italic; font-family: 'Aptos Narrow';">
+                    "Life is <b>short</b>, the world is too <b>wide</b>."
+                </h4>
             </div>
         </div>
         <!-- search engine tabs -->
         <div class="row  mt-0">
-            <div class="col-12 col-lg-5 mb-5 text-center position-relative">
+            <div class="col-12 col-lg-4 mb-5 text-center position-relative">
                 <div class="row">
                     <div class="col-12 col-lg-12 text-center bg-white position-relative" style="border-radius: 12px">
                         <div class="m-4">
@@ -34,13 +52,15 @@
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="tab-sekali-perjalan" data-bs-toggle="tab"
                                         data-bs-target="#sekali-perjalanan-tab" type="button" role="tab"
-                                        aria-controls="sekali-perjalanan-tab" aria-selected="true">Sekali
+                                        aria-controls="sekali-perjalanan-tab" aria-selected="true"
+                                        style="font-size: x-small;">Sekali
                                         Perjalanan</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="tab-tahunan" data-bs-toggle="tab"
                                         data-bs-target="#tahunan-tab" type="button" role="tab"
-                                        aria-controls="tahunan-tab" aria-selected="false">Tahunan</button>
+                                        aria-controls="tahunan-tab" aria-selected="false"
+                                        style="font-size: x-small;">Tahunan</button>
                                 </li>
                             </ul>
 
@@ -56,48 +76,61 @@
                 </div>
             </div>
 
-            <div class="col-12 col-lg-7 mb-5 text-center position-relative">
+            <div class="col-12 col-lg-8 mb-5 text-center position-relative">
                 <div class="col-12 col-lg-12 text-center bg-white position-relative h-100 d-flex"
                     style="border-radius: 12px;">
                     <div class="col-12 col-lg-12 p-4">
                         <div class="table-responsive">
                             <table class="col-12 col-lg-12 table datatables" id="table-asuransi">
                                 <thead>
-                                    <tr>
-
-                                        <th scope="col">Produk</th>
-                                        <th scope="col">Paket</th>
-                                        <th scope="col">Premi</th>
-                                        <th scope="col">EPolis & Materai</th>
-                                        <th scope="col">Detail</th>
-                                        <th scope="col"></th>
-                                    </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="text-white" colspan="6"
-                                            style="font-weight: bold;background-color: #025f88;font-size: small">
-                                            Detail Wilayah
-                                        </td>
+                                        <td colspan="6" style="font-weight: bold">Detail Wilayah</td>
                                     </tr>
                                     @foreach ($wilayahs as $wilayah)
-                                        <tr id="tr-benefit" style="text-align: left">
-                                            <td class="text-white" rowspan="2" colspan="2"
-                                                style="align-content: center; background-color: #025f88;font-size:x-small">
-                                                {{ $wilayah->name }}</td>
-                                            <td class="" style="background-color: #0393D2;font-size: x-small">Termasuk
-                                            </td>
-                                            <td class="text-sm" colspan="3"
-                                                style="background-color: #71d3fd;font-size: x-small">{{ $wilayah->include }}
-                                            </td>
-                                        </tr>
+                                        @if ($wilayah->exclude !== null)
+                                            <tr id="tr-benefit" style="text-align: left">
+                                                <td class="text-dark" rowspan="2" colspan="2"
+                                                    style="align-content: center; background-color:#6EC1E4;font-size:x-small; border-right:solid 2px white">
+                                                    {{ $wilayah->name }}</td>
+                                                <td class=""
+                                                    style="background-color: #6EC1E4;font-size: x-small;border-right:solid 2px white">
+                                                    Termasuk
+                                                </td>
+                                                <td class="text-sm" colspan="3"
+                                                    style="background-color: #6EC1E4;font-size: x-small">
+                                                    {{ $wilayah->include }}
+                                                </td>
+
+                                            </tr>
                                             <tr style="text-align: left">
-                                                <td class="" style="background-color: #71d3fd;font-size: x-small">Tidak
+                                                <td class="" style="background-color: white;font-size: x-small; border-right:solid 2px #6EC1E4; border-bottom:solid 2px #6EC1E4">Tidak
                                                     Termasuk</td>
                                                 <td class="text-sm" colspan="3"
-                                                    style="background-color: #0393D2;font-size: x-small">{{$wilayah->exclude}}</td>
+                                                    style="background-color: white;font-size: x-small; border-right:solid 2px #6EC1E4; border-bottom:solid 2px #6EC1E4">
+                                                    {{ $wilayah->exclude }}</td>
                                             </tr>
+                                        @else
+                                            <tr id="tr-benefit" style="text-align: left">
+                                                <td class="text-dark" colspan="2"
+                                                    style="align-content: center; background-color: #6EC1E4;font-size:x-small; border-right:solid 2px white">
+                                                    {{ $wilayah->name }}</td>
+                                                <td class=""
+                                                    style="background-color: #6EC1E4;font-size: x-small;border-right:solid 2px white">
+                                                    Termasuk
+                                                </td>
+                                                <td class="text-sm" colspan="3"
+                                                    style="background-color: #6EC1E4;font-size: x-small">
+                                                    {{ $wilayah->include }}
+                                                </td>
+
+                                            </tr>
+                                        @endif
                                     @endforeach
+                                 
+
+
 
                                 </tbody>
                             </table>

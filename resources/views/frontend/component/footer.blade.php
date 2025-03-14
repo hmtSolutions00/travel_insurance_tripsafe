@@ -6,9 +6,11 @@
                 <h5 class="mb-3 fs-6">Contact Us</h5>
                 @foreach ($socialMedias as $social)
                 <div class="flex-grow-1">
-                    <img src="{{ asset('/admin/social_media_icons/'.$social->icon) }}" alt="{{ $social->name }}"
-                    style="width: 10px; height: 10px; object-fit: contain;">
-                    <span class=" theme-text-dark"> {{ $social->name }}</span>
+                    <img src="{{ asset('/admin/social_media_icons/' . $social->icon) }}"
+                    alt="{{ $social->name }}" style="width: 20px; height: 20px; object-fit: contain;">
+                <a href="//{{ $social->link }}" target="_blank" class="btn theme-text-dark text-dark">
+                    {{ $social->name }}
+                </a>
                 </div>
                 <br>
                 @endforeach
@@ -28,7 +30,7 @@
             <div class="col-12 col-sm-6 col-lg-6 mb-5 mb-lg-0">
                 <h5 class="mb-3 fs-6">About Us</h5>
                 <div class="flex-grow-1">
-                    <span class="text-sm theme-text-dark"> Selamat Datang di <span class="fw-bold">SafeTrip</span><br>
+                    <span class="text-sm theme-text-dark"> Selamat Datang di <span class="fw-bold">TripSafe</span><br>
                     {{ $websiteConfig->about_us }}
                         </span>
                 </div>

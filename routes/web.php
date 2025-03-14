@@ -19,6 +19,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\BrosurController;
 use App\Http\Controllers\FrontEndController;
+use App\Http\Controllers\KodePromoController;
 use App\Http\Controllers\WebsiteSettingController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\SocialMediaController;
@@ -68,7 +69,7 @@ Route::middleware('guest')->group(function () {
     // Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
     // Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.update');
 
-    
+
 });
 
 Route::middleware('auth')->group(function () {
@@ -186,7 +187,7 @@ Route::middleware(['auth', 'role:admin,user'])->group(function () {
         Route::get('{id}/delete', [HargaPaketController::class, 'destroy'])->name('destroy');
     });
 
- }); 
+ });
     //halaman yang hanya dapat diakses apabila role nya adalah superaddmin
     Route::middleware(['auth', 'role:admin'])->group(function () {
       Route::prefix('settings/website')->name('seetings.webiste.')->group(function () {
@@ -227,9 +228,19 @@ Route::middleware(['auth', 'role:admin,user'])->group(function () {
         Route::delete('/{id}', [BrosurController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
     });
 
+    Route::prefix('kode/promo')->name('kode.promo.')->group(function () {
+        Route::get('/', [KodePromoController::class, 'index'])->name('index');
+        Route::get('/create', [KodePromoController::class, 'create'])->name('create');
+        Route::post('/store', [KodePromoController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [KodePromoController::class, 'edit'])->name('edit');  // ✅ Tambahkan {id}
+        Route::put('/{id}/update', [KodePromoController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
+        Route::get('/{id}/detail', [KodePromoController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
+        Route::delete('/{id}', [KodePromoController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
+    });
+
 
 
     });
-    
+
 
 

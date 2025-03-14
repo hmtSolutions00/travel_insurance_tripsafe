@@ -20,7 +20,7 @@
         <!-- Layout styles -->
         <link rel="stylesheet" href="{{url('/admin/assets/css/style.css')}}">
         <!-- End layout styles -->
-        <link rel="shortcut icon" href="{{url('/admin/assets/images/favicon.png')}}" />
+        <link rel="icon" type="image/png" sizes="80x80" href="{{ asset($websiteConfig->logo) }}">
       </head>
   <body>
     <div class="container-scroller">
@@ -29,15 +29,15 @@
             <div class="row flex-grow">
               <div class="col-lg-4 mx-auto">
                 <div class="auth-form-light text-left p-5">
-                  <div class="brand-logo">
+                  <div class="brand-logo text-center">
                     <img src="{{ asset($websiteConfig->logo) }}">
                   </div>
                   <h4>Hello! Trip SaFe Admin</h4>
                   <h6 class="fw-light">Login Untuk Melanjutkan</h6>
-      
+
                   <form class="pt-3" method="POST" action="{{ route('login') }}">
                     @csrf
-      
+
                     <!-- Email -->
                     <div class="form-group">
                       <input type="email" name="email" class="form-control form-control-lg" required placeholder="Email" value="{{ old('email') }}">
@@ -45,7 +45,7 @@
                         <div class="text-danger mt-1">{{ $message }}</div>
                       @enderror
                     </div>
-      
+
                     <!-- Password -->
                     <div class="form-group">
                       <input type="password" name="password" class="form-control form-control-lg" required placeholder="Password">
@@ -53,16 +53,16 @@
                         <div class="text-danger mt-1">{{ $message }}</div>
                       @enderror
                     </div>
-      
+
                     <!-- Remember Me -->
-      
+
                     <!-- Submit Button -->
                     <div class="mt-3 d-grid gap-2">
                       <button type="submit" class="btn btn-block btn-primary btn-lg fw-semibold auth-form-btn">
                         MASUK
                       </button>
                     </div>
-      
+
                     <!-- Forgot Password -->
                     @if (Route::has('password.request'))
                       <div class="mt-3 text-center">
@@ -70,7 +70,7 @@
                       </div>
                     @endif
                   </form>
-      
+
                 </div>
               </div>
             </div>

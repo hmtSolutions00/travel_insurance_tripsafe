@@ -28,30 +28,38 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-12 col-lg-6 mb-3" style="text-align: left">
-                <small class="form-check-label mb-1 fw-bold" for="tanggal_keberangkatan">Tanggal
-                    Keberangkatan</small>
+            <div class="col-12 col-lg-6 mb-1" style="text-align: left">
+                <small class="form-check-label mb-1 fw-bold" for="tanggal_keberangkatan">Keberangkatan</small>
                 <input type="date" class="form-control form-control-sm" id="tanggal_keberangkatan"
                     name="tanggal_keberangkatan" min="<?php echo date('Y-m-d'); ?>">
             </div>
-            <div class="col-12 col-lg-6 mb-3" style="text-align: left">
-                <small class="form-check-label mb-1 fw-bold" for="tanggal_kepulangan">Tanggal
-                    Kepulangan</small>
+            <div class="col-12 col-lg-6 mb-1" style="text-align: left">
+                <small class="form-check-label mb-1 fw-bold" for="tanggal_kepulangan">Kepulangan</small>
                 <input type="date" class="form-control form-control-sm" id="tanggal_kepulangan"
                     name="tanggal_kepulangan" min="<?php echo date('Y-m-d'); ?>">
             </div>
 
+            <div class="col-12 col-lg-12" id="totalTanggal">
+
+            </div>
+
             <script>
+                var dataValid = true;
                 const tanggalKeberangkatan = document.getElementById('tanggal_keberangkatan');
                 const tanggalKepulangan = document.getElementById('tanggal_kepulangan');
-
+                const totalTanggal = document.getElementById('totalTanggal');
                 tanggalKeberangkatan.addEventListener('change', hitungJumlahHari);
                 tanggalKepulangan.addEventListener('change', hitungJumlahHari);
+
 
                 function hitungJumlahHari() {
                     const tanggalKeberangkatanValue = new Date(tanggalKeberangkatan.value);
                     const tanggalKepulanganValue = new Date(tanggalKepulangan.value);
-
+                    checkValidity();
+                    $('.btnPilih').each(function() {
+                        $('.btnPilih').prop('disabled', true);
+                        $('.btnPilih').removeAttr('onclick');
+                    });
                     if (tanggalKeberangkatanValue && tanggalKepulanganValue) {
                         const jumlahHariValue = Math.round((tanggalKepulanganValue - tanggalKeberangkatanValue) / (1000 * 3600 *
                             24)) + 1;
@@ -66,16 +74,17 @@
                                                                 <small class="form-check-label mb-1" style="font-style:italic">Total perjalanan 0 hari</small>
                                                                 `;
 
-                            tanggalKeberangkatan.parentNode.appendChild(jumlahHariElement);
+                            totalTanggal.appendChild(jumlahHariElement);
                         } else {
                             document.getElementById('jumlah_hari').querySelectorAll('small')[0].innerText =
                                 `Total perjalanan ${jumlahHariValue} hari`;
                         }
                     }
+
                 }
             </script>
 
-            <div class="col-6 col-lg-4 mb-3 text-center">
+            <div class="col-6 col-lg-6 mb-3 text-center">
                 <small class="form-check-label mb-1 fw-bold" for="anak1">Anak</small>
                 <div class="input-group justify-content-center">
                     <button class="btn btn-outline-primary minus" type="button" id="anak1-minus">-</button>
@@ -86,7 +95,7 @@
                 <small class="text-muted">&lt;18 tahun</small>
             </div>
 
-            <div class="col-6 col-lg-4 mb-3 text-center">
+            <div class="col-6 col-lg-6 mb-3 text-center">
                 <small class="form-check-label mb-1 fw-bold" for="dewasa1">Dewasa</small>
                 <div class="input-group justify-content-center">
                     <button class="btn btn-outline-primary minus" type="button" id="dewasa1-minus">-</button>
@@ -97,7 +106,7 @@
                 <small class="text-muted">18-69 tahun</small>
             </div>
 
-            <div class="col-6 col-lg-4 mb-3 text-center">
+            <div class="col-6 col-lg-6 mb-3 text-center">
                 <small class="form-check-label mb-1 fw-bold" for="lansia1">Lansia</small>
                 <div class="input-group justify-content-center">
                     <button class="btn btn-outline-primary minus" type="button" id="lansia1-minus">-</button>
@@ -106,6 +115,16 @@
                     <button class="btn btn-outline-primary plus" type="button" id="lansia1-plus">+</button>
                 </div>
                 <small class="text-muted">70-84 tahun</small>
+            </div>
+
+            <div class="col-12 col-lg-12 mb-3" style="text-align: left">
+                <small class="form-check-label mb-1 fw-bold" for="kode_promo">Kode Promo (Opsional)</small>
+                <div class="input-group">
+                    <div class="col-8 col-lg-6">
+                        <input type="text" class="form-control form-control-sm" id="kode_promo" name="kode_promo"
+                            style="border:solid 1px; border-color: #0393D2;border-bottom-right-radius: 0;border-top-right-radius: 0">
+                    </div>
+                </div>
             </div>
 
             <div class="col-12 col-lg-12 mb-3 text-center" id="mass_jlhPelanggan">
@@ -123,8 +142,18 @@
                 const dewasa1BtnP = document.getElementById('dewasa1-plus');
                 const anak1BtnM = document.getElementById('anak1-minus');
                 const anak1BtnP = document.getElementById('anak1-plus');
+                const wilayahSelect = document.getElementById('wilayah');
+                const promoInput = document.getElementById('kode_promo');
 
                 function checkValidity() {
+                    var valBerangkat = tanggalKeberangkatan.value;
+                    var valPulang = tanggalKepulangan.value
+                    if (valBerangkat.trim() === '' || valPulang.trim() === '') {
+                        dataValid = false;
+                    } else {
+                        dataValid = true;
+                    }
+                    $('#btn-penawaran').click();
                     const jenisAsuransi = jenisAsuransiSelect.value;
                     const anak = parseInt(anakInput.value);
                     const dewasa = parseInt(dewasaInput.value);
@@ -141,11 +170,11 @@
                                                             `;
 
                             tombol.disabled = true;
-
-                            return false;
+                            dataValid = false;
                         } else {
                             massJlhPelangganDiv.innerHTML = '';
                             tombol.disabled = false;
+                            dataValid = false;
                             return false;
                         }
                     } else if (jenisAsuransi === '2') {
@@ -158,10 +187,11 @@
                                                             </div>
                                                             `;
                             tombol.disabled = true;
-                            return false;
+                            dataValid = false;
                         } else {
                             massJlhPelangganDiv.innerHTML = '';
                             tombol.disabled = false;
+                            dataValid = false;
                             return false;
                         }
                     } else if (jenisAsuransi === '3') {
@@ -174,20 +204,24 @@
                                                             </div>
                                                             `;
                             tombol.disabled = true;
-                            return false;
+                            dataValid = false;
                         } else {
                             massJlhPelangganDiv.innerHTML = '';
                             tombol.disabled = false;
+                            dataValid = false;
                             return false;
                         }
                     }
-
-                    massJlhPelangganDiv.innerHTML = '';
-                    return true;
                 }
                 let timeoutId = null;
 
+                promoInput.addEventListener('keydown',function() {
+                    clearTimeout(timeoutId);
+                    timeoutId = setTimeout(checkValidity, 500);
+                });
                 jenisAsuransiSelect.addEventListener('change', checkValidity);
+                wilayahSelect.addEventListener('change', checkValidity);
+                wilayahSelect.addEventListener('change', checkValidity);
                 anakInput.addEventListener('input', checkValidity);
                 dewasaInput.addEventListener('input', checkValidity);
                 lansiaInput.addEventListener('input', checkValidity);
@@ -238,7 +272,13 @@
                             const tabelAsuransi = document.getElementById('table-asuransi');
                             const totalHari = Math.round((tglKeberangkatan - tglKeberangkatan) / (1000 * 3600 *
                                 24)) + 1;
+                            const promoVal = document.getElementById('kode_promo').value;
 
+                            if (anak == 0 && dewasa == 0 && lansia == 0) {
+                                dataValid = false;
+                            } else {
+                                dataValid = true;
+                            }
                             if (wilayah == 0) {
                                 massJlhPelangganDiv.innerHTML = `
                                                                     <div class = "alert alert-warning" >
@@ -249,7 +289,6 @@
                             } else {
                                 massJlhPelangganDiv.innerHTML = ``;
                             }
-
                             if ((tglKeberangkatan || tglKeberangkatan.trim() === '')) {
                                 massJlhPelangganDiv.innerHTML = `
                                                                 <div class = "alert alert-warning" >
@@ -276,45 +315,87 @@
                                 url: '{{ route('getAsuransi') }}?jenisAsuransi=' + jenisAsuransi + '&wilayah=' +
                                     wilayah + '&tglKeberangkatan=' + tglKeberangkatan + '&tglKepulangan=' +
                                     tglKepulangan + '&jlhAnak=' + anak + '&jlhDewasa=' + dewasa +
-                                    '&jlhLansia=' + lansia + '&tipePerjalanan=' + 1,
+                                    '&jlhLansia=' + lansia + '&tipePerjalanan=' + 1 + '&kodePromo=' + promoVal,
                                 type: 'get',
                                 success: function(res) {
-                                    var table = $('#table-asuransi');
-                                    var tbody = table.find('tbody');
-                                    var modal = $('#benefit-modal');
+                                    if (dataValid == true && res['promoExist'] == true) {
+                                        var table = $('#table-asuransi');
+                                        var tbody = table.find('tbody');
+                                        var thead = table.find('thead');
+                                        var modal = $('#benefit-modal');
+                                        var jlhAdl = anak + dewasa + lansia;
 
-                                    tbody.html('');
-                                    const trBenefit = document.getElementById('tr-benefit');
-                                    if (trBenefit) {
-                                        trBenefit.remove();
-                                    }else{
-                                        console.log("tidak ada");
-                                    }
+                                        tbody.empty();
+                                        thead.empty();
+                                        var row3 = $('<tr>');
+                                        row3.append($('<th>').text("Produk"));
+                                        row3.append($('<th>').text("Paket"));
+                                        row3.append($('<th>').text("Premi"));
+                                        row3.append($('<th>').text("Materai"));
+                                        row3.append($('<th>').text("Detail"));
+                                        row3.append($('<th>').text(""));
+                                        thead.append(row3);
+                                        const trBenefit = document.getElementById('tr-benefit');
+                                        if (trBenefit) {
+                                            trBenefit.remove();
+                                        }
+                                        var arrLength = res['paket_asuransi'].length;
 
-                                    $.each(res['paket_asuransi'], function(key, value) {
-                                        var row = $('<tr>');
-                                        row.append($('<td>').text(value.product_name));
-                                        row.append($('<td>').text(value.nama_paket));
-                                        row.append($('<td>').text(formatRupiah(value.price)));
-                                        row.append($('<td>').text(formatRupiah(value.cetak_polis)));
-                                        row.append(`
+                                        if (arrLength == 0) {
+                                            var row2 = $('<tr>');
+                                            row2.append(`
+                                        <td colspan="6" style="place-content: center; font-style: italic">Data Tidak Ada</td>
+                                        `);
+                                            tbody.append(row2);
+                                        }
+                                        $.each(res['paket_asuransi'], function(key, value) {
+
+                                            var row = $('<tr>');
+                                            row.append($('<td>').text(value.product_name));
+                                            row.append($('<td>').text(value.nama_paket));
+                                            if (res['promoValue'] == false) {
+                                                row.append($('<td>').text(formatRupiah(value
+                                                    .price)));
+                                            } else {
+                                                row.append(`
+                                                    <td style="align-content:center"><del><small>` + formatRupiah(value
+                                                        .price) + `</small></del></br>` +
+                                                    formatRupiah(res['arrDiscPremi'][key]) + `</td>
+                                                    `);
+                                            }
+                                            row.append($('<td>').text(formatRupiah(value
+                                                .cetak_polis)));
+                                            row.append(`
                                         <td style="place-content: center; color: #0393D2;"><button class="btn"
                                                     data-bs-toggle="modal" data-bs-target="#modal-detail-asuransi-` +
-                                            key + `"
+                                                key + `"
                                                     style="background: transparent; border-color: transparent;">
                                                     <i class="fa-solid fa-circle-info fa-md text-secondary fs-5"></i>
                                                 </button></td>
                                         `);
-                                        row.append(
-                                            `<td>
-                                                <button class="btn text-white fw-bold" onclick="ContinueConfirmation` +
-                                            value.id + `(this)"
+                                            if (jlhAdl == 0 || tglKeberangkatan == null ||
+                                                tglKepulangan == null || $('#btn-penawaran').prop(
+                                                    'disabled') === true) {
+                                                row.append(
+                                                    `<td>
+                                                <button class="btn text-white fw-bold btnPilih" disabled
                                                     style="background-color:#0393D2">
                                                 <small>Pilih</small></button>
                                                 </td> `
-                                        );
-                                        row.append(
-                                            `
+                                                );
+                                            } else {
+                                                row.append(
+                                                    `<td>
+                                                <button class="btn text-white fw-bold btnPilih" onclick="ContinueConfirmation` +
+                                                    value.id + `(this)"
+                                                    style="background-color:#0393D2">
+                                                <small>Pilih</small></button>
+                                                </td> `
+                                                );
+                                            }
+
+                                            row.append(
+                                                `
                                             <script>
                                                 function ContinueConfirmation` + value.id + `(button) {
                                                     // var kode = $(button).closest(.action).find(#id_car).val();
@@ -328,18 +409,20 @@
                                                     }).then((result) => {
                                                         if (result.isConfirmed) {
                                                             window.location.href = "/data/penumpang/` +
-                                            `?berangkat=` + tglKeberangkatan + `&pulang=` +
-                                            tglKepulangan + `&anak=` + anak + `&dewasa=` +
-                                            dewasa + `&lansia=` + lansia + `&paket=` +
-                                            encodeURIComponent(JSON.stringify(value)) + `";
+                                                `?paket=` + encodeURIComponent(JSON.stringify(
+                                                    value)) + `&pulang=` +
+                                                tglKepulangan + `&anak=` + anak + `&dewasa=` +
+                                                dewasa + `&lansia=` + lansia + `&berangkat=` +
+                                                tglKeberangkatan +
+                                                `&kodePromo=` + promoVal + `";
                                                         }
                                                     });
                                                 }`
-                                        )
-                                        tbody.append(row);
-                                        modal.append(`
+                                            )
+                                            tbody.append(row);
+                                            modal.append(`
                                                 <div class="modal fade modal-xl" id="modal-detail-asuransi-` + key +
-                                            `" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                `" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content p-3">
                                                             <div class="modal-header">
@@ -348,7 +431,8 @@
                                                             </div>
                                                             <div class="modal-body" style="text-align: left">
                                                                 <small>Berikut adalah detail benefit dari paket asuransi :</small>
-                                                                <table class="table table-bordered m-1" id="table-benefit-` + key + `">
+                                                                <table class="table table-bordered m-1" id="table-benefit-` +
+                                                key + `">
                                                                     <tbody>
                                                                     </tbody>
                                                                 </table>
@@ -358,32 +442,69 @@
                                                 </div>
                                         `);
 
-                                        var table2 = $('#table-benefit-' + key);
-                                        var tbody2 = table2.find('tbody');
+                                            var table2 = $('#table-benefit-' + key);
+                                            var tbody2 = table2.find('tbody');
 
-                                        tbody2.empty();
-                                        $.each(res['manfaat'], function(key2, value2) {
-                                            tbody2.append(`
+                                            tbody2.empty();
+                                            $.each(res['manfaat'], function(key2, value2) {
+                                                tbody2.append(`
                                             <tr><td colspan="2" class="fw-bold"><small>` + value2.name + `</small></td></tr>
                                             `);
-                                            $.each(res['detail_manfaat'], function(key3,
-                                                value3) {
-                                                if (value3.insurance_type_id ==
-                                                    value.paket_asuransi_id &&
-                                                    value2.id == value3.benefits_id
-                                                ) {
-                                                    tbody2.append(`
+                                                $.each(res['detail_manfaat'], function(key3,
+                                                    value3) {
+                                                    if (value3.insurance_type_id ==
+                                                        value.paket_asuransi_id &&
+                                                        value2.id == value3
+                                                        .benefits_id
+                                                    ) {
+                                                        tbody2.append(`
                                                             <tr>
                                                                 <td><small>` + value3.opsi_manfaat + `</small></td>
                                                                 <td class="text-center"><small>` + value3.price + `</small></td>
                                                             </tr>
                                                         `);
-                                                }
+                                                    }
+                                                });
                                             });
                                         });
-                                    });
+                                    }else {
+                                        if(res['promoExist'] == false){
+                                            massJlhPelangganDiv.innerHTML = `<div class = "alert alert-warning" >
+                                                                    <i class = "fas fa-exclamation-triangle" ></i>
+                                                                    `+ res['pesanPromo']+`
+                                                                </div>`;
+                                        }
+                                        var table = $('#table-asuransi');
+                                        var thead = table.find('thead');
+                                        var tbody = table.find('tbody');
+                                        var modal = $('#benefit-modal');
+                                        var jlhAdl = anak + dewasa + lansia;
+                                        thead.html('');
+                                        tbody.html('');
+                                        const trBenefit = document.getElementById('tr-benefit');
+                                        if (trBenefit) {
+                                            trBenefit.remove();
+                                        }
+
+                                        var row3 = $('<tr>');
+                                        row3.append($('<th>').text("Produk"));
+                                        row3.append($('<th>').text("Paket"));
+                                        row3.append($('<th>').text("Premi"));
+                                        row3.append($('<th>').text("Materai"));
+                                        row3.append($('<th>').text("Detail"));
+                                        row3.append($('<th>').text(""));
+                                        thead.append(row3);
+
+                                        var row2 = $('<tr>');
+                                        row2.append(`
+                                        <td colspan="6" style="place-content: center; font-style: italic">Data Tidak Ada</td>
+                                        `);
+                                        tbody.append(row2);
+
+                                    }
                                 }
                             });
+
                         });
                     });
                 </script>

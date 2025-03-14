@@ -15,6 +15,33 @@
     <link rel="stylesheet"
         href="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css') }}"
         crossorigin="anonymous">
+
+    <style>
+        .cust-tab li .nav-link {
+            background-color: transparent;
+            border: 0px solid transparent;
+            position: relative;
+            color: #0393D2;
+            min-width: 100px;
+            border: 2px solid;
+            border-top-left-radius: 0%;
+            border-top-right-radius: 0%;
+            border-color: #0393D2;
+            font-size: x-small;
+        }
+
+        .cust-tab li .nav-link.active {
+            background-color: #0393D2;
+            border: 0px solid transparent;
+            position: relative;
+            color: white;
+            min-width: 100px;
+            border: 2px solid;
+            border-top-left-radius: 0%;
+            border-top-right-radius: 0%;
+            border-color: #0393D2;
+        }
+    </style>
 </head>
 
 <body>
@@ -23,8 +50,9 @@
 
         {{-- header --}}
         @include('frontend.component.header')
-        
-        <div class="search-engine" style="background: url('{{$websiteConfig->url_photo_background}}');">
+
+        <div class="search-engine"
+            style="background: url('{{ asset($websiteConfig->url_photo_background) }}');background-size: cover;background-position: center;height: 100%; min-height: 100%; background-attachment: scroll;">
             @yield('content')
         </div>
 

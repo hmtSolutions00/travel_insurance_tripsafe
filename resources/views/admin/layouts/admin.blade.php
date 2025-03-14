@@ -20,7 +20,7 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{url('/admin/assets/css/style.css')}}">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="{{url('/admin/assets/images/favicon.png')}}" />
+    <link rel="icon" type="image/png" sizes="80x80" href="{{ asset($websiteConfig->logo) }}">
   </head>
   <body>
     <div class="container-scroller">

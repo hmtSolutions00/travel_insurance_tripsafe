@@ -42,8 +42,6 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Wilayah</th>
-                                    <th>Termasuk</th>
-                                    <th>Tidak Termasuk</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -53,8 +51,6 @@
                                     <tr>
                                         <td class="py-1">{{ $loop->iteration }}</td>
                                         <td>{{ $wilayah->name }}</td>
-                                        <td>{{ $wilayah->include }}</td>
-                                        <td>{{ $wilayah->exclude }}</td>
                                         <td>
                                             <span class="badge {{ $wilayah->status === 'active' ? 'badge-success' : 'badge-danger' }}">
                                                 {{ ucfirst($wilayah->status) }}

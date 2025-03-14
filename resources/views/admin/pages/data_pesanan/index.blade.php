@@ -109,7 +109,6 @@
                                                         <hr
                                                             style="margin-top: 5px;margin-right: 0px;margin-bottom: 5px;margin-left: 0px">
                                                     @endif
-                                                    <button onclick="konfSudah(this)" class="btn">Ubah Status</button>
                                                     @if ($order->status != 3)
                                                         <a href="{{ route('admin.data.pesanan_asuransi.butuh.konfirmasi', $order->id) }}"
                                                             class="dropdown-item">Butuh Konfirmasi</a>
@@ -148,7 +147,7 @@
             "pageLength": 5,
             "lengthMenu": [5, 10, 25, 50, 100],
             "order": [
-                [3, "desc"]
+                [1, "asc"]
             ],
             "language": {
                 "lengthMenu": "Menampilkan _MENU_ Data per halaman",
