@@ -11,10 +11,9 @@ class KodePromo extends Model
 
     protected $fillable = [
         "kode_promo",
-        "promo",
         "tanggal_mulai",
         "tanggal_akhir",
         "nama_promo",
-        "keterangan"
+        "detail"
     ];
 }

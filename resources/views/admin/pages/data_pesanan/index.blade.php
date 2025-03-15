@@ -86,7 +86,9 @@
                                                     </span>
                                                 @endif
                                             </td>
-                                            <td><a href="{{ route('admin.data.pesanan_asuransi.show', $order->id) }}"
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <a href="{{ route('admin.data.pesanan_asuransi.show', $order->id) }}"
                                                     class="btn btn-sm btn-outline-info">
                                                     <i class="mdi mdi-eye d-block mb-1"></i>
                                                 </a>
@@ -123,6 +125,16 @@
                                                     @endif
 
                                                 </div>
+                                                <form action="{{ route('admin.data.pesanan_asuransi.destroy', $order->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus kode promo ini?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                        <i class="mdi mdi-delete-outline d-block mb-1"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -149,11 +161,7 @@
             "pageLength": 5,
             "lengthMenu": [5, 10, 25, 50, 100],
             "order": [
-<<<<<<< HEAD
                 [0, "asc"]
-=======
-                [1, "asc"]
->>>>>>> cbd1595ec6aa39758752a90b5eab7dd74804fbab
             ],
             "language": {
                 "lengthMenu": "Menampilkan _MENU_ Data per halaman",

@@ -81,26 +81,6 @@
                 <small class="text-muted">18-65 tahun</small>
             </div>
 
-            <!--<div class="col-6 col-lg-6 mb-3 text-center">-->
-            <!--    <small class="form-check-label mb-1 fw-bold" for="lansia1_t">Lansia</small>-->
-            <!--    <div class="input-group justify-content-center">-->
-            <!--        <button class="btn btn-outline-primary minus" type="button" id="lansia1-minus_t">-</button>-->
-            <!--        <input type="text" class="form-control text-center" id="lansia1_t" name="lansia1_t"-->
-            <!--            value="0" readonly style="max-width: 50px;">-->
-            <!--        <button class="btn btn-outline-primary plus" type="button" id="lansia1-plus_t">+</button>-->
-            <!--    </div>-->
-            <!--    <small class="text-muted">70-84 tahun</small>-->
-            <!--</div>-->
-
-            <div class="col-12 col-lg-12 mb-3" style="text-align: left">
-                <small class="form-check-label mb-1 fw-bold" for="kode_promo">Kode Promo (Opsional)</small>
-                <div class="input-group">
-                    <div class="col-8 col-lg-6">
-                        <input type="text" class="form-control form-control-sm" id="kode_promo_t"
-                            name="kode_promo_t" style="border:solid 1px; border-color: #0393D2;border-bottom-right-radius: 0;border-top-right-radius: 0">
-                    </div>
-                </div>
-            </div>
 
             <div class="col-12 col-lg-12 mb-3" style="text-align: left">
                 <small class="form-check-label mb-1 fw-bold" for="kode_promo">Kode Promo (Opsional)</small>
@@ -119,10 +99,8 @@
                 const jenisAsuransiSelect_t = document.getElementById('jenis_asuransi_t');
                 const anakInput_t = document.getElementById('anak1_t');
                 const dewasaInput_t = document.getElementById('dewasa1_t');
-                const lansiaInput_t = document.getElementById('lansia1_t');
+
                 const massJlhPelangganDiv_t = document.getElementById('mass_jlhPelanggan_t');
-                const lansia1BtnM_t = document.getElementById('lansia1-minus_t');
-                const lansia1BtnP_t = document.getElementById('lansia1-plus_t');
                 const dewasa1BtnM_t = document.getElementById('dewasa1-minus_t');
                 const dewasa1BtnP_t = document.getElementById('dewasa1-plus_t');
                 const anak1BtnM_t = document.getElementById('anak1-minus_t');
@@ -142,8 +120,7 @@
                     var jenisAsuransi = jenisAsuransiSelect_t.value;
                     var anak_t = parseInt(anakInput_t.value);
                     var dewasa_t = parseInt(dewasaInput_t.value);
-                    var lansia_t = parseInt(lansiaInput_t.value);
-                    var total = anak_t + dewasa_t + lansia_t;
+                    var total = anak_t + dewasa_t;
                     var tombol = document.getElementById('btn-penawaran_t');
                     console.log(anak_t);
                     if (jenisAsuransi === '1') {
@@ -215,16 +192,6 @@
                 wilayahSelect_t.addEventListener('change', checkValidity_t);
                 anakInput_t.addEventListener('input', checkValidity_t);
                 dewasaInput_t.addEventListener('input', checkValidity_t);
-                lansiaInput_t.addEventListener('input', checkValidity_t);
-
-                lansia1BtnP_t.addEventListener('click', function() {
-                    clearTimeout(timeoutId_t);
-                    timeoutId_t = setTimeout(checkValidity_t, 500);
-                });
-                lansia1BtnM_t.addEventListener('click', function() {
-                    clearTimeout(timeoutId_t);
-                    timeoutId_t = setTimeout(checkValidity_t, 500);
-                });
                 dewasa1BtnP_t.addEventListener('click', function() {
                     clearTimeout(timeoutId_t);
                     timeoutId_t = setTimeout(checkValidity_t, 500);
@@ -257,7 +224,6 @@
                             const jenisAsuransi_t = document.getElementById('jenis_asuransi_t').value;
                             const anak_t = document.getElementById('anak1_t').value;
                             const dewasa_t = document.getElementById('dewasa1_t').value;
-                            const lansia_t = document.getElementById('lansia1_t').value;
                             const wilayah_t = document.getElementById('wilayah_t').value;
                             const tglKeberangkatan_t = document.getElementById('tanggal_keberangkatan_t').value;
                             const tglKepulangan_t = document.getElementById('tanggal_kepulangan_t').value;
@@ -265,7 +231,7 @@
                             const promoVal_t = document.getElementById('kode_promo_t').value;
                             const totalHari_t = Math.round((tglKeberangkatan_t - tglKeberangkatan_t) / (1000 * 3600 *
                                 24)) + 1;
-                            if (anak_t == 0 && dewasa_t == 0 && lansia_t == 0) {
+                            if (anak_t == 0 && dewasa_t == 0) {
                                 dataValid = false;
                             } else {
                                 dataValid = true;
@@ -308,7 +274,7 @@
                                     '&wilayah=' +
                                     wilayah_t + '&tglKeberangkatan=' + tglKeberangkatan_t + '&tglKepulangan=' +
                                     tglKepulangan_t + '&jlhAnak=' + anak_t + '&jlhDewasa=' + dewasa_t +
-                                    '&jlhLansia=' + lansia_t + '&tipePerjalanan=' + 2 + '&kodePromo=' + promoVal_t,
+                                    '&jlhLansia=' + 0 + '&tipePerjalanan=' + 2 + '&kodePromo=' + promoVal_t,
                                 type: 'get',
                                 success: function(res) {
                                     if (dataValid == true && res['promoExist'] == true) {
@@ -316,10 +282,12 @@
                                         var tbody = table.find('tbody');
                                         var thead = table.find('thead');
                                         var modal = $('#benefit-modal');
-                                        var jlhAdl_t = anak_t + dewasa_t + lansia_t;
+                                        var jlhAdl_t = anak_t + dewasa_t;
+                                        var detKodePromo = $('#detKodePromo');
 
                                         tbody.empty();
                                         thead.empty();
+                                        detKodePromo.empty();
                                         var row3 = $('<tr>');
                                             row3.append($('<th>').text("Produk"));
                                             row3.append($('<th>').text("Paket"));
@@ -337,18 +305,19 @@
                                         `);
                                             tbody.append(row2);
                                         }
+                                        if (res['promoValue'] == true) {
+                                            detKodePromo.append(
+                                                `
+                                            <p class="text-danger" style="font-style: italic; font-size: small;">` + res[
+                                                        'arrDisc'][0][0] + ` terpakai! <br> ` + res[
+                                                        'arrDisc'][0][1] + `</p>
+                                            `);
+                                        }
                                         $.each(res['paket_asuransi'], function(key, value) {
-                                            
                                             var row = $('<tr>');
                                             row.append($('<td>').text(value.product_name));
                                             row.append($('<td>').text(value.nama_paket));
-                                            if(res['promoValue'] == false){
                                                 row.append($('<td>').text(formatRupiah(value.price)));
-                                            }else{
-                                                row.append(`
-                                                <td style="align-content:center"><del><small>` + formatRupiah(value.price) + `</small></del></br>` +   formatRupiah(res['arrDiscPremi'][key]) +`</td>
-                                                `);
-                                            }
                                             row.append($('<td>').text(formatRupiah(value
                                                 .cetak_polis)));
                                             row.append(`
@@ -399,7 +368,7 @@
                                                     value)) + `&pulang=` +
                                                 tglKepulangan_t + `&anak=` + anak_t +
                                                 `&dewasa=` +
-                                                dewasa_t + `&lansia=` + lansia_t +
+                                                dewasa_t + `&lansia=` + 0 +
                                                 `&berangkat=` +
                                                 tglKeberangkatan_t + `&kodePromo=` + promoVal_t +`";
                                                         }
@@ -465,6 +434,8 @@
                                         var thead = table.find('thead');
                                         var tbody = table.find('tbody');
                                         var modal = $('#benefit-modal');
+                                        var detKodePromo = $('#detKodePromo');
+                                        detKodePromo.empty();
                                         thead.html('');
                                         tbody.html('');
                                         const trBenefit = document.getElementById('tr-benefit');

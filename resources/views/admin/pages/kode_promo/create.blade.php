@@ -30,40 +30,33 @@
                                 @endif
                                 <div class="row" id="formProduk">
                                     <div class="col-12 col-lg-4 mb-3">
-                                        <label for="name" class="mb-2">Nama Promo</label>
+                                        <label for="name" class="mb-2">Nama Promo<span class="text-danger">*</span></label>
                                         <input type="text" id="nama_promo" name="nama_promo"
                                             class="form-control form-control-lg @error('name') is-invalid @enderror"
                                             placeholder="Contoh: Promo Tahun Baru" value="{{ old('nama_promo') }}" required>
                                     </div>
 
                                     <div class="col-12 col-lg-4 mb-3">
-                                        <label for="name" class="mb-2">Kode Promo</label>
+                                        <label for="name" class="mb-2">Kode Promo<span class="text-danger">*</span></label>
                                         <input type="text" name="kode_promo" id="kode_promo"
                                             placeholder="Contoh: NEWYEAR2025" class="form-control form-control-lg"
                                             min="0" value="{{ old('kode_promo') }}" required>
                                     </div>
-
                                     <div class="col-12 col-lg-4 mb-3">
-                                        <label for="name" class="mb-2">Total Potongan Promo (IDR)</label>
-                                        <input type="number" name="promo" id="promo" placeholder="Contoh: 50000"
-                                            class="form-control form-control-lg" min="0" value="{{ old('promo') }}"
-                                            required>
-                                    </div>
-                                    <div class="col-12 col-lg-4 mb-3">
-                                        <label for="name" class="mb-2">Tanggal Mulai Berlaku</label>
+                                        <label for="name" class="mb-2">Tanggal Mulai Berlaku<span class="text-danger">*</span></label>
                                         <input type="date" name="tanggal_mulai" id="tanggal_mulai"
                                             class="form-control form-control-lg" value="{{ old('tanggal_mulai') }}"
                                             required>
                                     </div>
                                     <div class="col-12 col-lg-4 mb-3">
-                                        <label for="name" class="mb-2">Tanggal Berakhir</label>
+                                        <label for="name" class="mb-2">Tanggal Berakhir<span class="text-danger">*</span></label>
                                         <input type="date" name="tanggal_akhir" id="tanggal_akhir"
                                             class="form-control form-control-lg" value="{{ old('tanggal_akhir') }}"
                                             required>
                                     </div>
                                     <div class="col-12 col-lg-12 mb-5">
-                                        <label for="name" class="mb-2">Keterangan</label>
-                                        <textarea name="keterangan" id="keterangan" class="form-control form-control-lg"></textarea>
+                                        <label for="name" class="mb-2">Detail Kode Promo<span class="text-danger">*</span></label>
+                                        <textarea name="detail" id="detail" class="form-control form-control-lg" placeholder="Ex: Selamat! Anda mendapat Cashback Saldo Gopay Rp. 10.000">{{ old('detail') }}</textarea>
                                     </div>
 
                                 </div>

@@ -31,7 +31,7 @@ class HargaPaketController extends Controller
         ]);
     }
 
-  public function get_paket_asuransi(Request $request)
+    public function get_paket_asuransi(Request $request)
     {
         $anak = $request->jlhAnak;
         $dewasa = $request->jlhDewasa;
@@ -199,7 +199,7 @@ class HargaPaketController extends Controller
                 $paket_asuransi = [];
             }
         }
-        $arrDiscPremi = [];
+        $arrDisc = [];
         $kodePromo = KodePromo::where('kode_promo', $request->kodePromo)->first();
 
         $promoExist = true;
@@ -219,11 +219,8 @@ class HargaPaketController extends Controller
                     $promoValue = true;
                     $pesanPromo = "Kode Promo belum tersedia";
                 } else {
-                    foreach ($paket_asuransi as $asuransi) {
-                        $diskon = (int)$asuransi["price"] - (int)$kodePromo->promo;
-                        array_push($arrDiscPremi, $diskon);
-                        $promoValue = true;
-                    }
+                    $promoValue = true;
+                    array_push($arrDisc, [$kodePromo->nama_promo, $kodePromo->detail]);
                 }
             } else {
                 $promoExist = false;
@@ -246,7 +243,7 @@ class HargaPaketController extends Controller
             'paket_asuransi' => $paket_asuransi,
             'manfaat' => $manfaat,
             'detail_manfaat' => $detail_manfaat,
-            'arrDiscPremi' => $arrDiscPremi,
+            'arrDisc' => $arrDisc,
             'pesanPromo' => $pesanPromo,
             'promoValue' => $promoValue,
             'promoExist' => $promoExist

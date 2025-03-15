@@ -50,7 +50,6 @@
                                         <th>Kode Promo</th>
                                         <th>Tanggal Mulai</th>
                                         <th>Tanggal Berakhir</th>
-                                        <th>Potongan Promo (IDR)</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -68,7 +67,6 @@
                                             @endphp
                                             <td>{{ $tglMulai }}</td>
                                             <td>{{ $tglAkhir }}</td>
-                                            <td style="text-align: right;">{{ $potongan }}</td>
                                             <td>
                                                 <div class="btn-group" role="group">
                                                     <a href="{{ route('kode.promo.show', $promo->id) }}"

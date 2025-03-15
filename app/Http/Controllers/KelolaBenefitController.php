@@ -31,7 +31,7 @@ class KelolaBenefitController extends Controller
   return view('admin.pages.data_benefit.index', compact('groupedData'));
 }
 
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -50,7 +50,7 @@ class KelolaBenefitController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $request->validate([
             'destionation_id' => 'required|array',
             'destionation_id.*' => 'exists:wilayahs,id',
@@ -80,24 +80,24 @@ class KelolaBenefitController extends Controller
     {
         // Decode destionation_id dari base64 dan JSON
         $decodedDestinationId = json_decode(base64_decode($destionation_id), true);
-    
+
         // Ambil data DetailManfaat berdasarkan insurance_type_id dan destionation_id
         $detailManfaat = DetailManfaat::where('insurance_type_id', $insurance_type_id)
             ->whereJsonContains('destionation_id', $decodedDestinationId)
             ->firstOrFail();
-    
+
         // Ambil data wilayah terkait
         $wilayahs = Wilayah::whereIn('id', $decodedDestinationId)->get();
-    
+
         // Ambil paket asuransi terkait
         $paketAsuransi = PaketAsuransi::findOrFail($insurance_type_id);
-    
+
         // Ambil manfaat paket dan opsi manfaatnya
         $manfaatPakets = ManfaatPaket::with('opsiManfaats')->get();
-    
+
         return view('admin.pages.data_benefit.detail', compact('detailManfaat', 'wilayahs', 'paketAsuransi', 'manfaatPakets','decodedDestinationId'));
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -105,7 +105,7 @@ class KelolaBenefitController extends Controller
 {
     // Dekode destionation_id dari base64 dan JSON
     $decodedDestinationId = json_decode(base64_decode($destionation_id), true);
-    
+
     // Ambil data DetailManfaat berdasarkan insurance_type_id dan destionation_id
     $detailManfaat = DetailManfaat::where('insurance_type_id', $insurance_type_id)
         ->whereJsonContains('destionation_id', $decodedDestinationId)
@@ -122,7 +122,7 @@ class KelolaBenefitController extends Controller
     return view('admin.pages.data_benefit.edit', compact('detailManfaat', 'wilayahs', 'paketAsuransis', 'manfaatPakets'));
 }
 
-    
+
 
 
 
@@ -134,7 +134,7 @@ class KelolaBenefitController extends Controller
     // {
     //     // Decode destionation_id agar sesuai dengan format JSON
     //     $decodedDestinationId = json_decode(base64_decode($destionation_id), true);
-    
+
     //     // Validasi request
     //     $request->validate([
     //         'destionation_id' => 'required|array',
@@ -144,17 +144,17 @@ class KelolaBenefitController extends Controller
     //         'prices.*.id' => 'required|exists:detail_manfaats,id', // Pastikan ID valid
     //         'prices.*.price' => 'nullable|string|max:255',
     //     ]);
-    
+
     //     // **1. Update data yang sudah ada berdasarkan ID di tabel detail_manfaat**
     //     foreach ($request->prices as $data) {
     //         DetailManfaat::where('id', $data['id'])->update([
     //             'insurance_type_id' => $request->insurance_type_id,
-                
+
     //             'destionation_id' =>json_encode($request->destionation_id, true) ,
     //             'price' => $data['price'],
     //         ]);
     //     }
-    
+
     //     return redirect()->route('kelola.data_benefit.index')->with('success', 'Data berhasil diperbarui.');
     // }
     public function update(Request $request, $insurance_type_id, $destionation_id)
@@ -194,7 +194,7 @@ class KelolaBenefitController extends Controller
     return redirect()->route('kelola.data_benefit.index')->with('success', 'Data berhasil diperbarui.');
 }
 
-    
+
 
 
 
@@ -208,22 +208,22 @@ class KelolaBenefitController extends Controller
     {
         // Dekode destionation_id dari base64 dan JSON
         $decodedDestinationId = json_decode(base64_decode($destionation_id), true);
-    
+
         // Ambil data berdasarkan insurance_type_id dan destionation_id
         $detailManfaat = DetailManfaat::where('insurance_type_id', $insurance_type_id)
             ->whereJsonContains('destionation_id', $decodedDestinationId)
             ->get();
-    
+
         // Jika data tidak ditemukan
         if ($detailManfaat->isEmpty()) {
             return redirect()->route('kelola.data_benefit.index')->with('error', 'Data tidak ditemukan.');
         }
-    
+
         // Hapus semua data yang cocok
         foreach ($detailManfaat as $manfaat) {
             $manfaat->delete();
         }
-    
+
         return redirect()->route('kelola.data_benefit.index')->with('success', 'Data berhasil dihapus.');
     }
 }

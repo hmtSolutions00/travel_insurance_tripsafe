@@ -86,11 +86,7 @@
                 <span class="menu-title">Benefit Asuransi</span>
             </a>
         </li>
-<<<<<<< HEAD
          <li class="nav-item {{ $activeSidebar['kode_promo'] ? 'active' : '' }}">
-=======
-        <li class="nav-item {{ $activeSidebar['kode_promo'] ? 'active' : '' }}">
->>>>>>> cbd1595ec6aa39758752a90b5eab7dd74804fbab
             <a class="nav-link" href="{{ route('kode.promo.index') }}" aria-expanded="false"
                 aria-controls="ui-basic">
                 <i class="mdi mdi-ticket-percent menu-icon"></i>

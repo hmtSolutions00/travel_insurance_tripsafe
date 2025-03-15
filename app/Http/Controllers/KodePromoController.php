@@ -27,7 +27,7 @@ class KodePromoController extends Controller
         $request->validate([
             'nama_promo' => 'required',
             'kode_promo' => 'required',
-            'promo' => 'required',
+            'detail' => 'required',
             'tanggal_mulai' => 'required',
             'tanggal_akhir' => 'required',
         ]);
@@ -43,10 +43,9 @@ class KodePromoController extends Controller
         KodePromo::create([
             'nama_promo' => $request->nama_promo,
             'kode_promo' => $request->kode_promo,
-            'promo' => $request->promo,
+            'detail' => $request->detail,
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_akhir' => $request->tanggal_akhir,
-            'keterangan' => $request->keterangan,
         ]);
 
         return redirect()->route('kode.promo.index')->with('success', 'Data kode promo berhasil ditambahkan');
@@ -71,7 +70,7 @@ class KodePromoController extends Controller
         $request->validate([
             'nama_promo' => 'required',
             'kode_promo' => 'required',
-            'promo' => 'required',
+            'detail' => 'required',
             'tanggal_mulai' => 'required',
             'tanggal_akhir' => 'required',
         ]);
@@ -89,10 +88,9 @@ class KodePromoController extends Controller
         $kodePromo->update([
             'nama_promo' => $request->nama_promo,
             'kode_promo' => $request->kode_promo,
-            'promo' => $request->promo,
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_akhir' => $request->tanggal_akhir,
-            'keterangan' => $request->keterangan,
+            'detail' => $request->detail,
         ]);
 
         return redirect()->route('kode.promo.index')->with('success', 'Data kode promo berhasil diubah');

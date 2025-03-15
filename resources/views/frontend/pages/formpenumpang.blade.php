@@ -158,21 +158,17 @@
 
                                     @php
                                         if($promo != null){
-                                            $potongan = (int) $promo->promo;
-                                            $formatPotongan =  number_format(-$promo->promo, 0, ',', '.');
                                             $kodePromo = $promo->kode_promo;
                                         }else{
-                                            $potongan = 0;
-                                            $formatPotongan = 0;
                                             $kodePromo = "";
                                         }
                                         $nilaiPremi = $paket_asuransi['price'];
                                         $nilaiCetakPolis = $paket_asuransi['cetak_polis'];
                                         $premi = number_format($nilaiPremi, 0, ',', '.');
                                         $cetakPolis = number_format($nilaiCetakPolis, 0, ',', '.');
-                                        $nilaiTotal = $nilaiPremi + $nilaiCetakPolis - $potongan;
+                                        $nilaiTotal = $nilaiPremi + $nilaiCetakPolis;
                                         $total = number_format($nilaiTotal, 0, ',', '.');
-                                    
+
                                     @endphp
 
                                     <div class="col-4 col-lg-4 mb-1" style="text-align: left">
@@ -191,20 +187,26 @@
                                             class="input-asuransi" id="cetak_polis" name="cetak_polis">
                                     </div>
                                     <div class="col-4 col-lg-4 mb-1" style="text-align: left">
-                                        <small class="title-pelanggan fw-bold">Potongan Kode Promo(IDR)</small>
-                                    </div>
-                                    <div class="col-8 col-lg-8 mb-2" style="text-align: right; align-content: center;">
-                                        <input type="text" readonly value="{{ $formatPotongan }}"
-                                        class="input-asuransi" id="promo" name="promo">
-                                        <input type="hidden" readonly value="{{ $kodePromo  }}"
-                                        class="input-asuransi" id="kode_promo" name="kode_promo">
-                                    </div>
-                                    <div class="col-4 col-lg-4 mb-1" style="text-align: left">
                                         <small class="title-pelanggan fw-bold">Total Harga (IDR)</small>
                                     </div>
                                     <div class="col-8 col-lg-8 mb-1" style="text-align: right">
                                         <input type="text" readonly value="{{ $total }}"
                                             class="input-asuransi" id="total_premi" name="total_premi">
+                                    </div>
+                                    @if($promo != null)
+                                    <div class="col-12 col-lg-12 mb-1" style="text-align: left">
+                                        <small class="title-pelanggan fw-bold">Kode Promo : {{ $promo->kode_promo }}</small>
+                                    </div>
+                                    @endif
+                                    <div class="col-12 col-lg-12 mb-2" style="text-align: left">
+                                        @if($promo != null)
+                                        <textarea name="promo" id="promo" class="form-control" readonly style="background-color: transparent; border-color: transparent;font-size:14px">{{ $promo->detail }} dari {{ $promo->nama_promo }}</textarea>
+                                        @else
+                                        <input type="hidden" readonly value=""
+                                        class="input-asuransi" id="promo" name="promo">
+                                        @endif
+                                        <input type="hidden" readonly value="{{ $kodePromo  }}"
+                                        class="input-asuransi" id="kode_promo" name="kode_promo">
                                     </div>
 
                                 </div>

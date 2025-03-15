@@ -128,12 +128,15 @@
                                             </tr>
                                         @endif
                                     @endforeach
-                                 
-
-
-
                                 </tbody>
                             </table>
+                            <div class="col-12 col-lg-12">
+                                <div class="row" style="text-align: left">
+                                    <div class="col-12 col-lg-12" id="detKodePromo">
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div id="benefit-modal">
                         </div>

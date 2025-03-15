@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('kode_promos', function (Blueprint $table) {
             $table->id();
             $table->string('kode_promo');
-            $table->integer('promo');
             $table->date('tanggal_mulai');
             $table->date('tanggal_akhir');
             $table->string('nama_promo')->nullable();
-            $table->text('keterangan')->nullable();
+            $table->text('detail');
             $table->timestamps();
         });
     }

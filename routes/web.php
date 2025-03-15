@@ -146,12 +146,7 @@ Route::middleware(['auth', 'role:admin,user'])->group(function () {
         Route::get('/{id}/sudah-diproses', [PesananController::class, 'u_sudah_diproses'])->name('sudah.diproses');
         Route::get('/{id}/tidak-valid', [PesananController::class, 'u_tidak_valid'])->name('tidak.valid');
         Route::get('/{id}/butuh-konfirmasi', [PesananController::class, 'u_butuh_konfirmasi'])->name('butuh.konfirmasi');
-        // Route::get('/create', [MstTipeAsuransiController::class, 'create'])->name('create');
-        // Route::post('/store', [MstTipeAsuransiController::class, 'store'])->name('store');
-        // Route::get('/{id}/edit', [MstTipeAsuransiController::class, 'edit'])->name('edit');  // ✅ Tambahkan {id}
-        // Route::put('/{id}/update', [MstTipeAsuransiController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
-        // Route::get('/{id}/detail', [MstTipeAsuransiController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
-        // Route::delete('/{id}', [MstTipeAsuransiController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
+        Route::delete('/{id}', [PesananController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('master/tipe/pelanggan')->name('admin.master.tipe_pelanggan.')->group(function () {
@@ -244,7 +239,7 @@ Route::middleware(['auth', 'role:admin,user'])->group(function () {
         Route::get('/{id}/detail', [BrosurController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
         Route::delete('/{id}', [BrosurController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
     });
-    
+
     Route::prefix('kode/promo')->name('kode.promo.')->group(function () {
         Route::get('/', [KodePromoController::class, 'index'])->name('index');
         Route::get('/create', [KodePromoController::class, 'create'])->name('create');

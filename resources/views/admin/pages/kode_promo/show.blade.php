@@ -42,13 +42,6 @@
                                             placeholder="Contoh: NEWYEAR2025" class="form-control form-control-lg"
                                             min="0" value="{{ $kodePromo->kode_promo }}" readonly>
                                     </div>
-
-                                    <div class="col-12 col-lg-4 mb-3">
-                                        <label for="name" class="mb-2">Total Potongan Promo (IDR)</label>
-                                        <input type="number" name="promo" id="promo" placeholder="Contoh: 50000"
-                                            class="form-control form-control-lg" min="0" value="{{ $kodePromo->promo }}"
-                                            readonly>
-                                    </div>
                                     <div class="col-12 col-lg-4 mb-3">
                                         <label for="name" class="mb-2">Tanggal Mulai Berlaku</label>
                                         <input type="date" name="tanggal_mulai" id="tanggal_mulai"
@@ -62,8 +55,8 @@
                                             readonly>
                                     </div>
                                     <div class="col-12 col-lg-12 mb-5">
-                                        <label for="name" class="mb-2">Keterangan</label>
-                                        <textarea name="keterangan" id="keterangan" class="form-control form-control-lg">{{ $kodePromo->keterangan }}</textarea>
+                                        <label for="name" class="mb-2">Detail Kode Promo</label>
+                                        <textarea name="detail" id="detail" class="form-control form-control-lg" readonly>{{ $kodePromo->detail }}</textarea>
                                     </div>
 
                                 </div>

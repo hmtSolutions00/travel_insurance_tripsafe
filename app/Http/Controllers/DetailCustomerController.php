@@ -9,7 +9,6 @@ use App\Models\Pesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use App\Models\KodePromo;
 
 class DetailCustomerController extends Controller
 {

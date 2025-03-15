@@ -215,9 +215,9 @@
                 }
                 let timeoutId = null;
 
-                promoInput.addEventListener('keydown',function() {
+                promoInput.addEventListener('keydown', function() {
                     clearTimeout(timeoutId);
-                    timeoutId = setTimeout(checkValidity, 1000);
+                    timeoutId = setTimeout(checkValidity, 600);
                 });
                 jenisAsuransiSelect.addEventListener('change', checkValidity);
                 wilayahSelect.addEventListener('change', checkValidity);
@@ -319,14 +319,17 @@
                                 type: 'get',
                                 success: function(res) {
                                     if (dataValid == true && res['promoExist'] == true) {
+
                                         var table = $('#table-asuransi');
                                         var tbody = table.find('tbody');
                                         var thead = table.find('thead');
                                         var modal = $('#benefit-modal');
                                         var jlhAdl = anak + dewasa + lansia;
+                                        var detKodePromo = $('#detKodePromo');
 
                                         tbody.empty();
                                         thead.empty();
+                                        detKodePromo.empty();
                                         var row3 = $('<tr>');
                                         row3.append($('<th>').text("Produk"));
                                         row3.append($('<th>').text("Paket"));
@@ -344,35 +347,34 @@
                                         if (arrLength == 0) {
                                             var row2 = $('<tr>');
                                             row2.append(`
-                                        <td colspan="6" style="place-content: center; font-style: italic">Data Tidak Ada</td>
-                                        `);
+                                                <td colspan="6" style="place-content: center; font-style: italic">Data Tidak Ada</td>
+                                                `);
                                             tbody.append(row2);
                                         }
+                                        if (res['promoValue'] == true) {
+                                            detKodePromo.append(
+                                                `
+                                            <p class="text-danger" style="font-style: italic; font-size: small;">` + res[
+                                                        'arrDisc'][0][0] + ` terpakai! <br> ` + res[
+                                                        'arrDisc'][0][1] + `</p>
+                                            `);
+                                        }
                                         $.each(res['paket_asuransi'], function(key, value) {
-
                                             var row = $('<tr>');
                                             row.append($('<td>').text(value.product_name));
                                             row.append($('<td>').text(value.nama_paket));
-                                            if (res['promoValue'] == false) {
-                                                row.append($('<td>').text(formatRupiah(value
-                                                    .price)));
-                                            } else {
-                                                row.append(`
-                                                    <td style="align-content:center"><del><small>` + formatRupiah(value
-                                                        .price) + `</small></del></br>` +
-                                                    formatRupiah(res['arrDiscPremi'][key]) + `</td>
-                                                    `);
-                                            }
+                                            row.append($('<td>').text(formatRupiah(value
+                                                .price)));
                                             row.append($('<td>').text(formatRupiah(value
                                                 .cetak_polis)));
                                             row.append(`
-                                        <td style="place-content: center; color: #0393D2;"><button class="btn"
+                                                <td style="place-content: center; color: #0393D2;"><button class="btn"
                                                     data-bs-toggle="modal" data-bs-target="#modal-detail-asuransi-` +
                                                 key + `"
                                                     style="background: transparent; border-color: transparent;">
                                                     <i class="fa-solid fa-circle-info fa-md text-secondary fs-5"></i>
                                                 </button></td>
-                                        `);
+                                                `);
                                             if (jlhAdl == 0 || tglKeberangkatan == null ||
                                                 tglKepulangan == null || $('#btn-penawaran').prop(
                                                     'disabled') === true) {
@@ -396,7 +398,7 @@
 
                                             row.append(
                                                 `
-                                            <script>
+                                                <script>
                                                 function ContinueConfirmation` + value.id + `(button) {
                                                     // var kode = $(button).closest(.action).find(#id_car).val();
                                                     Swal.fire({
@@ -440,7 +442,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                        `);
+                                                `);
 
                                             var table2 = $('#table-benefit-' + key);
                                             var tbody2 = table2.find('tbody');
@@ -448,8 +450,8 @@
                                             tbody2.empty();
                                             $.each(res['manfaat'], function(key2, value2) {
                                                 tbody2.append(`
-                                            <tr><td colspan="2" class="fw-bold"><small>` + value2.name + `</small></td></tr>
-                                            `);
+                                                <tr><td colspan="2" class="fw-bold"><small>` + value2.name + `</small></td></tr>
+                                                `);
                                                 $.each(res['detail_manfaat'], function(key3,
                                                     value3) {
                                                     if (value3.insurance_type_id ==
@@ -467,20 +469,22 @@
                                                 });
                                             });
                                         });
-                                    }else {
-                                        if(res['promoExist'] == false){
+                                    } else {
+                                        if (res['promoExist'] == false) {
                                             massJlhPelangganDiv.innerHTML = `<div class = "alert alert-warning" >
-                                                                    <i class = "fas fa-exclamation-triangle" ></i>
-                                                                    `+ res['pesanPromo']+`
-                                                                </div>`;
+                                                                <i class = "fas fa-exclamation-triangle" ></i>
+                                                                ` + res['pesanPromo'] + `
+                                                            </div>`;
                                         }
                                         var table = $('#table-asuransi');
                                         var thead = table.find('thead');
                                         var tbody = table.find('tbody');
                                         var modal = $('#benefit-modal');
                                         var jlhAdl = anak + dewasa + lansia;
+                                        var detKodePromo = $('#detKodePromo');
                                         thead.html('');
                                         tbody.html('');
+                                        detKodePromo.empty();
                                         const trBenefit = document.getElementById('tr-benefit');
                                         if (trBenefit) {
                                             trBenefit.remove();
@@ -497,10 +501,9 @@
 
                                         var row2 = $('<tr>');
                                         row2.append(`
-                                        <td colspan="6" style="place-content: center; font-style: italic">Data Tidak Ada</td>
-                                        `);
+                                    <td colspan="6" style="place-content: center; font-style: italic">Data Tidak Ada</td>
+                                    `);
                                         tbody.append(row2);
-
                                     }
                                 }
                             });

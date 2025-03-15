@@ -78,45 +78,39 @@
                                         </div>
                                     </div>
                                 </div>
-                                <hr>
-                                <div class="col-12 col-md-12" style="text-align: right">
-                                    @if ($pesanan->kode_promo != null)
-                                        <small style="font-weight: bold">Kode Promo : {{ $pesanan->kode_promo }}</small>
-                                    @else
-                                        <small style="font-weight: bold">Kode Promo : -</small>
-                                    @endif
-                                </div>
-                                <h4 class="card-title">Total Harga</h4>
                                 <div class="col-12 col-md-12 mb-2">
                                     <div class="row">
-                                        <div class="col-12 col-md-6">
+                                        <div class="col-12 col-md-6 mb-2">
                                             <small style="font-weight: bold">Premi(IDR)</small>
                                         </div>
-                                        <div class="col-12 col-md-6" style="text-align: right">
+                                        <div class="col-12 col-md-6 mb-2" style="text-align: right">
                                             <small class="fw bold">{{ $pesanan->premi }}</small>
                                         </div>
-                                        <div class="col-12 col-md-6">
+                                        <div class="col-12 col-md-6 mb-2">
                                             <small style="font-weight: bold">Materai & E-Polis(IDR)</small>
                                         </div>
-                                        <div class="col-12 col-md-6" style="text-align: right">
+                                        <div class="col-12 col-md-6 mb-2" style="text-align: right">
                                             <small class="fw bold">{{ $pesanan->materai }}</small>
                                         </div>
-                                        <div class="col-12 col-md-6">
-                                            <small style="font-weight: bold">Potongan Kode Promo(IDR)</small>
-                                        </div>
-                                        <div class="col-12 col-md-6 mb-2" style="text-align: right">
-                                            @if ($pesanan->potongan_promo != null)
-                                                <small class="fw bold">-{{ $pesanan->potongan_promo }}</small>
-                                            @else
-                                                <small class="fw bold">0</small>
-                                            @endif
-                                        </div>
-                                        <div class="col-12 col-md-6">
+                                        <div class="col-12 col-md-6 mb-2">
                                             <small style="font-weight: bold">Total Harga</small>
                                         </div>
-                                        <div class="col-12 col-md-6" style="text-align: right">
+                                        <div class="col-12 col-md-6 mb-2" style="text-align: right">
                                             <small class="fw bold">{{ $pesanan->total_price }}</small>
                                         </div>
+                                        @if ($pesanan->potongan_promo != null)
+                                        <hr>
+                                        <div class="col-12 col-md-12 mb-2" style="text-align: left">
+                                            @if ($pesanan->kode_promo != null)
+                                                <small style="font-weight: bold">Kode Promo : {{ $pesanan->kode_promo }}</small>
+                                            @else
+                                                <small style="font-weight: bold">Kode Promo : -</small>
+                                            @endif
+                                        </div>
+                                        <div class="col-12 col-md-12 mb-2" style="text-align: left">
+                                                <small class="fw bold">{{ $pesanan->potongan_promo }}</small>
+                                        </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
