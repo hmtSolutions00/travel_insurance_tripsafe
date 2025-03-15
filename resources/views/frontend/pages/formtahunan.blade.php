@@ -102,6 +102,16 @@
                 </div>
             </div>
 
+            <div class="col-12 col-lg-12 mb-3" style="text-align: left">
+                <small class="form-check-label mb-1 fw-bold" for="kode_promo">Kode Promo (Opsional)</small>
+                <div class="input-group">
+                    <div class="col-8 col-lg-6">
+                        <input type="text" class="form-control form-control-sm" id="kode_promo_t"
+                            name="kode_promo_t" style="border:solid 1px; border-color: #0393D2;border-bottom-right-radius: 0;border-top-right-radius: 0">
+                    </div>
+                </div>
+            </div>
+
             <div class="col-12 col-lg-12 mb-3 text-center" id="mass_jlhPelanggan_t">
             </div>
 

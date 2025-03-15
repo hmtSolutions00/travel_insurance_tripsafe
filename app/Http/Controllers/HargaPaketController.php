@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailManfaat;
 use App\Models\HargaPaket;
+use App\Models\KodePromo;
 use App\Models\ManfaatPaket;
 use App\Models\PaketAsuransi;
 use App\Models\TipeAsuransi;
 use App\Models\TipePelanggan;
 use App\Models\TipePerjalanan;
-use App\Models\KodePromo;
 use App\Models\Wilayah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -301,7 +301,7 @@ class HargaPaketController extends Controller
 
     public function store(Request $request)
     {
-        if($request->tipe_perjalanan == 2){
+        if ($request->tipe_perjalanan == 2) {
             $request['durasi_min'] = 1;
             $request['durasi_maks'] = 367;
             $request['extra_price'] = 0;
@@ -423,7 +423,7 @@ class HargaPaketController extends Controller
 
     public function update(Request $request, $id)
     {
-        if($request->tipe_perjalanan == 2){
+        if ($request->tipe_perjalanan == 2) {
             $request['durasi_min'] = 1;
             $request['durasi_maks'] = 367;
             $request['extra_price'] = 0;

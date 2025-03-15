@@ -149,7 +149,11 @@
             "pageLength": 5,
             "lengthMenu": [5, 10, 25, 50, 100],
             "order": [
+<<<<<<< HEAD
                 [0, "asc"]
+=======
+                [1, "asc"]
+>>>>>>> cbd1595ec6aa39758752a90b5eab7dd74804fbab
             ],
             "language": {
                 "lengthMenu": "Menampilkan _MENU_ Data per halaman",

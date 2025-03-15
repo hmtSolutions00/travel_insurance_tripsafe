@@ -19,5 +19,5 @@ class HargaPaket extends Model
         "custAge_id",
         "extra_price",
         "product_name",
-];
+    ];
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailCustomer;
 use App\Models\HargaPaket;
+use App\Models\KodePromo;
 use App\Models\Pesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -154,7 +155,7 @@ class DetailCustomerController extends Controller
         return view('frontend.pages.halamanterakhir');
     }
 
-    
+
 
     public function download_single(){
         $filePath = public_path('file-download/Brosur_TravelPro_Single_Trip.pdf');

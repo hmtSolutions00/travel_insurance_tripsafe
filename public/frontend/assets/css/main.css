@@ -281,7 +281,7 @@ a:hover {
 }
 
 .search-engine {
-  padding: 2rem 0 5rem 0;
+  padding: 2rem 0 0rem 0;
   background-size: cover;
   min-height: auto;
   background-repeat: no-repeat;
@@ -360,18 +360,19 @@ a:hover {
     border: 0px solid transparent;
     position: relative;
     color: #0393D2;
-    min-width: 160px;
+    min-width: 100px;
     border: 2px solid;
     border-top-left-radius: 0%;
     border-top-right-radius: 0%;
     border-color:#0393D2;
+    font-size: x-small;
 }
 .cust-tab li .nav-link.active {
   background-color: #0393D2;
   border: 0px solid transparent;
   position: relative;
   color: white;
-  min-width: 160px;
+  min-width: 100px;
   border: 2px solid;
   border-top-left-radius: 0%;
   border-top-right-radius: 0%;
