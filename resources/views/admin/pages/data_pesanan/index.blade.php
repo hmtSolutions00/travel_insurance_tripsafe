@@ -43,7 +43,7 @@
                                         <th>Jenis Asuransi</th>
                                         <th>Jenis Paket</th>
                                         <th>Tujuan</th>
-                                        {{-- <th>Waktu Perjalanan</th> --}}
+                                        <th>Tanggal Pesanan</th>
                                         <th>Total Harga(IDR)</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -56,6 +56,8 @@
                                                 ->where('is_polish', true)
                                                 ->first();
                                             $arrDurasi = json_decode($order->durasi_perjalan);
+                                            $tglPesanan = Carbon\Carbon::parse($order->created_at)->format("d/m/Y, H:i");
+
                                         @endphp
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
@@ -63,11 +65,11 @@
                                             <td>{{ $order->tipe_asuransi }}</td>
                                             <td>{{ $order->paket_asuransi }}</td>
                                             <td>{{ $order->wilayah }}</td>
-                                            {{-- <td>{{ $arrDurasi[0] }} - {{ $arrDurasi[1] }}</td> --}}
+                                            <td>{{ $tglPesanan }}</td>
                                             <td style="text-align: right">{{ $order->total_price }}</td>
                                             <td>
                                                 @if ($order->status == 1)
-                                                    <span class="badge badge-info">
+                                                    <span class="badge badge-primary">
                                                         Belum Diproses
                                                     </span>
                                                 @elseif($order->status == 2)
@@ -109,7 +111,6 @@
                                                         <hr
                                                             style="margin-top: 5px;margin-right: 0px;margin-bottom: 5px;margin-left: 0px">
                                                     @endif
-                                                    <button onclick="konfSudah(this)" class="btn">Ubah Status</button>
                                                     @if ($order->status != 3)
                                                         <a href="{{ route('admin.data.pesanan_asuransi.butuh.konfirmasi', $order->id) }}"
                                                             class="dropdown-item">Butuh Konfirmasi</a>
@@ -148,7 +149,7 @@
             "pageLength": 5,
             "lengthMenu": [5, 10, 25, 50, 100],
             "order": [
-                [3, "desc"]
+                [0, "asc"]
             ],
             "language": {
                 "lengthMenu": "Menampilkan _MENU_ Data per halaman",

@@ -65,13 +65,13 @@
                                                 <a href="{{ route('admin.master.tipe_asuransi.edit', $asuransi->id) }}" class="btn btn-sm btn-outline-warning">
                                                     <i class="mdi mdi-pencil-outline d-block mb-1"></i>
                                                 </a>
-                                                <form action="{{ route('admin.master.tipe_asuransi.destroy', $asuransi->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                        <i class="mdi mdi-delete-outline d-block mb-1"></i>
-                                                    </button>
-                                                </form>
+                                                <!--<form action="{{ route('admin.master.tipe_asuransi.destroy', $asuransi->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">-->
+                                                <!--    @csrf-->
+                                                <!--    @method('DELETE')-->
+                                                <!--    <button type="submit" class="btn btn-sm btn-outline-danger">-->
+                                                <!--        <i class="mdi mdi-delete-outline d-block mb-1"></i>-->
+                                                <!--    </button>-->
+                                                <!--</form>-->
                                             </div>
                                         </td>
                                     </tr>

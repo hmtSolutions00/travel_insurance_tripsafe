@@ -106,7 +106,7 @@
             "pageLength": 5,
             "lengthMenu": [5, 10, 25, 50, 100],
             "order": [
-                [3, "desc"]
+                [0, "asc"]
             ],
             "language": {
                 "lengthMenu": "Menampilkan _MENU_ Data per halaman",

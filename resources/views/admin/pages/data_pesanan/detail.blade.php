@@ -79,9 +79,38 @@
                                     </div>
                                 </div>
                                 <hr>
+                                <div class="col-12 col-md-12" style="text-align: right">
+                                    @if ($pesanan->kode_promo != null)
+                                        <small style="font-weight: bold">Kode Promo : {{ $pesanan->kode_promo }}</small>
+                                    @else
+                                        <small style="font-weight: bold">Kode Promo : -</small>
+                                    @endif
+                                </div>
                                 <h4 class="card-title">Total Harga</h4>
                                 <div class="col-12 col-md-12 mb-2">
                                     <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <small style="font-weight: bold">Premi(IDR)</small>
+                                        </div>
+                                        <div class="col-12 col-md-6" style="text-align: right">
+                                            <small class="fw bold">{{ $pesanan->premi }}</small>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <small style="font-weight: bold">Materai & E-Polis(IDR)</small>
+                                        </div>
+                                        <div class="col-12 col-md-6" style="text-align: right">
+                                            <small class="fw bold">{{ $pesanan->materai }}</small>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <small style="font-weight: bold">Potongan Kode Promo(IDR)</small>
+                                        </div>
+                                        <div class="col-12 col-md-6 mb-2" style="text-align: right">
+                                            @if ($pesanan->potongan_promo != null)
+                                                <small class="fw bold">-{{ $pesanan->potongan_promo }}</small>
+                                            @else
+                                                <small class="fw bold">0</small>
+                                            @endif
+                                        </div>
                                         <div class="col-12 col-md-6">
                                             <small style="font-weight: bold">Total Harga</small>
                                         </div>
@@ -402,29 +431,29 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-lg-12 mb-2">
-                                                <div class="row">
-                                                    <div class="col-6 col-lg-6">
-                                                        <small style="font-weight: bold">Provinsi</small>
-                                                    </div>
-                                                    <div class="col-6 col-lg-6" style="text-align:right">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <input type="text" name="province" id="province"
-                                                                    class="pelanggan form-control form-control-sm" readonly
-                                                                    value="{{ $detail_polis->province }}">
-                                                                <div class="input-group-append">
-                                                                    <button class="btn btn-sm text-dark"
-                                                                        onclick="copyText(this)"
-                                                                        style="border: solid 1px; border-color: #e4e9f0;border-left:transparent">
-                                                                        <i class="fa fa-copy fa-2xs"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <!--<div class="col-12 col-lg-12 mb-2">-->
+                                            <!--    <div class="row">-->
+                                            <!--        <div class="col-6 col-lg-6">-->
+                                            <!--            <small style="font-weight: bold">Provinsi</small>-->
+                                            <!--        </div>-->
+                                            <!--        <div class="col-6 col-lg-6" style="text-align:right">-->
+                                            <!--            <div class="form-group">-->
+                                            <!--                <div class="input-group">-->
+                                            <!--                    <input type="text" name="province" id="province"-->
+                                            <!--                        class="pelanggan form-control form-control-sm" readonly-->
+                                            <!--                        value="{{ $detail_polis->province }}">-->
+                                            <!--                    <div class="input-group-append">-->
+                                            <!--                        <button class="btn btn-sm text-dark"-->
+                                            <!--                            onclick="copyText(this)"-->
+                                            <!--                            style="border: solid 1px; border-color: #e4e9f0;border-left:transparent">-->
+                                            <!--                            <i class="fa fa-copy fa-2xs"></i>-->
+                                            <!--                        </button>-->
+                                            <!--                    </div>-->
+                                            <!--                </div>-->
+                                            <!--            </div>-->
+                                            <!--        </div>-->
+                                            <!--    </div>-->
+                                            <!--</div>-->
                                             <div class="col-12 col-lg-12 mb-2">
                                                 <div class="row">
                                                     <div class="col-6 col-lg-6">
@@ -481,10 +510,19 @@
                                             <div class="col-12 col-lg-12 mb-3 text-center">
                                                 <h4>Gambar Foto KTP</h4>
                                             </div>
-                                            <div class="col-12 col-lg-12 mb-5 text-center">
-                                                <img src="/ktp-images/{{ $detail_polis->url_photoId }}" alt="Brand Logo"
-                                                    title="Brand Logo" class="col-10 col-lg-11 img-fluid">
-                                            </div>
+                                            @if ($detail_polis->url_photoId != null)
+                                                <div class="col-12 col-lg-12 mb-5 text-center">
+                                                    <img src="/ktp-images/{{ $detail_polis->url_photoId }}"
+                                                        alt="Brand Logo" title="Brand Logo"
+                                                        class="col-10 col-lg-11 img-fluid">
+                                                </div>
+                                            @else
+                                                <div class="col-12 col-lg-12 mb-5 text-center">
+                                                    <span class="mdi mdi-smart-card-off-outline"
+                                                        style="font-size: 1500%"></span>
+
+                                                </div>
+                                            @endif
                                             <hr class="fs-2 mb-5">
                                             <div class="col-12 col-lg-12 mb-3 text-center">
                                                 <h4>Gambar Foto Passport</h4>
@@ -502,9 +540,9 @@
                     </div>
 
                     @for ($i = 2; $i < $totalPelanggan; $i++)
-                    @php
-                        $j = 0;
-                    @endphp
+                        @php
+                            $j = 0;
+                        @endphp
                         <div class="tab-pane fade" id="pelanggan-{{ $i }}-tab" role="tabpanel"
                             aria-labelledby="tab-pelanggan-{{ $i }}" tabindex="0">
                             <div class="row">
@@ -523,7 +561,8 @@
                                                                 <div class="input-group">
                                                                     <input type="text" name="fullname" id="fullname"
                                                                         class="pelanggan form-control form-control-sm"
-                                                                        readonly value="{{ $detail_customer[$j]->fullname }}">
+                                                                        readonly
+                                                                        value="{{ $detail_customer[$j]->fullname }}">
                                                                     <div class="input-group-append">
                                                                         <button class="btn btn-sm text-dark"
                                                                             onclick="copyText(this)"
@@ -547,7 +586,8 @@
                                                                     <input type="text" name="place_of_birth"
                                                                         id="place_of_birth"
                                                                         class="pelanggan form-control form-control-sm"
-                                                                        readonly value="{{ $detail_customer[$j]->gender }}">
+                                                                        readonly
+                                                                        value="{{ $detail_customer[$j]->gender }}">
                                                                     <div class="input-group-append">
                                                                         <button class="btn btn-sm text-dark"
                                                                             onclick="copyText(this)"
@@ -595,7 +635,8 @@
                                                                 <div class="input-group">
                                                                     <input type="text" name="date_of_birth"
                                                                         id="date_of_birth"
-                                                                        class="pelanggan form-control form-control-sm" readonly
+                                                                        class="pelanggan form-control form-control-sm"
+                                                                        readonly
                                                                         value="{{ $detail_customer[$j]->date_of_birth }}">
                                                                     <div class="input-group-append">
                                                                         <button class="btn btn-sm text-dark"
@@ -620,7 +661,8 @@
                                                                     <input type="text" name="no_passport"
                                                                         id="no_passport"
                                                                         class="pelanggan form-control form-control-sm"
-                                                                        readonly value="{{ $detail_customer[$j]->no_passport }}">
+                                                                        readonly
+                                                                        value="{{ $detail_customer[$j]->no_passport }}">
                                                                     <div class="input-group-append">
                                                                         <button class="btn btn-sm text-dark"
                                                                             onclick="copyText(this)"
@@ -670,11 +712,20 @@
                                                 <div class="col-12 col-lg-12 mb-3 text-center">
                                                     <h4>Gambar Foto KTP</h4>
                                                 </div>
-                                                <div class="col-12 col-lg-12 mb-5 text-center">
-                                                    <img src="/ktp-images/{{ $detail_customer[$j]->url_photoId }}"
-                                                        alt="Brand Logo" title="Brand Logo"
-                                                        class="col-10 col-lg-11 img-fluid">
-                                                </div>
+                                                @if ($detail_customer[$j]->url_photoId != null)
+                                                    <div class="col-12 col-lg-12 mb-5 text-center">
+                                                        <img src="/ktp-images/{{ $detail_customer[$j]->url_photoId }}"
+                                                            alt="Brand Logo" title="Brand Logo"
+                                                            class="col-10 col-lg-11 img-fluid">
+                                                    </div>
+                                                @else
+                                                    <div class="col-12 col-lg-12 mb-5 text-center">
+                                                        <span class="mdi mdi-smart-card-off-outline"
+                                                            style="font-size: 1500%"></span>
+
+                                                    </div>
+                                                @endif
+
                                                 <hr class="fs-2 mb-5">
                                                 <div class="col-12 col-lg-12 mb-3 text-center">
                                                     <h4>Gambar Foto Passport</h4>

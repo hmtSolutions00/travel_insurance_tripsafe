@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Plus Admin</title>
+    <title>{{ $websiteConfig->title }}</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{url('/admin/assets/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{url('/admin/assets/vendors/ti-icons/css/themify-icons.css')}}">
@@ -20,7 +20,7 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{url('/admin/assets/css/style.css')}}">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="{{url('/admin/assets/images/favicon.png')}}" />
+    <link rel="icon" type="image/png" sizes="80x80" href="{{ asset($websiteConfig->logo) }}">
   </head>
   <body>
     <div class="container-scroller">

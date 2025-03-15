@@ -14,7 +14,7 @@
             </a>
         </li>
         <li class="nav-item pt-3">
-            <a class="nav-link d-block" href="index.html">
+            <a class="nav-link d-block" href="#">
                 <img class="sidebar-brand-logo" src="assets/images/logo.svg" alt="">
                 <img class="sidebar-brand-logomini" src="assets/images/logo-mini.svg" alt="">
                 <div class="small fw-light pt-1">Tripsafe Dashboard </div>
@@ -86,8 +86,21 @@
                 <span class="menu-title">Benefit Asuransi</span>
             </a>
         </li>
+         <li class="nav-item {{ $activeSidebar['kode_promo'] ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('kode.promo.index') }}" aria-expanded="false"
+                aria-controls="ui-basic">
+                <i class="mdi mdi-ticket-percent menu-icon"></i>
+                <span class="menu-title">Kode Promo</span>
+            </a>
+        </li>
         <li class="pt-2 pb-1">
           <span class="nav-item-head">Pengaturan Website</span>
+        </li>
+        <li class="nav-item {{ $activeSidebar['user_management'] ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('user.management.index') }}">
+                <i class="mdi mdi-account-multiple"></i>
+                <span class="menu-title">User Management</span>
+            </a>
         </li>
         <li class="nav-item {{ $activeSidebar['social_media'] ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('social.media.index') }}">

@@ -24,14 +24,12 @@ class WebsiteSettingController extends Controller
                 'url_photo_background' => null,
                 'title' => 'Judul Website',
                 'keywords' => 'keyword1, keyword2, keyword3',
-                'slogan1' => 'Slogan 1 Default',
-                'slogan2' => 'Slogan 2 Default'
             ]);
         }
 
         return view('admin.config.web.index', compact('config'));
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -74,8 +72,6 @@ class WebsiteSettingController extends Controller
                 'url_photo_background' => null,
                 'title' => 'Judul Default',
                 'keywords' => 'kata kunci, default',
-                'slogan1' => 'Slogan pertama',
-                'slogan2' => 'Slogan kedua',
             ]);
         }
 
@@ -94,8 +90,6 @@ class WebsiteSettingController extends Controller
             'url_photo_background' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'title' => 'required|string|max:255',
             'keywords' => 'required|string',
-            'slogan1' => 'required|string|max:255',
-            'slogan2' => 'required|string|max:255',
         ]);
 
         // Ambil data konfigurasi website yang ada
@@ -110,8 +104,6 @@ class WebsiteSettingController extends Controller
         $config->about_us = $request->about_us;
         $config->title = $request->title;
         $config->keywords = $request->keywords;
-        $config->slogan1 = $request->slogan1;
-        $config->slogan2 = $request->slogan2;
 
         // Proses upload logo jika ada file baru
         if ($request->hasFile('logo')) {
@@ -134,7 +126,7 @@ class WebsiteSettingController extends Controller
 
         return redirect()->route('website.configuration.index')->with('success', 'Konfigurasi website berhasil diperbarui!');
     }
-    
+
 
     /**
      * Remove the specified resource from storage.

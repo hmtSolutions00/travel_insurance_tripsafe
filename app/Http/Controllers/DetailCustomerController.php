@@ -8,6 +8,7 @@ use App\Models\Pesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use App\Models\KodePromo;
 
 class DetailCustomerController extends Controller
 {
@@ -20,6 +21,7 @@ class DetailCustomerController extends Controller
         $lansia = $request->lansia;
         $paket_asuransi = json_decode($request->paket);
         $paket_asuransi = (array) $paket_asuransi;
+        $promo = KodePromo::where('kode_promo', $request->kodePromo)->first();
         array_push($paket_asuransi, array(
             "tanggal_keberangkatan" => $tglKeberangkatan,
             "tanggal_kepulangan" => $tglKepulangan,
@@ -29,11 +31,12 @@ class DetailCustomerController extends Controller
         ));
 
         return view('frontend.pages.formpenumpang', [
-            'paket_asuransi' => $paket_asuransi
+            'paket_asuransi' => $paket_asuransi,
+            'promo' => $promo,
         ]);
     }
 
-    public function kirim_pesanan_asuransi(Request $request)
+   public function kirim_pesanan_asuransi(Request $request)
     {
         $arrName1 = [];
         $arrName2 = [];
@@ -42,6 +45,10 @@ class DetailCustomerController extends Controller
         $arrJlhPelanggan = [$request->anak, $request->dewasa, $request->lansia];
         $jumlah_customer = json_encode($arrJlhPelanggan, true);
         $jlhPelanggan = $request->anak + $request->dewasa + $request->lansia;
+
+        if($jlhPelanggan == 0){
+            return redirect()->back()->with('error', "Data pelanggan masih kosong!");
+        }
 
 
         for ($i = 1; $i <= $jlhPelanggan; $i++) {
@@ -54,7 +61,6 @@ class DetailCustomerController extends Controller
                 "no_telepon_$i" => 'required',
                 "pekerjaan_1" => 'required',
                 "alamat_1" => 'required',
-                "provinsi_1" => 'required',
                 "kota_1" => 'required',
                 "kode_pos_1" => 'required',
                 "email_1" => 'required',
@@ -78,6 +84,10 @@ class DetailCustomerController extends Controller
             $tambahpesanan->paket_asuransi = $request->paket_asuransi;
             $tambahpesanan->tipe_asuransi = $request->tipe_asuransi;
             $tambahpesanan->wilayah = $request->wilayah;
+            $tambahpesanan->premi = $request->premi;
+            $tambahpesanan->materai = $request->cetak_polis;
+            $tambahpesanan->potongan_promo = $request->promo;
+            $tambahpesanan->kode_promo = $request->kode_promo;
             if (!$tambahpesanan->save()) {
                 if (count($arrName1) > 1) {
                     foreach ($arrName1 as $path) {
@@ -99,7 +109,6 @@ class DetailCustomerController extends Controller
                 $tambahDetailCustomer->no_passport = $request->input("no_passport_$i");
                 $tambahDetailCustomer->pekerjaan = $request->input("pekerjaan_$i");
                 $tambahDetailCustomer->home_address = $request->input("alamat_$i");
-                $tambahDetailCustomer->province = $request->input("provinsi_$i");
                 $tambahDetailCustomer->kota = $request->input("kota_$i");
                 $tambahDetailCustomer->post_code = $request->input("kode_pos_$i");
                 $tambahDetailCustomer->email = $request->input("email_$i");

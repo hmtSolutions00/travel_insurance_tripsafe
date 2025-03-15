@@ -23,6 +23,9 @@ use App\Http\Controllers\WebsiteSettingController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\SocialMediaController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\KodePromoController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +37,22 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/clear-and-optimize', function () {
+    // Clear semua cache
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+    Artisan::call('optimize:clear'); // Clear semua cache terkait optimize
 
+    // Optimasi aplikasi
+    Artisan::call('config:cache');
+    Artisan::call('route:cache');
+    Artisan::call('view:cache');
+    Artisan::call('optimize');
+
+    return '✅ All caches cleared and application optimized!';
+});
 
 //Halaman Yang dapat Diakses tanpa login
 
@@ -225,6 +243,26 @@ Route::middleware(['auth', 'role:admin,user'])->group(function () {
         Route::put('/{id}/update', [BrosurController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
         Route::get('/{id}/detail', [BrosurController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
         Route::delete('/{id}', [BrosurController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
+    });
+    
+    Route::prefix('kode/promo')->name('kode.promo.')->group(function () {
+        Route::get('/', [KodePromoController::class, 'index'])->name('index');
+        Route::get('/create', [KodePromoController::class, 'create'])->name('create');
+        Route::post('/store', [KodePromoController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [KodePromoController::class, 'edit'])->name('edit');  // ✅ Tambahkan {id}
+        Route::put('/{id}/update', [KodePromoController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
+        Route::get('/{id}/detail', [KodePromoController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
+        Route::delete('/{id}', [KodePromoController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
+    });
+
+    Route::prefix('website/usermanagement')->name('user.management.')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('/create', [UserController::class, 'create'])->name('create');
+        Route::post('/store', [UserController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');  // ✅ Tambahkan {id}
+        Route::put('/{id}/update', [UserController::class, 'update'])->name('update'); // ✅ Tambahkan {id}
+        Route::get('/{id}/detail', [UserController::class, 'show'])->name('show'); // ✅ Tambahkan {id}
+        Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy'); // ✅ Tambahkan {id}
     });
 
 

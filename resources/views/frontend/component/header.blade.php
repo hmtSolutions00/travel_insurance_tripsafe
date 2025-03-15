@@ -1,10 +1,10 @@
-<header class="header" style="background-color: white;">
+<header class="header " style="background-color: white;">
     <div class="container">
         <nav class="navbar navbar-expand-lg py-3 py-lg-0 px-0">
-            <a class="navbar-brand" href="/"><img src="{{ asset($websiteConfig->logo) }}" alt="Brand Logo" title="Brand Logo" class="img-fluid" style="height: 50px"></a>
+            <a class="m-1 navbar-brand" href="/"><img src="{{ asset($websiteConfig->logo) }}" alt="Brand Logo" title="Brand Logo" class="img-fluid" style="height: 50px"></a>
             <a class="navbar-brand" href="/"><span class="fw-bold fs-1" style="color:#0033c4; font-family: 'Aptos Narrow', sans-serif;"></a>
             <button class="navbar-toggler px-1 btn rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+               <span class="fa-solid fa-bars"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent" style="justify-content: right">
                 {{-- <ul class="navbar-nav me-auto page-menu" id="nav">
@@ -44,7 +44,7 @@
                     </li> --}}
                     <!-- user account  -->
                     <li class="nav-item dropdown my-auto" style="color: transparent">
-                        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown3" data-bs-toggle="dropdown" aria-expanded="false" style="color: transparent"><span class="d-inline-block p-2 theme-bg-white rounded-circle lh-1"><i class="fa-solid fa-bars-staggered text-primary fa-md"></i></span></a>
+                        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown3" data-bs-toggle="dropdown" aria-expanded="false" style="color: transparent"><span class="d-inline-block p-2 theme-bg-white rounded-circle lh-1"><i class="fa-solid fa-bars text-primary fa-md"></i></span></a>
                         <ul class="dropdown-menu dropdown-menu-end sub-menu text-center" aria-labelledby="navbarDropdown3" style="color:transparent">
                             <li class="mb-2 mt-1"><a class="dropdown-item fw-bold" href="/contact-us">Contact Us</a></li><br>
                             <li class="mb-2"><a class="dropdown-item fw-bold" href="/brosur/file">Brosur</a>

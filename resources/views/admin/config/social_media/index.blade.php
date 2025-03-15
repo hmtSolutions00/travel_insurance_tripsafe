@@ -53,7 +53,7 @@
                                     <tr>
                                         <td class="py-1">{{ $loop->iteration }}</td>
                                         <td>{{ $socialMedia->name }}</td>
-                                        <td><a href="{{ $socialMedia->link }}" target="_blank">{{ $socialMedia->link }}</a></td>
+                                        <td><a href="//{{ $socialMedia->link }}" target="_blank">{{ $socialMedia->link }}</a></td>
                                         <td>
                                             @if($socialMedia->icon)
                                                 <img src="{{ asset('/admin/social_media_icons/' . $socialMedia->icon) }}" alt="Icon" width="50">

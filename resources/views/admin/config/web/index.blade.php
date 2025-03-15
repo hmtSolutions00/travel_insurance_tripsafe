@@ -100,22 +100,6 @@
               @enderror
             </div>
 
-            <div class="form-group">
-              <label for="slogan1"><strong>Slogan 1</strong></label>
-              <input type="text" name="slogan1" class="form-control @error('slogan1') is-invalid @enderror" id="slogan1" value="{{ old('slogan1', $config->slogan1) }}">
-              @error('slogan1')
-                <span class="text-danger">{{ $message }}</span>
-              @enderror
-            </div>
-
-            <div class="form-group">
-              <label for="slogan2"><strong>Slogan 2</strong></label>
-              <input type="text" name="slogan2" class="form-control @error('slogan2') is-invalid @enderror" id="slogan2" value="{{ old('slogan2', $config->slogan2) }}">
-              @error('slogan2')
-                <span class="text-danger">{{ $message }}</span>
-              @enderror
-            </div>
-
             <button type="submit" class="btn btn-primary me-2">Simpan Perubahan</button>
           </form>
         </div>

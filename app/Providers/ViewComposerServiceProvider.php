@@ -55,7 +55,9 @@ class ViewComposerServiceProvider extends ServiceProvider
                 'kelola_produk' => Str::startsWith($currentRoute, 'kelola.data_produk.'),
                 'social_media' => Str::startsWith($currentRoute, 'social.media.'),
                 'webiste_configuration' => Str::startsWith($currentRoute, 'website.configuration.'),
-                'daftar_brosur' => Str::startsWith($currentRoute, 'daftar.brosur.')
+                'daftar_brosur' => Str::startsWith($currentRoute, 'daftar.brosur.'),
+                'kode_promo' => Str::startsWith($currentRoute, 'kode.promo'),
+                'user_management'=>Str::startsWith($currentRoute,'user.management.')
                 
             ];
 

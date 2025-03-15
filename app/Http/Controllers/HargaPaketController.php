@@ -9,9 +9,11 @@ use App\Models\PaketAsuransi;
 use App\Models\TipeAsuransi;
 use App\Models\TipePelanggan;
 use App\Models\TipePerjalanan;
+use App\Models\KodePromo;
 use App\Models\Wilayah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class HargaPaketController extends Controller
 {
@@ -29,7 +31,7 @@ class HargaPaketController extends Controller
         ]);
     }
 
-    public function get_paket_asuransi(Request $request)
+  public function get_paket_asuransi(Request $request)
     {
         $anak = $request->jlhAnak;
         $dewasa = $request->jlhDewasa;
@@ -45,6 +47,7 @@ class HargaPaketController extends Controller
 
         $totalHari = $tglAkhir - $tglAwal;
         $hari = floor(($totalHari / (60 * 60 * 24)) + 1);
+        $hari = (int) $hari;
 
         if ($hari <= 31) {
             if ($lansia == 0) {
@@ -52,13 +55,14 @@ class HargaPaketController extends Controller
                     ->rightJoin('paket_asuransis', 'paket_asuransis.id', '=', 'harga_pakets.package_id')
                     ->rightJoin('tipe_asuransis', 'tipe_asuransis.id', '=', 'harga_pakets.insuranceType_id')
                     ->rightJoin('tipe_perjalanans', 'tipe_perjalanans.id', '=', 'harga_pakets.tipePerjalanan_id')
-                    ->whereJsonContains('custAge_id', ["1"])
+                    ->whereJsonContains('harga_pakets.custAge_id', ["1"])
                     ->where(function ($query) use ($hari) {
                         $query->whereRaw('JSON_EXTRACT(duration, "$[0]") <= ? AND JSON_EXTRACT(duration, "$[1]") >= ?', [$hari, $hari]);
                     })
                     ->where('tipe_asuransis.id', $jenis_asuransi)
                     ->where('wilayahs.id', $wilayah)
                     ->where('tipe_perjalanans.id', $tipe_perjalan)
+                    ->orderByRaw('CAST(harga_pakets.price AS UNSIGNED) DESC')
                     ->select(
                         'harga_pakets.id',
                         'harga_pakets.price',
@@ -81,22 +85,29 @@ class HargaPaketController extends Controller
                     ->join('paket_asuransis', 'paket_asuransis.id', '=', 'harga_pakets.package_id')
                     ->join('tipe_asuransis', 'tipe_asuransis.id', '=', 'harga_pakets.insuranceType_id')
                     ->join('tipe_perjalanans', 'tipe_perjalanans.id', '=', 'harga_pakets.tipePerjalanan_id')
-                    ->whereJsonContains('custAge_id', ["3"])
+                    ->whereJsonContains('harga_pakets.custAge_id', ["3"])
                     ->where(function ($query) use ($hari) {
                         $query->whereRaw('JSON_EXTRACT(duration, "$[0]") <= ? AND JSON_EXTRACT(duration, "$[1]") >= ?', [$hari, $hari]);
                     })
                     ->where('tipe_asuransis.id', $jenis_asuransi)
                     ->where('wilayahs.id', $wilayah)
                     ->where('tipe_perjalanans.id', $tipe_perjalan)
+                    ->orderByRaw('CAST(harga_pakets.price AS UNSIGNED) DESC')
                     ->select(
                         'harga_pakets.id',
                         'harga_pakets.price',
                         'harga_pakets.extra_price',
                         'harga_pakets.product_name',
+                        'harga_pakets.cetak_polis',
+                        'wilayahs.id as wilayah_id',
                         'wilayahs.name as wilayah',
                         'paket_asuransis.nama_paket',
+                        'paket_asuransis.id  as paket_asuransi_id',
                         'tipe_asuransis.name as tipe_asuransi',
-                        'harga_pakets.duration'
+                        'tipe_asuransis.id as tipe_asuransi_id',
+                        'harga_pakets.duration',
+                        'tipe_perjalanans.name as tipe_perjalanan',
+                        'tipe_perjalanans.id as tipe_perjalanan_id'
                     )
                     ->get();
             }
@@ -105,15 +116,15 @@ class HargaPaketController extends Controller
                 $jenisAsuransi = TipeAsuransi::where('id', $jenis_asuransi)->first();
                 $tipePerjalanan = TipePerjalanan::where('id', $tipe_perjalan)->first();
                 $jenisWilayah = Wilayah::where('id', $wilayah)->first();
-                $paketAsuransi = HargaPaket::whereJsonContains('custAge_id', ["1"])
-                    ->rightJoin('paket_asuransis', 'paket_asuransis.id', '=', 'harga_pakets.package_id')
+                $paketAsuransi = HargaPaket::rightJoin('paket_asuransis', 'paket_asuransis.id', '=', 'harga_pakets.package_id')
+                    ->whereJsonContains('harga_pakets.custAge_id', ["1"])
                     ->where('harga_pakets.insuranceType_id', $jenis_asuransi)
                     ->where('harga_pakets.destination_id', $wilayah)
                     ->where('harga_pakets.tipePerjalanan_id', $tipe_perjalan)
-                    ->orderByRaw('JSON_EXTRACT(harga_pakets.duration, "$[1]") ASC')
+                    ->orderByRaw('CAST(harga_pakets.price AS UNSIGNED) DESC')
                     ->selectRaw('harga_pakets.package_id, harga_pakets.id, harga_pakets.price, JSON_EXTRACT(harga_pakets.duration, "$[1]") as maxDuration,
                     harga_pakets.duration, harga_pakets.extra_price, harga_pakets.product_name, harga_pakets.cetak_polis, paket_asuransis.nama_paket, paket_asuransis.id as paket_id')
-                    ->groupBy('package_id', 'maxDuration', 'price', 'id', 'duration', 'extra_price', 'product_name', 'cetak_polis', 'nama_paket', 'paket_id')
+                    ->groupBy('id', 'paket_id', 'harga_pakets.duration', 'harga_pakets.package_id', 'maxDuration', 'harga_pakets.price', 'harga_pakets.extra_price', 'harga_pakets.product_name', 'harga_pakets.cetak_polis', 'nama_paket')
                     ->take(2)
                     ->get();
 
@@ -142,12 +153,12 @@ class HargaPaketController extends Controller
                 $jenisAsuransi = TipeAsuransi::where('id', $jenis_asuransi)->first();
                 $tipePerjalanan = TipePerjalanan::where('id', $tipe_perjalan)->first();
                 $jenisWilayah = Wilayah::where('id', $wilayah)->first();
-                $paketAsuransi = HargaPaket::whereJsonContains('custAge_id', ["3"])
+                $paketAsuransi = HargaPaket::whereJsonContains('harga_pakets.custAge_id', ["3"])
                     ->rightJoin('paket_asuransis', 'paket_asuransis.id', '=', 'harga_pakets.package_id')
                     ->where('harga_pakets.insuranceType_id', $jenis_asuransi)
                     ->where('harga_pakets.destination_id', $wilayah)
                     ->where('harga_pakets.tipePerjalanan_id', $tipe_perjalan)
-                    ->orderByRaw('JSON_EXTRACT(harga_pakets.duration, "$[1]") ASC')
+                    ->orderByRaw('CAST(harga_pakets.price AS UNSIGNED) DESC')
                     ->selectRaw('harga_pakets.package_id, harga_pakets.id, harga_pakets.price, JSON_EXTRACT(harga_pakets.duration, "$[1]") as maxDuration,
                     harga_pakets.duration, harga_pakets.extra_price, harga_pakets.product_name, harga_pakets.cetak_polis, paket_asuransis.nama_paket, paket_asuransis.id as paket_id')
                     ->groupBy('package_id', 'maxDuration', 'price', 'id', 'duration', 'extra_price', 'product_name', 'cetak_polis', 'nama_paket', 'paket_id')
@@ -178,6 +189,49 @@ class HargaPaketController extends Controller
             }
         }
 
+        if (count($paket_asuransi) != 0) {
+            if (is_array($paket_asuransi[0]["duration"])) {
+                $arrWaktu = $paket_asuransi[0]["duration"];
+            } else {
+                $arrWaktu = json_decode($paket_asuransi[0]["duration"], true);
+            }
+            if ($paket_asuransi[0]["extra_price"]  == 0 && $hari > $arrWaktu[1]) {
+                $paket_asuransi = [];
+            }
+        }
+        $arrDiscPremi = [];
+        $kodePromo = KodePromo::where('kode_promo', $request->kodePromo)->first();
+
+        $promoExist = true;
+        $promoValue = false;
+        $pesanPromo = "";
+        $now = Carbon::now()->format('Y-m-d');
+        if ($request->kodePromo != null) {
+            if ($kodePromo != null) {
+                $mulai = Carbon::parse($kodePromo->tanggal_mulai)->format('Y-m-d');
+                $akhir = Carbon::parse($kodePromo->tanggal_akhir)->format('Y-m-d');
+                if ($now > $akhir) {
+                    $promoExist = false;
+                    $promoValue = true;
+                    $pesanPromo = "Kode Promo sudah kadaluwarsa";
+                } elseif ($now < $mulai) {
+                    $promoExist = false;
+                    $promoValue = true;
+                    $pesanPromo = "Kode Promo belum tersedia";
+                } else {
+                    foreach ($paket_asuransi as $asuransi) {
+                        $diskon = (int)$asuransi["price"] - (int)$kodePromo->promo;
+                        array_push($arrDiscPremi, $diskon);
+                        $promoValue = true;
+                    }
+                }
+            } else {
+                $promoExist = false;
+                $promoValue = true;
+                $pesanPromo = "Kode Promo tidak ada";
+            }
+        }
+
         $manfaat = ManfaatPaket::all();
         $detail_manfaat = DetailManfaat::rightJoin('opsi_manfaats', 'opsi_manfaats.id', '=', 'detail_manfaats.benefitOption')
             ->whereJsonContains('detail_manfaats.destionation_id', ["$wilayah"])
@@ -187,13 +241,17 @@ class HargaPaketController extends Controller
                 'opsi_manfaats.benefits_id'
             )->get();
 
+
         return response()->json([
             'paket_asuransi' => $paket_asuransi,
             'manfaat' => $manfaat,
             'detail_manfaat' => $detail_manfaat,
+            'arrDiscPremi' => $arrDiscPremi,
+            'pesanPromo' => $pesanPromo,
+            'promoValue' => $promoValue,
+            'promoExist' => $promoExist
         ]);
     }
-
     //admin
 
 
